@@ -60,7 +60,7 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.关于AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.glCanvas1 = new CSharpGL.GLCanvas();
+            this.glCanvas1 = new EMGraphics.GLCanvas();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
             this.SuspendLayout();
@@ -317,7 +317,7 @@
             this.glCanvas1.Location = new System.Drawing.Point(0, 28);
             this.glCanvas1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.glCanvas1.Name = "glCanvas1";
-            this.glCanvas1.RenderTrigger = CSharpGL.RenderTrigger.TimerBased;
+            this.glCanvas1.RenderTrigger = RenderTrigger.TimerBased;
             this.glCanvas1.Size = new System.Drawing.Size(754, 568);
             this.glCanvas1.TabIndex = 2;
             this.glCanvas1.OpenGLDraw += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.glCanvas1_OpenGLDraw);
@@ -374,6 +374,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem 关于AToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private CSharpGL.GLCanvas glCanvas1;
+        private EMGraphics.GLCanvas glCanvas1;
     }
 }

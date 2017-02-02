@@ -1,13 +1,12 @@
-﻿using CSharpGL;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using EMGraphics;
 
 namespace EMGraphics.Demo
 {
@@ -123,20 +122,20 @@ namespace EMGraphics.Demo
             Color.YellowGreen.ToVec3(),
         };
 
-        private Triangle[] demoTriangles = new Triangle[]
+        private EMGraphics.Triangle[] demoTriangles = new EMGraphics.Triangle[]
         {
-            new Triangle(1 - 1, 6 - 1, 2 - 1),
-            new Triangle(6 - 1, 1 - 1, 5 - 1),
-            new Triangle(2 - 1, 6 - 1, 7 - 1),
-            new Triangle(2 - 1, 7 - 1, 3 - 1),
-            new Triangle(4 - 1, 1 - 1, 2 - 1),
-            new Triangle(4 - 1, 2 - 1, 3 - 1),
-            new Triangle(4 - 1, 7 - 1, 8 - 1),
-            new Triangle(7 - 1, 4 - 1, 3 - 1),
-            new Triangle(5 - 1, 1 - 1, 4 - 1),
-            new Triangle(5 - 1, 4 - 1, 8 - 1),
-            new Triangle(6 - 1, 5 - 1, 8 - 1),
-            new Triangle(6 - 1, 8 - 1, 7 - 1),
+            new EMGraphics.Triangle(1 - 1, 6 - 1, 2 - 1),
+            new EMGraphics.Triangle(6 - 1, 1 - 1, 5 - 1),
+            new EMGraphics.Triangle(2 - 1, 6 - 1, 7 - 1),
+            new EMGraphics.Triangle(2 - 1, 7 - 1, 3 - 1),
+            new EMGraphics.Triangle(4 - 1, 1 - 1, 2 - 1),
+            new EMGraphics.Triangle(4 - 1, 2 - 1, 3 - 1),
+            new EMGraphics.Triangle(4 - 1, 7 - 1, 8 - 1),
+            new EMGraphics.Triangle(7 - 1, 4 - 1, 3 - 1),
+            new EMGraphics.Triangle(5 - 1, 1 - 1, 4 - 1),
+            new EMGraphics.Triangle(5 - 1, 4 - 1, 8 - 1),
+            new EMGraphics.Triangle(6 - 1, 5 - 1, 8 - 1),
+            new EMGraphics.Triangle(6 - 1, 8 - 1, 7 - 1),
         };
 
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
