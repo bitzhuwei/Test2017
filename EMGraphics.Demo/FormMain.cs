@@ -73,14 +73,14 @@ namespace EMGraphics.Demo
 
         private vec3[] demoColors = new vec3[]
         {
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.Yellow.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
+            Color.YellowGreen.ToVec3(),
         };
 
         private Triangle[] demoTriangles = new Triangle[]

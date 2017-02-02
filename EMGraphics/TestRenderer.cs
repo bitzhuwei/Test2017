@@ -60,6 +60,8 @@ namespace EMGraphics
 
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
         private PolygonModeState polygonLineState = new PolygonModeState(PolygonMode.Line);
+        private PolygonOffsetState offsetState = new PolygonOffsetLineState();
+        private LineWidthState lineWidthState = new LineWidthState(3.0f);
 
         protected override void DoRender(RenderEventArgs arg)
         {
@@ -72,6 +74,7 @@ namespace EMGraphics
 
             if (this.RenderFaces)
             {
+                this.SetUniform("useLineColor", false);
                 this.polygonFaceState.On();
                 base.DoRender(arg);
                 this.polygonFaceState.Off();
@@ -79,9 +82,14 @@ namespace EMGraphics
 
             if (this.RenderLines)
             {
+                this.SetUniform("useLineColor", true);
+                this.lineWidthState.On();
+                this.offsetState.On();
                 this.polygonLineState.On();
                 base.DoRender(arg);
                 this.polygonLineState.Off();
+                this.offsetState.Off();
+                this.lineWidthState.Off();
             }
         }
     }
