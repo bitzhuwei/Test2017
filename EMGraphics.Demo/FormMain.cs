@@ -22,6 +22,45 @@ namespace EMGraphics.Demo
             InitializeComponent();
 
             this.Load += FormMain_Load;
+            this.glCanvas1.MouseDown += FormMain_MouseDown;
+            this.glCanvas1.MouseMove += FormMain_MouseMove;
+            this.glCanvas1.MouseUp += FormMain_MouseUp;
+
+        }
+
+        void FormMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.middleDown && e.Button == System.Windows.Forms.MouseButtons.Middle)
+            {
+                Point newPosition = e.Location;
+                vec3 right = this.camera.GetRight();
+                this.camera.Position -= right * (newPosition.X - lastMiddleDown.X) * this.sensitivity;
+                this.camera.Target -= right * (newPosition.X - lastMiddleDown.X) * this.sensitivity;
+                vec3 down = this.camera.GetDown();
+                this.camera.Position -= down * (newPosition.Y - lastMiddleDown.Y) * this.sensitivity;
+                this.camera.Target -= down * (newPosition.Y - lastMiddleDown.Y) * this.sensitivity;
+                lastMiddleDown = newPosition;
+            }
+        }
+
+        void FormMain_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Middle)
+            {
+                this.middleDown = false;
+            }
+        }
+
+        private Point lastMiddleDown;
+        private bool middleDown = false;
+        private float sensitivity = 0.001f;
+        void FormMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Middle)
+            {
+                this.lastMiddleDown = e.Location;
+                this.middleDown = true;
+            }
         }
 
         private void Application_Idle(object sender, EventArgs e)
@@ -34,13 +73,14 @@ namespace EMGraphics.Demo
             {
                 var camera = new Camera(
                     new vec3(5, 4, 3) * 0.5f, new vec3(0, 0, 0), new vec3(0, 1, 0),
-                    CameraType.Perspecitive, this.glCanvas1.Width, this.glCanvas1.Height);
+                    CameraType.Ortho, this.glCanvas1.Width, this.glCanvas1.Height);
                 var rotator = new SatelliteManipulater(System.Windows.Forms.MouseButtons.Left);
                 rotator.Bind(camera, this.glCanvas1);
                 this.camera = camera;
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
+                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 打开OToolStripMenuItem_Click(sender, e);

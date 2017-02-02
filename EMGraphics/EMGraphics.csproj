@@ -31,10 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CSharpGL, Version=1.0.7.4, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>CSharpGL\CSharpGL.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -60,6 +56,12 @@
     <Content Include="CSharpGL\CSharpGL.dll" />
     <Content Include="CSharpGL\CSharpGL.pdb" />
     <Content Include="CSharpGL\CSharpGL.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CSharpGL\CSharpGL\CSharpGL.csproj">
+      <Project>{115ab8f1-a732-4fad-8f16-f8c9e4da02a1}</Project>
+      <Name>CSharpGL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
