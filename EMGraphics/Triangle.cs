@@ -42,5 +42,11 @@ namespace EMGraphics
         /// </summary>
         public double Area { get; set; }
 
+        public Triangle(int num1, int num2, int num3)
+        {
+            this.Num1 = num1;
+            this.Num2 = num2;
+            this.Num3 = num3;
+        }
     }
 }
