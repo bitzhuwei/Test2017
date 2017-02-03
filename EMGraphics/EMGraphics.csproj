@@ -387,6 +387,7 @@
     <Compile Include="Layout\ILayoutEvent.cs" />
     <Compile Include="Layout\ILayoutHelper.cs" />
     <Compile Include="Manipulaters\CameraManipulaters\FirstPerspectiveManipulater.cs" />
+    <Compile Include="Manipulaters\CameraManipulaters\ScreenTranslateManipulater.cs" />
     <Compile Include="Manipulaters\CameraManipulaters\SatelliteManipulater.cs" />
     <Compile Include="Manipulaters\IKeyboardHandler.cs" />
     <Compile Include="Manipulaters\IMouseHandler.cs" />
@@ -633,23 +634,23 @@
     <None Include="Renderers\readme.md" />
     <None Include="Renderers\Renderers.cd" />
     <None Include="Resources\!!!.md" />
-    <None Include="Resources\BoundingBox.frag" />
-    <None Include="Resources\BoundingBox.vert" />
-    <None Include="Resources\Highlight.frag" />
-    <None Include="Resources\Highlight.vert" />
-    <None Include="Resources\Label.frag" />
-    <None Include="Resources\Label.vert" />
-    <None Include="Resources\Picking.frag" />
-    <None Include="Resources\Picking.vert" />
-    <None Include="Resources\Points.frag" />
-    <None Include="Resources\Points.vert" />
-    <None Include="Resources\readme.md" />
-    <None Include="Resources\Simple.frag" />
-    <None Include="Resources\Simple.vert" />
-    <None Include="Resources\SquareRenderer.frag" />
-    <None Include="Resources\SquareRenderer.vert" />
-    <None Include="Resources\TextModel.frag" />
-    <None Include="Resources\TextModel.vert" />
+    <EmbeddedResource Include="Resources\BoundingBox.frag" />
+    <EmbeddedResource Include="Resources\BoundingBox.vert" />
+    <EmbeddedResource Include="Resources\Highlight.frag" />
+    <EmbeddedResource Include="Resources\Highlight.vert" />
+    <EmbeddedResource Include="Resources\Label.frag" />
+    <EmbeddedResource Include="Resources\Label.vert" />
+    <EmbeddedResource Include="Resources\Picking.frag" />
+    <EmbeddedResource Include="Resources\Picking.vert" />
+    <EmbeddedResource Include="Resources\Points.frag" />
+    <EmbeddedResource Include="Resources\Points.vert" />
+    <EmbeddedResource Include="Resources\readme.md" />
+    <EmbeddedResource Include="Resources\Simple.frag" />
+    <EmbeddedResource Include="Resources\Simple.vert" />
+    <EmbeddedResource Include="Resources\SquareRenderer.frag" />
+    <EmbeddedResource Include="Resources\SquareRenderer.vert" />
+    <EmbeddedResource Include="Resources\TextModel.frag" />
+    <EmbeddedResource Include="Resources\TextModel.vert" />
     <None Include="Scene\readme.md" />
     <None Include="Test.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -683,7 +684,7 @@
     <Content Include="Renderers\PickableRenderer\ZeroIndexRenderer\LineSearcher\ZeroIndexLineInTrianglesSearcher.jpg" />
     <Content Include="Renderers\PickableRenderer\ZeroIndexRenderer\LineSearcher\ZeroIndexLineInTriangleStripAdjacencySearcher.jpg" />
     <Content Include="Renderers\PickableRenderer\ZeroIndexRenderer\LineSearcher\ZeroIndexLineInTriangleStripSearcher.jpg" />
-    <Content Include="Resources\cursor_gold.png" />
+    <EmbeddedResource Include="Resources\cursor_gold.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="UIRendering\0Foundations\" />
