@@ -87,12 +87,26 @@ namespace EMGraphics
                 if (camera == null) { return; }
 
                 Point newPosition = e.Location;
-                vec3 right = this.camera.GetRight();
-                camera.Position -= right * (newPosition.X - this.lastPosition.X) * this.HorizontalRotationFactor;
-                camera.Target -= right * (newPosition.X - this.lastPosition.X) * this.HorizontalRotationFactor;
-                vec3 down = this.camera.GetDown();
-                camera.Position -= down * (newPosition.Y - this.lastPosition.Y) * this.VerticalRotationFactor;
-                camera.Target -= down * (newPosition.Y - this.lastPosition.Y) * this.VerticalRotationFactor;
+                int diffX = newPosition.X - this.lastPosition.X;
+                int diffY = newPosition.Y - this.lastPosition.Y;
+                mat4 viewMatrix = this.camera.GetViewMatrix();
+                mat4 projectionMatrix = this.camera.GetProjectionMatrix();
+                vec3 cameraPosition = this.camera.Position;
+                vec4 viewport;
+                {
+                    int[] tmp = OpenGL.GetViewport();
+                    viewport = new vec4(tmp[0], tmp[1], tmp[2], tmp[3]);
+                }
+                vec3 windowPos = glm.project(cameraPosition,
+                        viewMatrix, projectionMatrix, viewport);
+                var newWindowPos = new vec3(windowPos.x - diffX,
+                    windowPos.y + diffY, windowPos.z);
+                vec3 newCameraPosition = glm.unProject(newWindowPos,
+                    viewMatrix, projectionMatrix, viewport);
+                vec3 cameraDiff = newCameraPosition - cameraPosition;
+                this.camera.Position = newCameraPosition;
+                this.camera.Target += cameraDiff;
+
                 this.lastPosition = newPosition;
 
                 if (this.canvas.RenderTrigger == RenderTrigger.Manual)
