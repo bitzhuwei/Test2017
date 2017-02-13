@@ -50,6 +50,12 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormProperyGrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormProperyGrid.Designer.cs">
+      <DependentUpon>FormProperyGrid.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FormMain.resx">

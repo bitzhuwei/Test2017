@@ -69,8 +69,8 @@ namespace EMGraphics
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
-            this.AmbientLightColor = new vec3(0.2f);
-            this.DirectionalLightDirection = new vec3(1);
+            this.AmbientLightColor = new vec3(0.5f);
+            this.DirectionalLightDirection = new vec3(3, 4, 5).normalize();
             this.DirectionalLightColor = new vec3(1);
             //this.HalfVector = new vec3(1);
             this.Shininess = 10.0f;

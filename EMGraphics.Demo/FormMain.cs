@@ -42,7 +42,7 @@ namespace EMGraphics.Demo
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
-                //this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
+                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 打开OToolStripMenuItem_Click(sender, e);
@@ -109,6 +109,7 @@ namespace EMGraphics.Demo
                 var renderer = EMGraphics.TestRenderer.Create(model);
                 SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
                 this.scene.RootObject.Children.Add(obj);
+                (new FormProperyGrid(renderer)).Show();
                 this.glCanvas1.Repaint();
             }
         }
