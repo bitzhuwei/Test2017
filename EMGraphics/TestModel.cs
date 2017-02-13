@@ -62,7 +62,7 @@ namespace EMGraphics
             {
                 if (this.normalBuffer == null)
                 {
-                    this.normalBuffer = this.vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                    this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
                 return this.normalBuffer;
             }
