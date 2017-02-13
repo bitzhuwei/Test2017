@@ -324,6 +324,7 @@
     <Compile Include="0Foundations\Utilities\DumpTreeToText.cs" />
     <Compile Include="0Foundations\Utilities\FloatHelper.cs" />
     <Compile Include="0Foundations\Utilities\ManifestResourceLoader.cs" />
+    <Compile Include="0Foundations\Utilities\NormalHelper.cs" />
     <Compile Include="0Foundations\Utilities\PositionHelper.cs" />
     <Compile Include="0Foundations\Utilities\RectangleHelper.cs" />
     <Compile Include="0Foundations\Utilities\ScreenShot.cs" />

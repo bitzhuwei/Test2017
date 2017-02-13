@@ -42,7 +42,7 @@ namespace EMGraphics.Demo
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
-                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
+                //this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 打开OToolStripMenuItem_Click(sender, e);
@@ -121,7 +121,8 @@ namespace EMGraphics.Demo
             vec3[] positions = demoPositions;
             vec3[] colors = demoColors;
             Triangle[] triangles = demoTriangles;
-            var model = new TestModel(positions, colors, triangles);
+            vec3[] normals = positions.CalculateNormals(triangles);
+            var model = new TestModel(positions, colors, normals, triangles);
             return model;
         }
 

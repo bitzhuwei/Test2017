@@ -10,13 +10,14 @@ namespace EMGraphics
     /// </summary>
     public class TestModel : IBufferable, IModelSpace
     {
-        public TestModel(vec3[] vertexPositions, vec3[] vertexColors, Triangle[] triangles)
+        public TestModel(vec3[] vertexPositions, vec3[] vertexColors, vec3[] normals, Triangle[] triangles)
         {
             BoundingBox box = vertexPositions.Move2Center();
             this.vertexPositions = vertexPositions;
             this.ModelSize = box.MaxPosition - box.MinPosition;
             this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             this.vertexColors = vertexColors;
+            this.vertexNormals = normals;
             this.triangles = triangles;
             this.RotationAngleDegree = 0;
             this.RotationAxis = new vec3(0, 1, 0);
@@ -30,6 +31,10 @@ namespace EMGraphics
         public const string strColor = "color";
         private VertexBuffer colorBuffer;
         private vec3[] vertexColors;
+
+        public const string strNormal = "normal";
+        private VertexBuffer normalBuffer;
+        private vec3[] vertexNormals;
 
         //public const string strIndex = "index";
         private IndexBuffer indexBuffer = null;
@@ -52,6 +57,14 @@ namespace EMGraphics
                     this.colorBuffer = this.vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
                 return this.colorBuffer;
+            }
+            else if (bufferName == strNormal)
+            {
+                if (this.normalBuffer == null)
+                {
+                    this.normalBuffer = this.vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                }
+                return this.normalBuffer;
             }
             else
             {

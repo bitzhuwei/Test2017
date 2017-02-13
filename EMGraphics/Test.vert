@@ -1,17 +1,18 @@
-﻿#version 150 core
+﻿#version 330 core
+
+uniform mat4 mvpMatrix;
+uniform mat3 normalMatrix;
 
 in vec3 inPosition;
 in vec3 inColor;
+in vec3 inNormal;
 
+out vec3 passNormal;
 out vec3 passColor;
-
-uniform mat4 projection;
-uniform mat4 view;
-uniform mat4 model;
 
 void main()
 {
-	gl_Position = projection * view * model * vec4(inPosition, 1.0f);
-
+	passNormal = normalize(normalMatrix * inNormal);
 	passColor = inColor;
+	gl_Position = mvpMatrix * vec4(inPosition, 1.0);
 }
