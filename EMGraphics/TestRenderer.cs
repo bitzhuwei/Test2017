@@ -28,8 +28,8 @@ namespace EMGraphics
         [Category(strTestRenderer)]
         public vec3 AmbientLightColor { get; set; }
 
-        [Category(strTestRenderer)]
-        public vec3 DirectionalLightDirection { get; set; }
+        //[Category(strTestRenderer)]
+        //public vec3 DirectionalLightDirection { get; set; }
 
         [Category(strTestRenderer)]
         public vec3 DirectionalLightColor { get; set; }
@@ -70,7 +70,7 @@ namespace EMGraphics
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
             this.AmbientLightColor = new vec3(0.5f);
-            this.DirectionalLightDirection = new vec3(3, 4, 5).normalize();
+            //this.DirectionalLightDirection = new vec3(3, 4, 5).normalize();
             this.DirectionalLightColor = new vec3(1);
             //this.HalfVector = new vec3(1);
             this.Shininess = 10.0f;
@@ -106,8 +106,9 @@ namespace EMGraphics
 
                 this.SetUniform("ambientLight", this.AmbientLightColor);
                 this.SetUniform("directionalLightColor", this.DirectionalLightColor);
-                this.SetUniform("directionalLightDirection", this.DirectionalLightDirection.normalize());
-                this.SetUniform("halfVector", this.DirectionalLightDirection.normalize());
+                vec3 lightDirection = (arg.Camera.Target - arg.Camera.Position).normalize();
+                this.SetUniform("directionalLightDirection", lightDirection);
+                this.SetUniform("halfVector", lightDirection);
                 //this.SetUniform("halfVector", this.HalfVector.normalize());
                 this.SetUniform("shininess", this.Shininess);
                 this.SetUniform("strength", this.Strength);
