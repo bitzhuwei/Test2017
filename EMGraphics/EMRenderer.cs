@@ -10,51 +10,51 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class TestRenderer : PickableRenderer
+    public class EMRenderer : PickableRenderer
     {
-        private const string strTestRenderer = "TestRenderer";
+        private const string strEMRenderer = "EMRenderer";
         /// <summary>
         /// 是否渲染模型的各个三角形面
         /// </summary>
-        [Category(strTestRenderer)]
+        [Category(strEMRenderer)]
         public bool RenderFaces { get; set; }
 
         /// <summary>
         /// 是否渲染模型的各个三角形边
         /// </summary>
-        [Category(strTestRenderer)]
+        [Category(strEMRenderer)]
         public bool RenderLines { get; set; }
 
-        [Category(strTestRenderer)]
+        [Category(strEMRenderer)]
         public vec3 AmbientLightColor { get; set; }
 
-        //[Category(strTestRenderer)]
+        //[Category(strEMRenderer)]
         //public vec3 DirectionalLightDirection { get; set; }
 
-        [Category(strTestRenderer)]
+        [Category(strEMRenderer)]
         public vec3 DirectionalLightColor { get; set; }
 
         //public vec3 HalfVector { get; set; }
-        [Category(strTestRenderer)]
+        [Category(strEMRenderer)]
         public float Shininess { get; set; }
 
-        [Category(strTestRenderer)]
+        [Category(strEMRenderer)]
         public float Strength { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static TestRenderer Create(TestModel model)
+        public static EMRenderer Create(EMModel model)
         {
             var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"Test.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"Test.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"EM.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"EM.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
-            map.Add("inPosition", TestModel.strPosition);
-            map.Add("inColor", TestModel.strColor);
-            map.Add("inNormal", TestModel.strNormal);
-            var renderer = new TestRenderer(model, shaderCodes, map, TestModel.strPosition);
+            map.Add("inPosition", EMModel.strPosition);
+            map.Add("inColor", EMModel.strColor);
+            map.Add("inNormal", EMModel.strNormal);
+            var renderer = new EMRenderer(model, shaderCodes, map, EMModel.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;
@@ -64,7 +64,7 @@ namespace EMGraphics
             return renderer;
         }
 
-        private TestRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        private EMRenderer(IBufferable model, ShaderCode[] shaderCodes,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)

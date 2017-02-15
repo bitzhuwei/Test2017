@@ -15,6 +15,12 @@ namespace EMGraphics
 
             switch (config)
             {
+                case VBOConfig.Bool:
+                    result.dataSize = 1;
+                    result.dataType = OpenGL.GL_BYTE;
+                    result.pointerType = VertexAttribPointerType.Integer;
+                    break;
+
                 case VBOConfig.Byte:
                     result.dataSize = 1;
                     result.dataType = OpenGL.GL_BYTE;

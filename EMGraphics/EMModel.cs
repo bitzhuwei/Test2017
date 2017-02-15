@@ -8,9 +8,9 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class TestModel : IBufferable, IModelSpace
+    public class EMModel : IBufferable, IModelSpace
     {
-        public TestModel(vec3[] vertexPositions, vec3[] vertexColors, vec3[] normals, Triangle[] triangles)
+        public EMModel(vec3[] vertexPositions, vec3[] vertexColors, vec3[] normals, Triangle[] triangles)
         {
             BoundingBox box = vertexPositions.Move2Center();
             this.vertexPositions = vertexPositions;

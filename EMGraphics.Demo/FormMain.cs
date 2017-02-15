@@ -76,13 +76,13 @@ namespace EMGraphics.Demo
         private vec3[] demoColors = new vec3[]
         {
             Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
-            Color.YellowGreen.ToVec3(),
+            Color.LightYellow.ToVec3(),
+            Color.Yellow.ToVec3(),
+            Color.LightGoldenrodYellow.ToVec3(),
+            Color.GreenYellow.ToVec3(),
+            Color.LightGreen.ToVec3(),
+            Color.DarkSeaGreen.ToVec3(),
+            Color.DarkSeaGreen.ToVec3(),
         };
 
         private EMGraphics.Triangle[] demoTriangles = new EMGraphics.Triangle[]
@@ -103,10 +103,10 @@ namespace EMGraphics.Demo
 
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            TestModel model = GetModel();
+            EMModel model = GetModel();
             if (model != null)
             {
-                var renderer = EMGraphics.TestRenderer.Create(model);
+                var renderer = EMGraphics.EMRenderer.Create(model);
                 SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
                 this.scene.RootObject.Children.Add(obj);
                 (new FormProperyGrid(renderer)).Show();
@@ -114,7 +114,7 @@ namespace EMGraphics.Demo
             }
         }
 
-        private TestModel GetModel()
+        private EMModel GetModel()
         {
             //vec3[] positions = null;//vec3.x .y .z分别表示顶点位置的x y z坐标。
             //vec3[] colors = null;//vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]
@@ -123,7 +123,7 @@ namespace EMGraphics.Demo
             vec3[] colors = demoColors;
             Triangle[] triangles = demoTriangles;
             vec3[] normals = positions.CalculateNormals(triangles);
-            var model = new TestModel(positions, colors, normals, triangles);
+            var model = new EMModel(positions, colors, normals, triangles);
             return model;
         }
 

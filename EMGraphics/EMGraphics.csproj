@@ -370,7 +370,8 @@
     <Compile Include="Canvas\Win32API\WindowStylesEx.cs" />
     <Compile Include="Canvas\Win32API\WNDCLASSEX.cs" />
     <Compile Include="Canvas\Win32API\WndProc.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="NormalLineModel.cs" />
+    <Compile Include="NormalLineRenderer.cs" />
     <Compile Include="FontTexture\FontBitmap.cs" />
     <Compile Include="FontTexture\FontBitmap.IDisposable.cs" />
     <Compile Include="FontTexture\FontBitmapHelper.0_.cs" />
@@ -581,7 +582,7 @@
     <Compile Include="Scene\Time.cs" />
     <Compile Include="Scene\ViewPort.cs" />
     <Compile Include="Scene\ViewPort.ILayout.cs" />
-    <Compile Include="TestModel.cs" />
+    <Compile Include="EMModel.cs" />
     <Compile Include="UIRendering\UIRenderer.cs" />
     <Compile Include="UIRendering\UIRenderer.ILayout.cs" />
     <Compile Include="UIRendering\UIRenderers\UIAxis.cs" />
@@ -620,6 +621,12 @@
     <None Include="0Foundations\Utilities\StringHelper.cs.bak" />
     <None Include="Canvas\readme.md" />
     <None Include="Canvas\RenderContexts\readme.md" />
+    <None Include="NormalLine.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="NormalLine.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="FontTexture\readme.md" />
     <None Include="Manipulaters\readme.md" />
     <None Include="PropertyGrid\TypeConverters\readme.md" />
@@ -653,13 +660,13 @@
     <EmbeddedResource Include="Resources\TextModel.frag" />
     <EmbeddedResource Include="Resources\TextModel.vert" />
     <None Include="Scene\readme.md" />
-    <None Include="Test.frag">
+    <None Include="EM.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Test.vert">
+    <None Include="EM.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Compile Include="TestRenderer.cs" />
+    <Compile Include="EMRenderer.cs" />
     <Compile Include="Triangle.cs" />
     <None Include="UIRendering\readme.md" />
   </ItemGroup>

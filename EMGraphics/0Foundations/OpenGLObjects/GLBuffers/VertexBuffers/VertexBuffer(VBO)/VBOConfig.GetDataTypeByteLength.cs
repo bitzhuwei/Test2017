@@ -8,6 +8,10 @@
 
             switch (config)
             {
+                case VBOConfig.Bool:
+                    result = sizeof(bool);
+                    break;
+
                 case VBOConfig.Byte:
                     result = sizeof(byte);
                     break;

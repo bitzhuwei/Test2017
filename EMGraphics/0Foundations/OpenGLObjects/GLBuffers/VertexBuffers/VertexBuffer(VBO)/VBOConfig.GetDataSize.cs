@@ -16,6 +16,10 @@ namespace EMGraphics
             int dataSize = 0;
             switch (config)
             {
+                case VBOConfig.Bool:
+                    dataSize = 1;
+                    break;
+
                 case VBOConfig.Byte:
                     dataSize = 1;
                     break;
