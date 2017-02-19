@@ -13,25 +13,25 @@ namespace EMGraphics
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vertexPositions">root positions of every normal line.</param>
-        /// <param name="directions">directions of every normal line.</param>
-        /// <param name="lengths">lengths of every normal line.</param>
-        public NormalLineModel(vec3[] vertexPositions, vec3[] directions, float[] lengths)
+        /// <param name="normalPositions">root positions of every normal line.</param>
+        /// <param name="normalDirections">directions of every normal line.</param>
+        /// <param name="normalLengths">lengths of every normal line.</param>
+        public NormalLineModel(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths)
         {
-            if (vertexPositions == null || directions == null || lengths == null)
+            if (normalPositions == null || normalDirections == null || normalLengths == null)
             { throw new ArgumentNullException(); }
-            if (vertexPositions.Length != directions.Length)
+            if (normalPositions.Length != normalDirections.Length)
             { throw new ArgumentException(); }
-            if (vertexPositions.Length != lengths.Length)
+            if (normalPositions.Length != normalLengths.Length)
             { throw new ArgumentException(); }
 
-            this.vertexCount = vertexPositions.Length * 4;
-            BoundingBox box = vertexPositions.Move2Center();
-            this.vertexPositions = vertexPositions;
+            this.vertexCount = normalPositions.Length * 4;
+            BoundingBox box = normalPositions.Move2Center();
+            this.normalPositions = normalPositions;
             this.ModelSize = box.MaxPosition - box.MinPosition;
             this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
-            this.directions = directions;
-            this.lengths = lengths;
+            this.normalDirections = normalDirections;
+            this.normalLengths = normalLengths;
             this.RotationAngleDegree = 0;
             this.RotationAxis = new vec3(0, 1, 0);
             this.Scale = new vec3(1, 1, 1);
@@ -40,9 +40,9 @@ namespace EMGraphics
         public const string strPosition = "position";
         private VertexBuffer positionBuffer;
 
-        private vec3[] vertexPositions;
-        private vec3[] directions;
-        private float[] lengths;
+        private vec3[] normalPositions;
+        private vec3[] normalDirections;
+        private float[] normalLengths;
 
         private IndexBuffer indexBuffer = null;
 
@@ -54,11 +54,11 @@ namespace EMGraphics
             {
                 if (this.positionBuffer == null)
                 {
-                    vec3[] positions = new vec3[this.vertexPositions.Length * 4];
-                    for (int i = 0; i < this.vertexPositions.Length; i++)
+                    vec3[] positions = new vec3[this.normalPositions.Length * 4];
+                    for (int i = 0; i < this.normalPositions.Length; i++)
                     {
-                        vec3 root = this.vertexPositions[i];
-                        vec3 direction = this.directions[i].normalize() * lengths[i];
+                        vec3 root = this.normalPositions[i];
+                        vec3 direction = this.normalDirections[i].normalize() * normalLengths[i];
                         positions[i * 4 + 0] = root;
                         positions[i * 4 + 1] = root + direction * 2.0f / 3.0f;
                         positions[i * 4 + 2] = root + direction * 2.0f / 3.0f;
@@ -66,9 +66,9 @@ namespace EMGraphics
                     }
                     this.positionBuffer = positions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                     // be ready to release array by GC.
-                    this.vertexPositions = null;
-                    this.directions = null;
-                    this.lengths = null;
+                    this.normalPositions = null;
+                    this.normalDirections = null;
+                    this.normalLengths = null;
                 }
                 return this.positionBuffer;
             }

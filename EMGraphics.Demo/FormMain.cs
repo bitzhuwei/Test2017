@@ -103,25 +103,85 @@ namespace EMGraphics.Demo
 
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            EMModel model = GetModel();
-            if (model != null)
+            BoundingBox box = demoPositions.Move2Center();
+            vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
+            vec3 size = box.MaxPosition - box.MinPosition;
             {
-                var renderer = EMGraphics.EMRenderer.Create(model);
-                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
-                this.scene.RootObject.Children.Add(obj);
-                (new FormProperyGrid(renderer)).Show();
+                EMModel model = GetEMModel(demoPositions, demoColors, demoTriangles);
+                if (model != null)
+                {
+                    {
+                        var renderer = EMGraphics.EMRenderer.Create(model);
+                        renderer.WorldPosition = center;
+                        renderer.ModelSize = size;
+                        SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
+                        this.scene.RootObject.Children.Add(obj);
+
+                        (new FormProperyGrid(renderer)).Show();
+                    }
+                }
+            }
+            {
+                NormalLineModel model = GetNormalLineModel(demoPositions, demoTriangles);
+                if (model != null)
+                {
+                    var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                    renderer.WorldPosition = center;
+                    renderer.ModelSize = size;
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                    this.scene.RootObject.Children.Add(obj);
+                }
+
                 this.glCanvas1.Repaint();
             }
         }
 
-        private EMModel GetModel()
+        /// <summary>
+        /// 获取三角形面的法线。
+        /// </summary>
+        /// <param name="positions">vec3.x .y .z分别表示顶点位置的x y z坐标。</param>
+        /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
+        /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
+        /// <returns></returns>
+        private NormalLineModel GetNormalLineModel(vec3[] positions, Triangle[] triangles)
         {
-            //vec3[] positions = null;//vec3.x .y .z分别表示顶点位置的x y z坐标。
-            //vec3[] colors = null;//vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]
-            //Triangle[] triangles = null;//Triangle记录了positions数组里的哪三个顶点组成1个三角形。
-            vec3[] positions = demoPositions;
-            vec3[] colors = demoColors;
-            Triangle[] triangles = demoTriangles;
+            var normalPositions = new vec3[triangles.Length];
+            var normalDirections = new vec3[triangles.Length];
+            var normalLengths = new float[triangles.Length];
+
+            for (int i = 0; i < triangles.Length; i++)
+            {
+                vec3 vertex1 = positions[triangles[i].Num1];
+                vec3 vertex2 = positions[triangles[i].Num2];
+                vec3 vertex3 = positions[triangles[i].Num3];
+
+                vec3 position = vertex1 / 3.0f + vertex2 / 3.0f + vertex3 / 3.0f;
+                normalPositions[i] = position;
+
+                vec3 v12 = vertex2 - vertex1;
+                vec3 v23 = vertex3 - vertex2;
+                //normalDirections[i] = v23.cross(v12).normalize();
+                normalDirections[i] = v12.cross(v23).normalize();
+
+                float length = vertex1.length();
+                float tmp = vertex2.length(); if (tmp > length) { length = tmp; }
+                tmp = vertex3.length(); if (tmp > length) { length = tmp; }
+                normalLengths[i] = length;
+            }
+
+            var model = new NormalLineModel(normalPositions, normalDirections, normalLengths);
+            return model;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="positions">vec3.x .y .z分别表示顶点位置的x y z坐标。</param>
+        /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
+        /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
+        /// <returns></returns>
+        private EMModel GetEMModel(vec3[] positions, vec3[] colors, Triangle[] triangles)
+        {
             vec3[] normals = positions.CalculateNormals(triangles);
             var model = new EMModel(positions, colors, normals, triangles);
             return model;

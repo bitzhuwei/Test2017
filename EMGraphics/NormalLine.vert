@@ -4,18 +4,18 @@ uniform mat4 mvpMatrix;
 
 in vec3 inPosition;
 
-out bool passColor;// true for blue; false for red.
+flat out vec3 passColor;// true for blue; false for red.
 
 void main()
 {
 	gl_Position = mvpMatrix * vec4(inPosition, 1.0);
 
-	if (gl_VertexID %4 == 0 || gl_VertexID % 4 == 1)
+	if (gl_VertexID % 4 == 0 || gl_VertexID % 4 == 1)
 	{
-		passColor = true;
+		passColor = vec3(0.0, 0.0, 1.0);
 	}
 	else
 	{
-		passColor = false;
+		passColor = vec3(1.0, 0.0, 0.0);
 	}
 }
