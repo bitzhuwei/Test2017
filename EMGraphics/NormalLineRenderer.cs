@@ -40,7 +40,7 @@ namespace EMGraphics
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
-            this.StateList.Add(new LineWidthState(2));
+            this.StateList.Add(new LineWidthState(1));
         }
 
         protected override void DoRender(RenderEventArgs arg)

@@ -130,6 +130,8 @@ namespace EMGraphics.Demo
                     renderer.ModelSize = size;
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
+
+                    (new FormProperyGrid(renderer)).Show();
                 }
 
                 this.glCanvas1.Repaint();
