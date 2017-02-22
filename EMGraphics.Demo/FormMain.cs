@@ -103,6 +103,10 @@ namespace EMGraphics.Demo
 
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (openFileDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+
+            }
             BoundingBox box = demoPositions.Move2Center();
             vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             vec3 size = box.MaxPosition - box.MinPosition;

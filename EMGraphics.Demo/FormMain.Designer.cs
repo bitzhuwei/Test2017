@@ -61,6 +61,7 @@
             this.关于AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.glCanvas1 = new EMGraphics.GLCanvas();
+            this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
             this.SuspendLayout();
@@ -317,10 +318,14 @@
             this.glCanvas1.Location = new System.Drawing.Point(0, 28);
             this.glCanvas1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.glCanvas1.Name = "glCanvas1";
-            this.glCanvas1.RenderTrigger = RenderTrigger.TimerBased;
+            this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
             this.glCanvas1.Size = new System.Drawing.Size(754, 568);
             this.glCanvas1.TabIndex = 2;
             this.glCanvas1.OpenGLDraw += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.glCanvas1_OpenGLDraw);
+            // 
+            // openFileDlg
+            // 
+            this.openFileDlg.Filter = "*.nas|*.nas";
             // 
             // FormMain
             // 
@@ -375,5 +380,6 @@
         private System.Windows.Forms.ToolStripMenuItem 关于AToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private EMGraphics.GLCanvas glCanvas1;
+        private System.Windows.Forms.OpenFileDialog openFileDlg;
     }
 }

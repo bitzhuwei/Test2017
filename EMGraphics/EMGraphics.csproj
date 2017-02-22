@@ -370,6 +370,7 @@
     <Compile Include="Canvas\Win32API\WindowStylesEx.cs" />
     <Compile Include="Canvas\Win32API\WNDCLASSEX.cs" />
     <Compile Include="Canvas\Win32API\WndProc.cs" />
+    <Compile Include="NASFile.cs" />
     <Compile Include="NormalLineModel.cs" />
     <Compile Include="NormalLineRenderer.cs" />
     <Compile Include="FontTexture\FontBitmap.cs" />
