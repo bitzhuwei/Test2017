@@ -81,7 +81,7 @@ namespace EMGraphics
                         }
                         else//GRID*              26182                -6.270781884E-01-4.699668723E-02   26182
                         {
-                            if (str22[2].Substring(1, 1) == "-")
+                            if (str22[2].Substring(0, 1) == "-")
                             {
                                 x = float.Parse(str22[2].Substring(0, 16));
                             }
