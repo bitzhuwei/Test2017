@@ -45,7 +45,7 @@ namespace EMGraphics.Demo
                 this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
-                打开OToolStripMenuItem_Click(sender, e);
+                //打开OToolStripMenuItem_Click(sender, e);
             }
             {
                 var uiAxis = new UIAxis(AnchorStyles.Left | AnchorStyles.Bottom,
@@ -101,19 +101,26 @@ namespace EMGraphics.Demo
             new EMGraphics.Triangle(6 - 1, 8 - 1, 7 - 1),
         };
 
+        Random random = new Random();
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
-            }
-            BoundingBox box = demoPositions.Move2Center();
-            vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
-            vec3 size = box.MaxPosition - box.MinPosition;
-            {
-                EMModel model = GetEMModel(demoPositions, demoColors, demoTriangles);
-                if (model != null)
+                NASFile file = NASFile.Load(openFileDlg.FileName);
+                vec3[] positions = file.Points.ToArray();
+                vec3[] colors = new vec3[positions.Length];
+                // temp solution for color:
+                for (int i = 0; i < colors.Length; i++)
                 {
+                    colors[i] = demoColors[random.Next() % demoColors.Length];
+                }
+                Triangle[] triangles = file.Grids.ToArray();
+                BoundingBox box = positions.Move2Center();
+                vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
+                vec3 size = box.MaxPosition - box.MinPosition;
+                {
+                    EMModel model = GetEMModel(positions, colors, triangles);
+                    if (model != null)
                     {
                         var renderer = EMGraphics.EMRenderer.Create(model);
                         renderer.WorldPosition = center;
@@ -124,21 +131,21 @@ namespace EMGraphics.Demo
                         (new FormProperyGrid(renderer)).Show();
                     }
                 }
-            }
-            {
-                NormalLineModel model = GetNormalLineModel(demoPositions, demoTriangles);
-                if (model != null)
                 {
-                    var renderer = EMGraphics.NormalLineRenderer.Create(model);
-                    renderer.WorldPosition = center;
-                    renderer.ModelSize = size;
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    this.scene.RootObject.Children.Add(obj);
+                    NormalLineModel model = GetNormalLineModel(positions, triangles);
+                    if (model != null)
+                    {
+                        var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                        renderer.WorldPosition = center;
+                        renderer.ModelSize = size;
+                        SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                        this.scene.RootObject.Children.Add(obj);
 
-                    (new FormProperyGrid(renderer)).Show();
+                        (new FormProperyGrid(renderer)).Show();
+                    }
+
+                    this.glCanvas1.Repaint();
                 }
-
-                this.glCanvas1.Repaint();
             }
         }
 
