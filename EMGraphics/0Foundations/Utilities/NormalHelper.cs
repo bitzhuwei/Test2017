@@ -26,9 +26,9 @@ namespace EMGraphics
                 vec3 vertex1 = vertexPositions[vertexId1];
                 vec3 vertex2 = vertexPositions[vertexId2];
                 vec3 vertex3 = vertexPositions[vertexId3];
-                vec3 v1 = vertex1 - vertex3;
-                vec3 v2 = vertex3 - vertex2;
-                faceNormals[i] = v2.cross(v1).normalize();
+                vec3 v12 = vertex2 - vertex1;
+                vec3 v23 = vertex3 - vertex2;
+                faceNormals[i] = v23.cross(v12).normalize();
             }
 
             var normals = new vec3[vertexPositions.Length];
