@@ -10,20 +10,20 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class FaceNormalLineRenderer : PickableRenderer
+    public class NormalLineRenderer : PickableRenderer
     {
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static FaceNormalLineRenderer Create(FaceNormalLineModel model)
+        public static NormalLineRenderer Create(NormalLineModel model)
         {
             var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"FaceNormalLine.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"FaceNormalLine.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"NormalLine.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"NormalLine.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
-            map.Add("inPosition", FaceNormalLineModel.strPosition);
-            var renderer = new FaceNormalLineRenderer(model, shaderCodes, map, EMModel.strPosition);
+            map.Add("inPosition", NormalLineModel.strPosition);
+            var renderer = new NormalLineRenderer(model, shaderCodes, map, EMModel.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;
@@ -33,7 +33,7 @@ namespace EMGraphics
             return renderer;
         }
 
-        private FaceNormalLineRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        private NormalLineRenderer(IBufferable model, ShaderCode[] shaderCodes,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)

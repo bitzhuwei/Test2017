@@ -370,9 +370,9 @@
     <Compile Include="Canvas\Win32API\WindowStylesEx.cs" />
     <Compile Include="Canvas\Win32API\WNDCLASSEX.cs" />
     <Compile Include="Canvas\Win32API\WndProc.cs" />
+    <Compile Include="NormalLineModel.cs" />
+    <Compile Include="NormalLineRenderer.cs" />
     <Compile Include="NASFile.cs" />
-    <Compile Include="FaceNormalLineModel.cs" />
-    <Compile Include="FaceNormalLineRenderer.cs" />
     <Compile Include="FontTexture\FontBitmap.cs" />
     <Compile Include="FontTexture\FontBitmap.IDisposable.cs" />
     <Compile Include="FontTexture\FontBitmapHelper.0_.cs" />
@@ -622,10 +622,10 @@
     <None Include="0Foundations\Utilities\StringHelper.cs.bak" />
     <None Include="Canvas\readme.md" />
     <None Include="Canvas\RenderContexts\readme.md" />
-    <None Include="FaceNormalLine.frag">
+    <None Include="NormalLine.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="FaceNormalLine.vert">
+    <None Include="NormalLine.vert">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="FontTexture\readme.md" />

@@ -133,10 +133,10 @@ namespace EMGraphics.Demo
                     }
                 }
                 {
-                    FaceNormalLineModel model = GetNormalLineModel(positions, triangles);
+                    NormalLineModel model = GetNormalLineModel(positions, triangles);
                     if (model != null)
                     {
-                        var renderer = EMGraphics.FaceNormalLineRenderer.Create(model);
+                        var renderer = EMGraphics.NormalLineRenderer.Create(model);
                         renderer.WorldPosition = center;
                         renderer.ModelSize = size;
                         SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
@@ -157,7 +157,7 @@ namespace EMGraphics.Demo
         /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
         /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
         /// <returns></returns>
-        private FaceNormalLineModel GetNormalLineModel(vec3[] positions, Triangle[] triangles)
+        private NormalLineModel GetNormalLineModel(vec3[] positions, Triangle[] triangles)
         {
             var normalPositions = new vec3[triangles.Length];
             var normalDirections = new vec3[triangles.Length];
@@ -184,7 +184,7 @@ namespace EMGraphics.Demo
                 normalLengths[i] = length;
             }
 
-            var model = new FaceNormalLineModel(normalPositions, normalDirections, normalLengths);
+            var model = new NormalLineModel(normalPositions, normalDirections, normalLengths);
             return model;
         }
 
