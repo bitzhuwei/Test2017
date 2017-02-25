@@ -22,20 +22,15 @@ void main()
 	else 
 	{
 		float diffuse = max(0.0, dot(passNormal, directionalLightDirection));
-		float specular = max(0.0, dot(passNormal, halfVector));
-		
-		if (diffuse == 0.0) { specular = 0.0; }
-		else { specular = pow(specular, shininess); }
 		
 		vec3 scatteredLight = ambientLight + directionalLightColor * diffuse;
-		vec3 reflectedLight = directionalLightColor * specular * strength;
 		if (strength == (0.0))
 		{
 			outColor = vec4(1.0);
 		}
 		else
 		{	
-			vec3 rgb = min(passColor * scatteredLight + reflectedLight, vec3(1.0));
+			vec3 rgb = min(passColor * scatteredLight, vec3(1.0));
 			outColor = vec4(rgb, 1.0);
 		}
 	}

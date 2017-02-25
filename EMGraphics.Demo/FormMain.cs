@@ -121,32 +121,46 @@ namespace EMGraphics.Demo
                 vec3 size = box.MaxPosition - box.MinPosition;
                 {
                     EMModel model = GetEMModel(positions, colors, triangles);
-                    if (model != null)
-                    {
-                        var renderer = EMGraphics.EMRenderer.Create(model);
-                        renderer.WorldPosition = center;
-                        renderer.ModelSize = size;
-                        SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
-                        this.scene.RootObject.Children.Add(obj);
+                    var renderer = EMGraphics.EMRenderer.Create(model);
+                    renderer.WorldPosition = center;
+                    renderer.ModelSize = size;
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
+                    this.scene.RootObject.Children.Add(obj);
 
-                        (new FormProperyGrid(renderer)).Show();
-                    }
+                    (new FormProperyGrid(renderer)).Show();
                 }
                 {
-                    NormalLineModel model = GetNormalLineModel(positions, triangles);
-                    if (model != null)
-                    {
-                        var renderer = EMGraphics.NormalLineRenderer.Create(model);
-                        renderer.WorldPosition = center;
-                        renderer.ModelSize = size;
-                        SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                        this.scene.RootObject.Children.Add(obj);
+                    // generate and display faces' normal lines.
+                    NormalLineModel model = GetFaceNormalLineModel(positions, triangles);
+                    var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                    renderer.WorldPosition = center;
+                    renderer.ModelSize = size;
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                    this.scene.RootObject.Children.Add(obj);
 
-                        (new FormProperyGrid(renderer)).Show();
-                    }
-
-                    this.glCanvas1.Repaint();
+                    (new FormProperyGrid(renderer)).Show();
                 }
+                //{
+                //    // generate and display vertexes' normal lines.
+                //    vec3[] normals = positions.CalculateNormals(triangles);
+                //    float[] lengths = new float[positions.Length];
+                //    for (int i = 0; i < lengths.Length; i++)
+                //    {
+                //        lengths[i] = 0.1f;
+                //    }
+                //    var model = new NormalLineModel(positions, normals, lengths);
+                //    var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                //    renderer.HeadColor.Value = Color.Blue;
+                //    renderer.TailColor.Value = Color.Purple;
+                //    renderer.WorldPosition = center;
+                //    renderer.ModelSize = size;
+                //    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                //    this.scene.RootObject.Children.Add(obj);
+
+                //    (new FormProperyGrid(renderer)).Show();
+                //}
+
+                this.glCanvas1.Repaint();
             }
         }
 
@@ -157,7 +171,7 @@ namespace EMGraphics.Demo
         /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
         /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
         /// <returns></returns>
-        private NormalLineModel GetNormalLineModel(vec3[] positions, Triangle[] triangles)
+        private NormalLineModel GetFaceNormalLineModel(vec3[] positions, Triangle[] triangles)
         {
             var normalPositions = new vec3[triangles.Length];
             var normalDirections = new vec3[triangles.Length];
