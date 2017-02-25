@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,12 @@ namespace EMGraphics
     /// </summary>
     public class NormalLineRenderer : PickableRenderer
     {
+        public MarkableStruct<Color> HeadColor { get; set; }
+        private long headColorUpdatedTicks;
+
+        public MarkableStruct<Color> TailColor { get; set; }
+        private long tailColorUpdatedTicks;
+
         /// <summary>
         /// 
         /// </summary>
@@ -38,6 +45,8 @@ namespace EMGraphics
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
+            this.HeadColor = new MarkableStruct<Color>(Color.Aqua);
+            this.TailColor = new MarkableStruct<Color>(Color.Red);
             this.StateList.Add(new LineWidthState(1));
         }
 
@@ -47,6 +56,16 @@ namespace EMGraphics
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
             this.SetUniform("mvpMatrix", projection * view * model);
+            if (this.HeadColor.UpdateTicks != this.headColorUpdatedTicks)
+            {
+                this.SetUniform("headColor", this.HeadColor.Value.ToVec3());
+                this.headColorUpdatedTicks = this.HeadColor.UpdateTicks;
+            }
+            if (this.TailColor.UpdateTicks != this.tailColorUpdatedTicks)
+            {
+                this.SetUniform("tailColor", this.TailColor.Value.ToVec3());
+                this.tailColorUpdatedTicks = this.TailColor.UpdateTicks;
+            }
 
             base.DoRender(arg);
         }

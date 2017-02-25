@@ -1,6 +1,8 @@
 ﻿#version 330 core
 
 uniform mat4 mvpMatrix;
+uniform vec3 headColor = vec3(0.0, 1.0, 1.0);
+uniform vec3 tailColor = vec3(1.0, 0.0, 0.0);
 
 in vec3 inPosition;
 
@@ -12,10 +14,10 @@ void main()
 
 	if (gl_VertexID % 4 == 0 || gl_VertexID % 4 == 1)
 	{
-		passColor = vec3(0.0, 1.0, 1.0);
+		passColor = headColor;
 	}
 	else
 	{
-		passColor = vec3(1.0, 0.0, 0.0);
+		passColor = tailColor;
 	}
 }
