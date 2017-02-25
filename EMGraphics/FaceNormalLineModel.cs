@@ -8,7 +8,7 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class NormalLineModel : IBufferable, IModelSpace
+    public class FaceNormalLineModel : IBufferable, IModelSpace
     {
         /// <summary>
         /// 
@@ -16,7 +16,7 @@ namespace EMGraphics
         /// <param name="normalPositions">root positions of every normal line.</param>
         /// <param name="normalDirections">directions of every normal line.</param>
         /// <param name="normalLengths">lengths of every normal line.</param>
-        public NormalLineModel(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths)
+        public FaceNormalLineModel(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths)
         {
             if (normalPositions == null || normalDirections == null || normalLengths == null)
             { throw new ArgumentNullException(); }

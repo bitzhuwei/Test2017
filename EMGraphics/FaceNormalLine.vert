@@ -12,7 +12,7 @@ void main()
 
 	if (gl_VertexID % 4 == 0 || gl_VertexID % 4 == 1)
 	{
-		passColor = vec3(0.0, 0.0, 1.0);
+		passColor = vec3(0.0, 1.0, 1.0);
 	}
 	else
 	{

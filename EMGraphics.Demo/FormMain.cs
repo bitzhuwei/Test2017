@@ -42,7 +42,7 @@ namespace EMGraphics.Demo
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
-                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
+                //this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 //打开OToolStripMenuItem_Click(sender, e);
@@ -75,14 +75,15 @@ namespace EMGraphics.Demo
 
         private vec3[] demoColors = new vec3[]
         {
-            Color.YellowGreen.ToVec3(),
-            Color.LightYellow.ToVec3(),
-            Color.Yellow.ToVec3(),
-            Color.LightGoldenrodYellow.ToVec3(),
-            Color.GreenYellow.ToVec3(),
-            Color.LightGreen.ToVec3(),
-            Color.DarkSeaGreen.ToVec3(),
-            Color.DarkSeaGreen.ToVec3(),
+			Color.Orange.ToVec3(),
+            //Color.YellowGreen.ToVec3(),
+            //Color.LightYellow.ToVec3(),
+            //Color.Yellow.ToVec3(),
+            //Color.LightGoldenrodYellow.ToVec3(),
+            //Color.GreenYellow.ToVec3(),
+            //Color.LightGreen.ToVec3(),
+            //Color.DarkSeaGreen.ToVec3(),
+            //Color.DarkSeaGreen.ToVec3(),
         };
 
         private EMGraphics.Triangle[] demoTriangles = new EMGraphics.Triangle[]
@@ -132,10 +133,10 @@ namespace EMGraphics.Demo
                     }
                 }
                 {
-                    NormalLineModel model = GetNormalLineModel(positions, triangles);
+                    FaceNormalLineModel model = GetNormalLineModel(positions, triangles);
                     if (model != null)
                     {
-                        var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                        var renderer = EMGraphics.FaceNormalLineRenderer.Create(model);
                         renderer.WorldPosition = center;
                         renderer.ModelSize = size;
                         SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
@@ -156,7 +157,7 @@ namespace EMGraphics.Demo
         /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
         /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
         /// <returns></returns>
-        private NormalLineModel GetNormalLineModel(vec3[] positions, Triangle[] triangles)
+        private FaceNormalLineModel GetNormalLineModel(vec3[] positions, Triangle[] triangles)
         {
             var normalPositions = new vec3[triangles.Length];
             var normalDirections = new vec3[triangles.Length];
@@ -176,13 +177,14 @@ namespace EMGraphics.Demo
                 //normalDirections[i] = v23.cross(v12).normalize();
                 normalDirections[i] = v12.cross(v23).normalize();
 
-                float length = vertex1.length();
-                float tmp = vertex2.length(); if (tmp > length) { length = tmp; }
-                tmp = vertex3.length(); if (tmp > length) { length = tmp; }
+                vec3 v31 = vertex1 - vertex3;
+                float length = v12.length();
+                float tmp = v23.length(); if (tmp > length) { length = tmp; }
+                tmp = v31.length(); if (tmp > length) { length = tmp; }
                 normalLengths[i] = length;
             }
 
-            var model = new NormalLineModel(normalPositions, normalDirections, normalLengths);
+            var model = new FaceNormalLineModel(normalPositions, normalDirections, normalLengths);
             return model;
         }
 

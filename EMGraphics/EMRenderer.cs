@@ -83,7 +83,7 @@ namespace EMGraphics
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
         private PolygonModeState polygonLineState = new PolygonModeState(PolygonMode.Line);
         private PolygonOffsetState offsetState = new PolygonOffsetLineState();
-        private LineWidthState lineWidthState = new LineWidthState(3.0f);
+        private LineWidthState lineWidthState = new LineWidthState(1.0f);
 
         protected override void DoRender(RenderEventArgs arg)
         {
