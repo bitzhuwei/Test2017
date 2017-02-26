@@ -326,6 +326,7 @@
             this.glCanvas1.Size = new System.Drawing.Size(754, 568);
             this.glCanvas1.TabIndex = 2;
             this.glCanvas1.OpenGLDraw += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.glCanvas1_OpenGLDraw);
+            this.glCanvas1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.glCanvas1_KeyPress);
             // 
             // FormMain
             // 

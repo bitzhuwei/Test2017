@@ -42,7 +42,7 @@ namespace EMGraphics.Demo
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
-                // this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
+                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 var uiAxis = new UIAxis(AnchorStyles.Left | AnchorStyles.Bottom,
@@ -206,6 +206,25 @@ namespace EMGraphics.Demo
         private void glCanvas1_OpenGLDraw(object sender, PaintEventArgs e)
         {
             this.scene.Render();
+        }
+
+        private bool whiteClearColor = true;
+
+        private void glCanvas1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == 'w')
+            {
+                if (this.whiteClearColor)
+                {
+                    this.scene.RootViewPort.Children[0].Content.ClearColor = Color.Black;
+                    this.whiteClearColor = !this.whiteClearColor;
+                }
+                else
+                {
+                    this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
+                    this.whiteClearColor = !this.whiteClearColor;
+                }
+            }
         }
     }
 }
