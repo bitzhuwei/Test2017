@@ -10,7 +10,7 @@ namespace EMGraphics
     /// </summary>
     public class EMModel : IBufferable, IModelSpace
     {
-        public EMModel(vec3[] vertexPositions, vec3[] vertexColors, vec3[] normals, Triangle[] triangles)
+        public EMModel(vec3[] vertexPositions, vec3[] vertexColors, vec3[] normals)
         {
             BoundingBox box = vertexPositions.Move2Center();
             this.vertexPositions = vertexPositions;
@@ -18,10 +18,11 @@ namespace EMGraphics
             this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             this.vertexColors = vertexColors;
             this.vertexNormals = normals;
-            this.triangles = triangles;
             this.RotationAngleDegree = 0;
             this.RotationAxis = new vec3(0, 1, 0);
             this.Scale = new vec3(1, 1, 1);
+
+            this.vertexCount = vertexPositions.Length;
         }
 
         public const string strPosition = "position";
@@ -38,7 +39,7 @@ namespace EMGraphics
 
         //public const string strIndex = "index";
         private IndexBuffer indexBuffer = null;
-        private Triangle[] triangles;
+        private int vertexCount;
 
         public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
         {
@@ -76,19 +77,7 @@ namespace EMGraphics
         {
             if (this.indexBuffer == null)
             {
-                OneIndexBuffer buffer = GLBuffer.Create(IndexBufferElementType.UInt, this.triangles.Length * 3, DrawMode.Triangles, BufferUsage.StaticDraw);
-                unsafe
-                {
-                    IntPtr pointer = buffer.MapBuffer(MapBufferAccess.WriteOnly);
-                    var array = (uint*)pointer;
-                    for (int i = 0; i < this.triangles.Length; i++)
-                    {
-                        array[i * 3 + 0] = (uint)this.triangles[i].Num1;
-                        array[i * 3 + 1] = (uint)this.triangles[i].Num2;
-                        array[i * 3 + 2] = (uint)this.triangles[i].Num3;
-                    }
-                    buffer.UnmapBuffer();
-                }
+                ZeroIndexBuffer buffer = GLBuffer.Create(DrawMode.Triangles, 0, this.vertexCount);
                 this.indexBuffer = buffer;
             }
 
@@ -97,7 +86,7 @@ namespace EMGraphics
 
         public bool UsesZeroIndexBuffer()
         {
-            return false;
+            return true;
         }
 
         public vec3 ModelSize { get; set; }

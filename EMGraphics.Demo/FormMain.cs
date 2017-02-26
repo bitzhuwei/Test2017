@@ -72,12 +72,11 @@ namespace EMGraphics.Demo
                 {
                     colors[i] = Color.Orange.ToVec3();
                 }
-                Triangle[] triangles = file.Grids.ToArray();
                 BoundingBox box = positions.Move2Center();
                 vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
                 vec3 size = box.MaxPosition - box.MinPosition;
                 {
-                    EMModel model = GetEMModel(positions, colors, triangles);
+                    EMModel model = GetEMModel(positions, colors);
                     var renderer = EMGraphics.EMRenderer.Create(model);
                     renderer.WorldPosition = center;
                     renderer.ModelSize = size;
@@ -88,7 +87,7 @@ namespace EMGraphics.Demo
                 }
                 {
                     // generate and display faces' normal lines.
-                    NormalLineModel model = GetFaceNormalLineModel(positions, triangles);
+                    NormalLineModel model = GetFaceNormalLineModel(positions);
                     var renderer = EMGraphics.NormalLineRenderer.Create(model);
                     renderer.WorldPosition = center;
                     renderer.ModelSize = size;
@@ -128,17 +127,17 @@ namespace EMGraphics.Demo
         /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
         /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
         /// <returns></returns>
-        private NormalLineModel GetFaceNormalLineModel(vec3[] positions, Triangle[] triangles)
+        private NormalLineModel GetFaceNormalLineModel(vec3[] positions)
         {
-            var normalPositions = new vec3[triangles.Length];
-            var normalDirections = new vec3[triangles.Length];
-            var normalLengths = new float[triangles.Length];
+            vec3[] normalPositions = new vec3[positions.Length];
+            vec3[] normalDirections = CalculateNormals(positions);
+            var normalLengths = new float[positions.Length];
 
-            for (int i = 0; i < triangles.Length; i++)
+            for (int i = 0; i < positions.Length / 3; i++)
             {
-                vec3 vertex1 = positions[triangles[i].Num1];
-                vec3 vertex2 = positions[triangles[i].Num2];
-                vec3 vertex3 = positions[triangles[i].Num3];
+                vec3 vertex1 = positions[i * 3 + 0];
+                vec3 vertex2 = positions[i * 3 + 1];
+                vec3 vertex3 = positions[i * 3 + 2];
 
                 vec3 position = vertex1 / 3.0f + vertex2 / 3.0f + vertex3 / 3.0f;
                 normalPositions[i] = position;
@@ -152,7 +151,9 @@ namespace EMGraphics.Demo
                 float length = v12.length();
                 float tmp = v23.length(); if (length < tmp) { length = tmp; }
                 tmp = v31.length(); if (length < tmp) { length = tmp; }
-                normalLengths[i] = length;
+                normalLengths[i * 3 + 0] = length;
+                normalLengths[i * 3 + 1] = length;
+                normalLengths[i * 3 + 2] = length;
             }
 
             var model = new NormalLineModel(normalPositions, normalDirections, normalLengths);
@@ -166,11 +167,27 @@ namespace EMGraphics.Demo
         /// <param name="colors">vec3.x .y .z分别表示颜色分量的R G B值，范围为[0, 1]</param>
         /// <param name="triangles">Triangle记录了positions数组里的哪三个顶点组成1个三角形。</param>
         /// <returns></returns>
-        private EMModel GetEMModel(vec3[] positions, vec3[] colors, Triangle[] triangles)
+        private EMModel GetEMModel(vec3[] positions, vec3[] colors)
         {
-            vec3[] normals = positions.CalculateNormals(triangles);
-            var model = new EMModel(positions, colors, normals, triangles);
+            vec3[] normals = CalculateNormals(positions);
+            var model = new EMModel(positions, colors, normals);
             return model;
+        }
+
+        private vec3[] CalculateNormals(vec3[] positions)
+        {
+            var normals = new vec3[positions.Length];
+            for (int i = 0; i < normals.Length / 3; i++)
+            {
+                vec3 v10 = positions[i * 3 + 1] - positions[i * 3 + 0];
+                vec3 v21 = positions[i * 3 + 2] - positions[i * 3 + 1];
+                vec3 normal = v21.cross(v10).normalize();
+                normals[i * 3 + 0] = normal;
+                normals[i * 3 + 1] = normal;
+                normals[i * 3 + 2] = normal;
+            }
+
+            return normals;
         }
 
         private void glCanvas1_OpenGLDraw(object sender, PaintEventArgs e)

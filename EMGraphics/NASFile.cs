@@ -21,20 +21,10 @@ namespace EMGraphics
         {
             get { return points; }
         }
-        private List<Triangle> grids;
 
-        /// <summary>
-        /// triangles that refer to <see cref="Points"/> in this *.nas file.
-        /// </summary>
-        public List<Triangle> Grids
-        {
-            get { return grids; }
-        }
-
-        private NASFile(List<vec3> points, List<Triangle> grids)
+        private NASFile(List<vec3> points)
         {
             this.points = points;
-            this.grids = grids;
         }
 
         public static NASFile Load(string filename)
@@ -48,7 +38,8 @@ namespace EMGraphics
                 float x = 0, y = 0, z = 0;
                 int ctria1, ctria2, ctria3;
                 var points = new List<vec3>();
-                var grids = new List<Triangle>();
+                var finalPoints = new List<vec3>();
+
                 //points.Add(new vec3(0, 0, 0));//点坐标的数组是从1开始的,不是从0开始的,方便
                 //grids.Add(new Triangle(0, 0, 0));//网格数组也是从1开始的
 
@@ -106,10 +97,12 @@ namespace EMGraphics
                         ctria1 = int.Parse(parts[3]) - pointIndexMin + 1;//第一个点
                         ctria2 = int.Parse(parts[4]) - pointIndexMin + 1;//第二个点
                         ctria3 = int.Parse(parts[5]) - pointIndexMin + 1;//第三个点
-                        grids.Add(new Triangle(ctria1 - 1, ctria2 - 1, ctria3 - 1));
+                        finalPoints.Add(points[ctria1 - 1]);
+                        finalPoints.Add(points[ctria2 - 1]);
+                        finalPoints.Add(points[ctria3 - 1]);
                     }
                 } while (true);
-                result = new NASFile(points, grids);
+                result = new NASFile(finalPoints);
             }
 
             return result;

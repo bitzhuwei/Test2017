@@ -12,7 +12,6 @@ namespace EMGraphics
     public class ScreenTranslateManipulater : Manipulater, IMouseHandler
     {
         private vec3 back;
-        private Size bound = new Size();
         private ICamera camera;
         private ICanvas canvas;
 
