@@ -43,8 +43,8 @@ namespace EMGraphics
 
             using (var reader = new StreamReader(filename))
             {
-                string[] str22;
-                string sss = string.Empty;
+                string[] parts;
+                string line = string.Empty;
                 float x = 0, y = 0, z = 0;
                 int ctria1, ctria2, ctria3;
                 var points = new List<vec3>();
@@ -57,29 +57,29 @@ namespace EMGraphics
 
                 do
                 {
-                    sss = reader.ReadLine();
+                    line = reader.ReadLine();
                     if (reader.EndOfStream)
                     {
                         break;
                     }
 
-                    str22 = sss.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-                    if (sss.Length >= 5 && sss.Substring(0, 5) == "GRID*")//观察导出文件的格式,当遇到*号时,开始解读点的坐标,反之就是网格的信息
+                    parts = line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                    if (line.Length >= 5 && line.Substring(0, 5) == "GRID*")//观察导出文件的格式,当遇到*号时,开始解读点的坐标,反之就是网格的信息
                     {
                         if (flagPointIndexMin)
                         {
-                            pointIndexMin = int.Parse(str22[1]);
+                            pointIndexMin = int.Parse(parts[1]);
                             flagPointIndexMin = false;
                         }
 
-                        if (str22.Length == 5)//GRID*              26176                -8.088764491E-01 5.021697901E-02   26176
+                        if (parts.Length == 5)//GRID*              26176                -8.088764491E-01 5.021697901E-02   26176
                         {
-                            x = float.Parse(str22[2]);
-                            y = float.Parse(str22[3]);
+                            x = float.Parse(parts[2]);
+                            y = float.Parse(parts[3]);
                         }
                         else//GRID*              26182                -6.270781884E-01-4.699668723E-02   26182
                         {
-                            string xy = str22[2];
+                            string xy = parts[2];
                             if (xy.Substring(0, 1) == "-")
                             {
                                 x = float.Parse(xy.Substring(0, 16));
@@ -92,20 +92,20 @@ namespace EMGraphics
                             }
                         }
                     }
-                    else if (sss.Length >= 1 && sss.Substring(0, 1) == "*")//提取Z坐标
+                    else if (line.Length >= 1 && line.Substring(0, 1) == "*")//提取Z坐标
                     {
-                        string last = str22[str22.Length - 1];
+                        string last = parts[parts.Length - 1];
                         if (last.Length == 15)// 正数或零
                         { z = float.Parse(last); }
                         else// 负数
                         { z = float.Parse(last.Substring(last.Length - 16)); }
                         points.Add(new vec3(x, y, z));
                     }
-                    else if (sss.Length >= 5 && sss.Substring(0, 5) == "CTRIA")
+                    else if (line.Length >= 5 && line.Substring(0, 5) == "CTRIA")
                     {
-                        ctria1 = int.Parse(str22[3]) - pointIndexMin + 1;//第一个点
-                        ctria2 = int.Parse(str22[4]) - pointIndexMin + 1;//第二个点
-                        ctria3 = int.Parse(str22[5]) - pointIndexMin + 1;//第三个点
+                        ctria1 = int.Parse(parts[3]) - pointIndexMin + 1;//第一个点
+                        ctria2 = int.Parse(parts[4]) - pointIndexMin + 1;//第二个点
+                        ctria3 = int.Parse(parts[5]) - pointIndexMin + 1;//第三个点
                         grids.Add(new Triangle(ctria1 - 1, ctria2 - 1, ctria3 - 1));
                     }
                 } while (true);
