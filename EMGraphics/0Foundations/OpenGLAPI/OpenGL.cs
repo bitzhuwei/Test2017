@@ -101,7 +101,7 @@ namespace EMGraphics
 
         //const bool error = false;
 
-        //TODO: 在linux还能正常使用CSharpGL吗？我没有试验过。
+        //TODO: 在linux还能正常使用EMGraphics吗？我没有试验过。
         /// <summary>
         ///
         /// </summary>

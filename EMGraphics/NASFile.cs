@@ -81,21 +81,26 @@ namespace EMGraphics
                         }
                         else//GRID*              26182                -6.270781884E-01-4.699668723E-02   26182
                         {
-                            if (str22[2].Substring(0, 1) == "-")
+                            string xy = str22[2];
+                            if (xy.Substring(0, 1) == "-")
                             {
-                                x = float.Parse(str22[2].Substring(0, 16));
+                                x = float.Parse(xy.Substring(0, 16));
+                                y = float.Parse(xy.Substring(16));
                             }
                             else
                             {
-                                x = float.Parse(str22[2].Substring(0, 15));
+                                x = float.Parse(xy.Substring(0, 15));
+                                y = float.Parse(xy.Substring(15));
                             }
-
-                            y = float.Parse(str22[2].Substring(str22[2].Length - 16));
                         }
                     }
                     else if (sss.Length >= 1 && sss.Substring(0, 1) == "*")//提取Z坐标
                     {
-                        z = float.Parse(str22[str22.Length - 1].Substring(str22[str22.Length - 1].Length - 15));
+                        string last = str22[str22.Length - 1];
+                        if (last.Length == 15)// 正数或零
+                        { z = float.Parse(last); }
+                        else// 负数
+                        { z = float.Parse(last.Substring(last.Length - 16)); }
                         points.Add(new vec3(x, y, z));
                     }
                     else if (sss.Length >= 5 && sss.Substring(0, 5) == "CTRIA")

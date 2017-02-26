@@ -19,9 +19,9 @@ namespace EMGraphics
             InitializeComponent();
 
             this.cmbDrawMode.Items.Clear();
-            foreach (object item in Enum.GetValues(typeof(DrawMode)))
+            foreach (object item in Enum.GetValues(typeof(EMGraphics.DrawMode)))
             {
-                this.cmbDrawMode.Items.Add((DrawMode)item);
+                this.cmbDrawMode.Items.Add((EMGraphics.DrawMode)item);
             }
 
             if (indexBuffer != null)

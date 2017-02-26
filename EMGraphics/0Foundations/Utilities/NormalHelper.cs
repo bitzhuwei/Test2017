@@ -18,6 +18,8 @@ namespace EMGraphics
             if (vertexPositions == null || faces == null) { throw new ArgumentNullException(); }
 
             var faceNormals = new vec3[faces.Length];
+            var normals = new vec3[vertexPositions.Length];
+            var counts = new int[vertexPositions.Length];
             for (int i = 0; i < faceNormals.Length; i++)
             {
                 int vertexId1 = faces[i].Num1;
@@ -28,33 +30,22 @@ namespace EMGraphics
                 vec3 vertex3 = vertexPositions[vertexId3];
                 vec3 v12 = vertex2 - vertex1;
                 vec3 v23 = vertex3 - vertex2;
-                faceNormals[i] = v23.cross(v12).normalize();
+                vec3 normal = v23.cross(v12).normalize();
+                faceNormals[i] = normal;
+                normals[vertexId1] += normal;
+                normals[vertexId2] += normal;
+                normals[vertexId3] += normal;
+                counts[vertexId1]++;
+                counts[vertexId2]++;
+                counts[vertexId3]++;
             }
 
-            var normals = new vec3[vertexPositions.Length];
             for (int i = 0; i < normals.Length; i++)
             {
-                var sum = new vec3();
-                int shared = 0;
-                for (int j = 0; j < faces.Length; j++)
+                if (counts[i] > 0)
                 {
-                    int vertexId1 = faces[j].Num1;
-                    int vertexId2 = faces[j].Num2;
-                    int vertexId3 = faces[j].Num3;
-                    // note: vertex id starts from 1(not 0).
-                    if (vertexId1 - 1 == i || vertexId2 - 1 == i || vertexId3 - 1 == i)
-                    {
-                        sum = sum + faceNormals[j];
-                        shared++;
-                    }
+                    normals[i] = normals[i] / counts[i];
                 }
-
-                if (shared > 0)
-                {
-                    sum = (sum / shared).normalize();
-                }
-
-                normals[i] = sum;
             }
 
             return normals;

@@ -17,7 +17,7 @@ namespace EMGraphics
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Points.vert"), ShaderType.VertexShader);
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Points.frag"), ShaderType.FragmentShader);
-            var map = new AttributeMap();
+            var map = new EMGraphics.AttributeMap();
             map.Add("in_Position", Points.strposition);
             var renderer = new PointsRenderer(model, shaderCodes, map, Points.strposition);
             renderer.ModelSize = model.Lengths;
@@ -35,7 +35,7 @@ namespace EMGraphics
         /// <param name="attributeMap"></param>
         /// <param name="positionNameInIBufferable"></param>
         /// <param name="switches"></param>
-        public PointsRenderer(Points model, ShaderCode[] shaderCodes, AttributeMap attributeMap, string positionNameInIBufferable, params GLState[] switches) :
+        public PointsRenderer(Points model, EMGraphics.ShaderCode[] shaderCodes, EMGraphics.AttributeMap attributeMap, string positionNameInIBufferable, params GLState[] switches) :
             base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
         }
@@ -46,7 +46,7 @@ namespace EMGraphics
         ///
         /// </summary>
         /// <param name="arg"></param>
-        protected override void DoRender(RenderEventArgs arg)
+        protected override void DoRender(EMGraphics.RenderEventArgs arg)
         {
             mat4 projection = arg.Camera.GetProjectionMatrix();
             mat4 view = arg.Camera.GetViewMatrix();

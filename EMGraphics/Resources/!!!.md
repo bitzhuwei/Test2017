@@ -1,7 +1,7 @@
 ﻿# Note
 DO NOT rename or move this folder!
 # Embeded resources
-Every file in this folder(except this readme.md) will be embeded into dll. And they work with ManifestResourceLoader.
+Every file in this folder(except this readme.md) will be embeded into EMGraphics.dll. And they work with ManifestResourceLoader.
 ```
     /// <summary>
     /// A small helper class to load manifest resource files.

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
-  <Class Name="VertexBuffer">
+  <Class Name="EMGraphics.VertexBuffer">
     <Position X="0.5" Y="6.5" Width="12.75" />
     <Compartments>
       <Compartment Name="Protected" Collapsed="true" />
@@ -12,7 +12,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\VertexBuffers\VertexBufferObject(VBO)\VertexBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Buffer">
+  <Class Name="EMGraphics.Buffer">
     <Position X="16.5" Y="0.5" Width="9.5" />
     <Compartments>
       <Compartment Name="Protected" Collapsed="true" />
@@ -25,14 +25,14 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="IndexBuffer">
+  <Class Name="EMGraphics.IndexBuffer">
     <Position X="30.5" Y="6.5" Width="6" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAoAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>0Foundations\OpenGLObjects\Buffers\VertexBuffers\IndexBuffers\IndexBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="AtomicCounterBuffer">
+  <Class Name="EMGraphics.AtomicCounterBuffer">
     <Position X="2" Y="14" Width="5.75" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -42,7 +42,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\OtherBuffers\AtomicCounterBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PixelPackBuffer">
+  <Class Name="EMGraphics.PixelPackBuffer">
     <Position X="8.5" Y="14" Width="5.25" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -52,7 +52,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\OtherBuffers\PixelPackBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="PixelUnpackBuffer">
+  <Class Name="EMGraphics.PixelUnpackBuffer">
     <Position X="14.5" Y="14" Width="5.5" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -62,7 +62,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\OtherBuffers\PixelUnpackBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ShaderStorageBuffer">
+  <Class Name="EMGraphics.ShaderStorageBuffer">
     <Position X="20.75" Y="14" Width="6.75" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -73,7 +73,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\OtherBuffers\ShaderStorageBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TextureBuffer">
+  <Class Name="EMGraphics.TextureBuffer">
     <Position X="28.25" Y="14" Width="5.25" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -83,7 +83,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\OtherBuffers\TextureBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="UniformBuffer">
+  <Class Name="EMGraphics.UniformBuffer">
     <Position X="34.25" Y="14" Width="6.5" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -94,7 +94,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\OtherBuffers\UniformBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="OneIndexBuffer">
+  <Class Name="EMGraphics.OneIndexBuffer">
     <Position X="26.5" Y="9.25" Width="6.75" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />
@@ -105,7 +105,7 @@
       <FileName>0Foundations\OpenGLObjects\Buffers\VertexBuffers\IndexBuffers\OneIndexBuffer.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ZeroIndexBuffer">
+  <Class Name="EMGraphics.ZeroIndexBuffer">
     <Position X="34" Y="9.25" Width="6.75" />
     <Compartments>
       <Compartment Name="Internal" Collapsed="true" />

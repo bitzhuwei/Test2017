@@ -47,7 +47,7 @@ namespace EMGraphics
             {
                 if (this.positionBuffer == null)
                 {
-                    float[] positions = model.GetPositions();
+                    vec3[] positions = model.GetPositions();
                     //int length = positions.Length;
                     //VertexBuffer buffer = VertexBuffer.Create(typeof(float), length, VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                     //unsafe
@@ -70,10 +70,12 @@ namespace EMGraphics
             {
                 if (this.colorBuffer == null)
                 {
-                    float[] normals = model.GetNormals();
+                    vec3[] normals = model.GetNormals();
                     for (int i = 0; i < normals.Length; i++)
                     {
-                        if (normals[i] < 0) { normals[i] = -normals[i]; }
+                        if (normals[i].x < 0) { normals[i].x = -normals[i].x; }
+                        if (normals[i].y < 0) { normals[i].y = -normals[i].y; }
+                        if (normals[i].z < 0) { normals[i].z = -normals[i].z; }
                     }
                     //int length = normals.Length;
                     //VertexBuffer buffer = VertexBuffer.Create(typeof(float), length, VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
@@ -97,7 +99,7 @@ namespace EMGraphics
             {
                 if (this.normalBuffer == null)
                 {
-                    float[] normals = model.GetNormals();
+                    vec3[] normals = model.GetNormals();
                     //int length = normals.Length;
                     //VertexBuffer buffer = VertexBuffer.Create(typeof(float), length, VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                     //unsafe
@@ -130,8 +132,8 @@ namespace EMGraphics
         {
             if (indexBuffer == null)
             {
-                ushort[] faces = model.GetFaces();
-                int length = faces.Length;
+                EMGraphics.TeapotModel.Face[] faces = model.GetFaces();
+                int length = faces.Length * 3;
                 OneIndexBuffer buffer = GLBuffer.Create(IndexBufferElementType.UShort, length, DrawMode.Triangles, BufferUsage.StaticDraw);
                 unsafe
                 {
@@ -139,7 +141,9 @@ namespace EMGraphics
                     var array = (ushort*)pointer;
                     for (int i = 0; i < faces.Length; i++)
                     {
-                        array[i] = (ushort)(faces[i] - 1);
+                        array[i * 3 + 0] = (ushort)(faces[i].vertexId1 - 1);
+                        array[i * 3 + 1] = (ushort)(faces[i].vertexId2 - 1);
+                        array[i * 3 + 2] = (ushort)(faces[i].vertexId3 - 1);
                     }
                     buffer.UnmapBuffer();
                 }

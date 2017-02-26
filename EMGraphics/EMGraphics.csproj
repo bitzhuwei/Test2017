@@ -56,11 +56,11 @@
     <Compile Include="0Foundations\DataStructrues\NoisyArray.cs" />
     <Compile Include="0Foundations\DataStructrues\Pixel.cs" />
     <Compile Include="0Foundations\DataStructrues\Tuple.cs" />
+    <Compile Include="0Foundations\DataStructrues\UnmanagedArray\TempUnmanagedArray`1.cs" />
+    <Compile Include="0Foundations\DataStructrues\UnmanagedArray\TempUnmanagedArray`1.IDisposable.cs" />
     <Compile Include="0Foundations\DataStructrues\UnmanagedArray\UnmanagedArrayBase.cs" />
-    <Compile Include="0Foundations\DataStructrues\UnmanagedArray\UnmanagedArrayBase.FromHandle.cs" />
     <Compile Include="0Foundations\DataStructrues\UnmanagedArray\UnmanagedArrayBase.IDisposable.cs" />
     <Compile Include="0Foundations\DataStructrues\UnmanagedArray\UnmanagedArray`1.cs" />
-    <Compile Include="0Foundations\DataStructrues\UnmanagedArray\UnmanagedArray`1.FromHandle.cs" />
     <Compile Include="0Foundations\DataStructrues\UnmanagedArray\UnmanagedArray`1.IDisposable.cs" />
     <Compile Include="0Foundations\DataStructrues\UpdatingRecord.cs" />
     <Compile Include="0Foundations\Maths\glm_camera.cs" />

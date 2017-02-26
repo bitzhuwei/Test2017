@@ -61,59 +61,19 @@ namespace EMGraphics.Demo
             //}
         }
 
-        private vec3[] demoPositions = new vec3[]
-        {
-            new vec3((float)1.000000000E+00,(float)0.000000000E+00,(float)0.000000000E+00),
-            new vec3((float)1.000000000E+00,(float)1.000000000E+00,(float)0.000000000E+00),
-            new vec3((float)1.000000000E+00,(float)1.000000000E+00,(float)1.000000000E+00),
-            new vec3((float)1.000000000E+00,(float)0.000000000E+00,(float)1.000000000E+00),
-            new vec3((float)0.000000000E+00,(float)0.000000000E+00,(float)0.000000000E+00),
-            new vec3((float)0.000000000E+00,(float)1.000000000E+00,(float)0.000000000E+00),
-            new vec3((float)0.000000000E+00,(float)1.000000000E+00,(float)1.000000000E+00),
-            new vec3((float)0.000000000E+00,(float)0.000000000E+00,(float)1.000000000E+00),
-        };
-
-        private vec3[] demoColors = new vec3[]
-        {
-			Color.Orange.ToVec3(),
-            //Color.YellowGreen.ToVec3(),
-            //Color.LightYellow.ToVec3(),
-            //Color.Yellow.ToVec3(),
-            //Color.LightGoldenrodYellow.ToVec3(),
-            //Color.GreenYellow.ToVec3(),
-            //Color.LightGreen.ToVec3(),
-            //Color.DarkSeaGreen.ToVec3(),
-            //Color.DarkSeaGreen.ToVec3(),
-        };
-
-        private EMGraphics.Triangle[] demoTriangles = new EMGraphics.Triangle[]
-        {
-            new EMGraphics.Triangle(1 - 1, 6 - 1, 2 - 1),
-            new EMGraphics.Triangle(6 - 1, 1 - 1, 5 - 1),
-            new EMGraphics.Triangle(2 - 1, 6 - 1, 7 - 1),
-            new EMGraphics.Triangle(2 - 1, 7 - 1, 3 - 1),
-            new EMGraphics.Triangle(4 - 1, 1 - 1, 2 - 1),
-            new EMGraphics.Triangle(4 - 1, 2 - 1, 3 - 1),
-            new EMGraphics.Triangle(4 - 1, 7 - 1, 8 - 1),
-            new EMGraphics.Triangle(7 - 1, 4 - 1, 3 - 1),
-            new EMGraphics.Triangle(5 - 1, 1 - 1, 4 - 1),
-            new EMGraphics.Triangle(5 - 1, 4 - 1, 8 - 1),
-            new EMGraphics.Triangle(6 - 1, 5 - 1, 8 - 1),
-            new EMGraphics.Triangle(6 - 1, 8 - 1, 7 - 1),
-        };
-
-        Random random = new Random();
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
+                this.scene.RootObject.Children.Clear();
+
                 NASFile file = NASFile.Load(openFileDlg.FileName);
                 vec3[] positions = file.Points.ToArray();
                 vec3[] colors = new vec3[positions.Length];
                 // temp solution for color:
                 for (int i = 0; i < colors.Length; i++)
                 {
-                    colors[i] = demoColors[random.Next() % demoColors.Length];
+                    colors[i] = Color.Orange.ToVec3();
                 }
                 Triangle[] triangles = file.Grids.ToArray();
                 BoundingBox box = positions.Move2Center();
@@ -146,7 +106,7 @@ namespace EMGraphics.Demo
                 //    float[] lengths = new float[positions.Length];
                 //    for (int i = 0; i < lengths.Length; i++)
                 //    {
-                //        lengths[i] = 0.1f;
+                //        lengths[i] = 0.5f;
                 //    }
                 //    var model = new NormalLineModel(positions, normals, lengths);
                 //    var renderer = EMGraphics.NormalLineRenderer.Create(model);

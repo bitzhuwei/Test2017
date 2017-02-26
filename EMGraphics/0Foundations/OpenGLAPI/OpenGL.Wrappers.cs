@@ -1238,10 +1238,10 @@ namespace EMGraphics
         /// <param name="message"></param>
         /// <param name="userParam"></param>
         public delegate void DebugProc(
-            DebugSource source,
-            DebugType type,
+            EMGraphics.DebugSource source,
+            EMGraphics.DebugType type,
             uint id,
-            DebugSeverity severity,
+            EMGraphics.DebugSeverity severity,
             int length,
             StringBuilder message,
             IntPtr userParam);
@@ -1256,9 +1256,9 @@ namespace EMGraphics
         /// <param name="ids"></param>
         /// <param name="enabled"></param>
         public static void DebugMessageControl(
-            DebugMessageControlSource source,
-            DebugMessageControlType type,
-            DebugMessageControlSeverity severity,
+            EMGraphics.DebugMessageControlSource source,
+            EMGraphics.DebugMessageControlType type,
+            EMGraphics.DebugMessageControlSeverity severity,
             int count,
             int[] ids,
             bool enabled)
@@ -1276,10 +1276,10 @@ namespace EMGraphics
         /// <param name="length">用-1即可。</param>
         /// <param name="buf"></param>
         public static void DebugMessageInsert(
-            DebugSource source,
-            DebugType type,
+            EMGraphics.DebugSource source,
+            EMGraphics.DebugType type,
             uint id,
-            DebugSeverity severity,
+            EMGraphics.DebugSeverity severity,
             int length,
             StringBuilder buf)
         {

@@ -7,11 +7,6 @@
     public enum VBOConfig : uint
     {
         /// <summary>
-        /// bool
-        /// </summary>
-        Bool,
-
-        /// <summary>
         /// byte.
         /// </summary>
         Byte,

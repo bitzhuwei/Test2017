@@ -1,5 +1,5 @@
 ﻿# 基础
-这个文件夹里写的都是OpenGL的概念。CSharpGL所涉及的所有OpenGL知识点，都被封装为enum, struct, interface, class代码。这些知识点包含在类型的名字上；包含在方法的名字上；包含在类型的继承关系上；包含在所有的注释上。
+这个文件夹里写的都是OpenGL的概念。EMGraphics所涉及的所有OpenGL知识点，都被封装为enum, struct, interface, class代码。这些知识点包含在类型的名字上；包含在方法的名字上；包含在类型的继承关系上；包含在所有的注释上。
 ## Shader
 一个Shader就是在GPU上运行的一小段（也许并不小）类C代码。  
 现代OpenGL的渲染是建立在GLSL的shader基础上的。Shader工作在OpenGL渲染管线的各自的阶段上。这些阶段如何施展全看你的shader怎么写。
@@ -21,7 +21,7 @@ OpenGL是个状态机。`GLState`就是控制其状态的。
 纹理、帧缓存、查询对象等等，在你学会上述内容之后就仅仅是一些很简单的概念而已。
 
 # Foundations
-OpenGL concepts lay in this folder. All basic OpenGL knowledge included in CSharpGL are wrapped into types(enum, interface, struct, class). It exists in type's names, method's names, inheritance relationships, and all comments.
+OpenGL concepts lay in this folder. All basic OpenGL knowledge included in EMGraphics are wrapped into types(enum, interface, struct, class). It exists in type's names, method's names, inheritance relationships, and all comments.
 ## Shader
 A shader is a small(maybe not that small) piece of C-like code that executes on GPU.  
 Modern OpenGL rendering is built on GLSL shader. Shaders works on their own stages in OpenGL rendering pipeline. It's all up to you how these stages work.

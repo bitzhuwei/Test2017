@@ -1,4 +1,6 @@
-﻿namespace EMGraphics
+﻿using System;
+using System.Runtime.InteropServices;
+namespace EMGraphics
 {
     public sealed unsafe partial class UnmanagedArray<T>
     {
@@ -19,7 +21,14 @@
         /// </summary>
         protected override void DisposeUnmanagedResources()
         {
-            base.DisposeUnmanagedResources();
+            IntPtr header = this.Header;
+            if (header != IntPtr.Zero)
+            {
+                Marshal.FreeHGlobal(header);
+                this.Header = IntPtr.Zero;
+            }
+
+            this.Length = 0;
 
             UnmanagedArray<T>.thisTypeDisposedCount++;
         }

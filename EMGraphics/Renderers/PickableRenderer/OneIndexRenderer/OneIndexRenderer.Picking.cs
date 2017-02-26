@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace EMGraphics
 {
-    // check http://www.cnblogs.com/bitzhuwei/p/CSharpGL-18-Picking-of-OneIndexBuffer.html
+    // check http://www.cnblogs.com/bitzhuwei/p/EMGraphics-18-Picking-of-OneIndexBuffer.html
     partial class OneIndexRenderer
     {
         /// <summary>

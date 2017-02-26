@@ -1,4 +1,4 @@
-﻿**CSharpGL(31)[译]OpenGL渲染管道那些事**
+﻿**EMGraphics(31)[译]OpenGL渲染管道那些事**
 
 # 开始
 

@@ -1,7 +1,7 @@
 ﻿namespace EMGraphics
 {
     /// <summary>
-    /// Renders a model provided by 
+    /// Renders a model provided by EMGraphics.
     /// </summary>
     public partial class SimpleRenderer : PickableRenderer
     {

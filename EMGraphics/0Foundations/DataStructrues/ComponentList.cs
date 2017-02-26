@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace EMGraphics
 {
-    //“IListEditor<ComponentList<TBinding,TComponent>>”: 特性参数不能使用类型参数
+    //“EMGraphics.IListEditor<EMGraphics.ComponentList<TBinding,TComponent>>”: 特性参数不能使用类型参数
     //[Editor(typeof(IListEditor<ComponentList<TBinding, TComponent>>), typeof(UITypeEditor))]
     /// <summary>
     /// a list of components who bind to the specified binding object.

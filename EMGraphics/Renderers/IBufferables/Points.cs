@@ -39,9 +39,9 @@ namespace EMGraphics
         /// </summary>
         public const string strposition = "position";
 
-        private VertexBuffer positionBuffer;
+        private EMGraphics.VertexBuffer positionBuffer;
 
-        private IndexBuffer indexBuffer;
+        private EMGraphics.IndexBuffer indexBuffer;
 
         /// <summary>
         ///
@@ -49,7 +49,7 @@ namespace EMGraphics
         /// <param name="bufferName"></param>
         /// <param name="varNameInShader"></param>
         /// <returns></returns>
-        public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
+        public EMGraphics.VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
         {
             if (bufferName == strposition)
             {
@@ -83,7 +83,7 @@ namespace EMGraphics
         ///
         /// </summary>
         /// <returns></returns>
-        public IndexBuffer GetIndexBuffer()
+        public EMGraphics.IndexBuffer GetIndexBuffer()
         {
             if ((indexBuffer == null))
             {

@@ -12,7 +12,7 @@ namespace EMGraphics
     [DefaultProperty("Text")]
     //[DefaultEvent("OpenGLDraw")]
     [Description("A canvas that renders a scene with OpenGL.")]
-    //[ToolboxBitmap(typeof(GLCanvas), @"WinformControls.GLCanvas.ico")]
+    //[ToolboxBitmap(typeof(GLCanvas), @"EMGraphics.WinformControls.GLCanvas.ico")]
     public partial class GLSceneCanvas :
         UserControl,
         ISupportInitialize,
@@ -76,7 +76,7 @@ namespace EMGraphics
         ///// <summary>
         ///// show/hide system's cursor.
         ///// </summary>
-        //[Category("CSharpGL")]
+        //[Category("EMGraphics")]
         //[Description("show/hide system's cursor.")]
         //public bool ShowSystemCursor
         //{
@@ -304,7 +304,7 @@ namespace EMGraphics
         /// <summary>
         ///
         /// </summary>
-        [Category("CSharpGL")]
+        [Category("EMGraphics")]
         public double FPS { get; private set; }
 
         /// <summary>
@@ -313,7 +313,7 @@ namespace EMGraphics
         /// <value>
         /// The render trigger.
         /// </value>
-        [Description("The render trigger - determines when rendering will occur."), Category("CSharpGL")]
+        [Description("The render trigger - determines when rendering will occur."), Category("EMGraphics")]
         public RenderTrigger RenderTrigger
         {
             get
@@ -341,7 +341,7 @@ namespace EMGraphics
         /// <summary>
         /// Interval between two rendering passes. Must be greater than 0.(in milliseconds)
         /// </summary>
-        [Description("Interval between two rendering passes. Must be greater than 0.(in milliseconds)."), Category("CSharpGL"), DefaultValue(50)]
+        [Description("Interval between two rendering passes. Must be greater than 0.(in milliseconds)."), Category("EMGraphics"), DefaultValue(50)]
         public int TimerTriggerInterval
         {
             get { return this.redrawTimer.Interval; }
@@ -361,7 +361,7 @@ namespace EMGraphics
         /// <summary>
         /// Scene to be rendered.
         /// </summary>
-        [Description("Scene to be rendered."), Category("CSharpGL")]
+        [Description("Scene to be rendered."), Category("EMGraphics")]
         public Scene Scene { get; private set; }
 
         private Manipulater cameraManipulater;
@@ -369,7 +369,7 @@ namespace EMGraphics
         /// <summary>
         /// Controls how camera moves according to mouse/keyboard.
         /// </summary>
-        [Description("Controls how camera moves according to mouse/keyboard."), Category("CSharpGL")]
+        [Description("Controls how camera moves according to mouse/keyboard."), Category("EMGraphics")]
         public Manipulater CameraManipulater
         {
             get { return this.cameraManipulater; }

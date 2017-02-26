@@ -47,7 +47,7 @@ namespace EMGraphics
         {
             this.HeadColor = new MarkableStruct<Color>(Color.Aqua);
             this.TailColor = new MarkableStruct<Color>(Color.Red);
-            this.StateList.Add(new LineWidthState(1));
+            this.StateList.Add(new LineWidthState(2));
         }
 
         protected override void DoRender(RenderEventArgs arg)

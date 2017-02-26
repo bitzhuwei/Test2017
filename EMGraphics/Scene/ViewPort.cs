@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace EMGraphics
 {
-    // http://www.cnblogs.com/bitzhuwei/p/CSharpGL-35-render-scene-to-multiple-view-port.html
+    // http://www.cnblogs.com/bitzhuwei/p/EMGraphics-35-render-scene-to-multiple-view-port.html
     /// <summary>
     /// Render scene to an area of canvas.
     /// </summary>

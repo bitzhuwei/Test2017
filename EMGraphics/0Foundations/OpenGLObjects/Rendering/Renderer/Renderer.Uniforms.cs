@@ -156,7 +156,7 @@ namespace EMGraphics
             if (variableDict == null)
             {
                 variableDict = new Dictionary<Type, Type>();
-                Type baseType = typeof(UniformSingleVariableBase);
+                Type baseType = typeof(EMGraphics.UniformSingleVariableBase);
                 Assembly asm = Assembly.GetAssembly(baseType);
                 var types = from item in asm.GetTypes()
                             where (baseType.IsAssignableFrom(item)

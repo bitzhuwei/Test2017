@@ -641,7 +641,7 @@ namespace EMGraphics
             if (variableArrayDict == null)
             {
                 variableArrayDict = new Dictionary<Type, Type>();
-                Type baseType = typeof(UniformArrayVariableBase);
+                Type baseType = typeof(EMGraphics.UniformArrayVariableBase);
                 Assembly asm = Assembly.GetAssembly(baseType);
                 var types = from item in asm.GetTypes()
                             where (baseType.IsAssignableFrom(item)
