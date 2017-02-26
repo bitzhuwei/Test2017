@@ -46,7 +46,7 @@ namespace EMGraphics.Demo
                 var renderer = geometry.FromRenderer as IHighlightable;
                 if (renderer != null)
                 {
-                    // TODO: highlight this geometry...
+                    // TODO: highlight this geometry.
                     switch (this.CurrentSelectingType)
                     {
                         case SelectingType.Triangle:
