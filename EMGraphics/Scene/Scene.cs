@@ -31,9 +31,10 @@ namespace EMGraphics
         {
             if (camera == null || canvas == null) { throw new ArgumentNullException(); }
 
-            this.Canvas = canvas;
-            this.canvasLastSize = canvas.Size;
-
+			{
+				this.Canvas = canvas;
+				this.canvasLastSize = canvas.Size;
+			}
             {
                 this.rootUI = new SceneRootUI();
             }
@@ -69,10 +70,9 @@ namespace EMGraphics
             Size currentSize = control.Size;
             this.FirstCamera.Resize(this.canvasLastSize, currentSize);
             this.canvasLastSize = currentSize;
-            this.rootViewPort.Size = control.Size;
-
-            this.rootUI.Size = control.Size;
-            //this.rootCursor.Size = control.Size;
+            this.rootViewPort.Size = currentSize;
+            this.rootUI.Size = currentSize;
+            //this.rootCursor.Size = currentSize;
         }
 
         /// <summary>
