@@ -60,8 +60,8 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.关于AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.glCanvas1 = new EMGraphics.GLCanvas();
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
+            this.glCanvas1 = new EMGraphics.GLCanvas();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
             this.SuspendLayout();
@@ -312,6 +312,10 @@
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
+            // openFileDlg
+            // 
+            this.openFileDlg.Filter = "*.nas|*.nas";
+            // 
             // glCanvas1
             // 
             this.glCanvas1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -323,10 +327,6 @@
             this.glCanvas1.TabIndex = 2;
             this.glCanvas1.OpenGLDraw += new System.EventHandler<System.Windows.Forms.PaintEventArgs>(this.glCanvas1_OpenGLDraw);
             // 
-            // openFileDlg
-            // 
-            this.openFileDlg.Filter = "*.nas|*.nas";
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -337,6 +337,7 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FormMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "EMGraphics DEMO";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

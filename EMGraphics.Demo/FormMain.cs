@@ -42,7 +42,7 @@ namespace EMGraphics.Demo
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
-                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
+                // this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 var uiAxis = new UIAxis(AnchorStyles.Left | AnchorStyles.Bottom,
@@ -80,7 +80,7 @@ namespace EMGraphics.Demo
                     var renderer = EMGraphics.EMRenderer.Create(model);
                     renderer.WorldPosition = center;
                     renderer.ModelSize = size;
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
 
                     (new FormProperyGrid(renderer)).Show();
@@ -93,6 +93,7 @@ namespace EMGraphics.Demo
                     renderer.ModelSize = size;
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
+                    obj.Enabled = false;
 
                     (new FormProperyGrid(renderer)).Show();
                 }
@@ -115,7 +116,19 @@ namespace EMGraphics.Demo
 
                 //    (new FormProperyGrid(renderer)).Show();
                 //}
-
+                {
+                    // center axis 
+                    // NOTE: this renderer must be the last one!
+                    float max = size.x;
+                    if (max < size.y) { max = size.y; }
+                    if (max < size.z) { max = size.z; }
+                    var model = new CenterAxisModel(max);
+                    CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
+                    renderer.WorldPosition = center;
+                    renderer.ModelSize = size;
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
+                    this.scene.RootObject.Children.Add(obj);
+                }
                 this.glCanvas1.Repaint();
             }
         }

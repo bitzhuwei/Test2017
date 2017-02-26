@@ -370,6 +370,8 @@
     <Compile Include="Canvas\Win32API\WindowStylesEx.cs" />
     <Compile Include="Canvas\Win32API\WNDCLASSEX.cs" />
     <Compile Include="Canvas\Win32API\WndProc.cs" />
+    <Compile Include="CenterAxisModel.cs" />
+    <Compile Include="CenterAxisRenderer.cs" />
     <Compile Include="NormalLineModel.cs" />
     <Compile Include="NormalLineRenderer.cs" />
     <Compile Include="NASFile.cs" />
@@ -622,6 +624,12 @@
     <None Include="0Foundations\Utilities\StringHelper.cs.bak" />
     <None Include="Canvas\readme.md" />
     <None Include="Canvas\RenderContexts\readme.md" />
+    <None Include="CenterAxis.frag">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="CenterAxis.vert">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="NormalLine.frag">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
