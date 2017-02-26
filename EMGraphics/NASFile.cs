@@ -20,7 +20,6 @@ namespace EMGraphics
         public List<vec3> Points
         {
             get { return points; }
-            set { points = value; }
         }
         private List<Triangle> grids;
 
@@ -30,7 +29,6 @@ namespace EMGraphics
         public List<Triangle> Grids
         {
             get { return grids; }
-            set { grids = value; }
         }
 
         private NASFile(List<vec3> points, List<Triangle> grids)
@@ -51,8 +49,8 @@ namespace EMGraphics
                 int ctria1, ctria2, ctria3;
                 var points = new List<vec3>();
                 var grids = new List<Triangle>();
-                points.Add(new vec3(0, 0, 0));//点坐标的数组是从1开始的,不是从0开始的,方便
-                grids.Add(new Triangle(0, 0, 0));//网格数组也是从1开始的
+                //points.Add(new vec3(0, 0, 0));//点坐标的数组是从1开始的,不是从0开始的,方便
+                //grids.Add(new Triangle(0, 0, 0));//网格数组也是从1开始的
 
                 int pointIndexMin = 0;//点的最小序号
                 bool flagPointIndexMin = true;
@@ -108,7 +106,7 @@ namespace EMGraphics
                         ctria1 = int.Parse(str22[3]) - pointIndexMin + 1;//第一个点
                         ctria2 = int.Parse(str22[4]) - pointIndexMin + 1;//第二个点
                         ctria3 = int.Parse(str22[5]) - pointIndexMin + 1;//第三个点
-                        grids.Add(new Triangle(ctria1, ctria2, ctria3));
+                        grids.Add(new Triangle(ctria1 - 1, ctria2 - 1, ctria3 - 1));
                     }
                 } while (true);
                 result = new NASFile(points, grids);
