@@ -225,6 +225,10 @@ namespace EMGraphics.Demo
                     this.whiteClearColor = !this.whiteClearColor;
                 }
             }
+            else if (e.KeyChar == 's')
+            {
+                (new FormProperyGrid(this.scene)).Show();
+            }
         }
     }
 }
