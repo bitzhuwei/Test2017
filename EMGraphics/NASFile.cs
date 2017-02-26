@@ -52,7 +52,7 @@ namespace EMGraphics
                 var points = new List<vec3>();
                 var grids = new List<Triangle>();
                 points.Add(new vec3(0, 0, 0));//点坐标的数组是从1开始的,不是从0开始的,方便
-                grids.Add(new Triangle(1, 2, 3));//网格数组也是从1开始的
+                grids.Add(new Triangle(0, 0, 0));//网格数组也是从1开始的
 
                 int pointIndexMin = 0;//点的最小序号
                 bool flagPointIndexMin = true;

@@ -42,10 +42,7 @@ namespace EMGraphics.Demo
                 this.rotator = rotator;
                 this.scene = new Scene(camera, this.glCanvas1);
                 this.glCanvas1.Resize += this.scene.Resize;
-                //this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
-            }
-            {
-                //打开OToolStripMenuItem_Click(sender, e);
+                this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
             }
             {
                 var uiAxis = new UIAxis(AnchorStyles.Left | AnchorStyles.Bottom,
