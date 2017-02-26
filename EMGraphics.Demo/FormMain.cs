@@ -20,7 +20,9 @@ namespace EMGraphics.Demo
         {
             InitializeComponent();
 
-            this.Load += FormMain_Load;
+            this.Load += this.FormMain_Load;
+            this.glCanvas1.OpenGLDraw += this.glCanvas1_OpenGLDraw;
+            this.glCanvas1.KeyPress += this.glCanvas1_KeyPress;
         }
 
         private void Application_Idle(object sender, EventArgs e)
@@ -113,8 +115,8 @@ namespace EMGraphics.Demo
         /// <returns></returns>
         private NormalLineModel GetFaceNormalLineModel(vec3[] positions)
         {
-            vec3[] normalPositions = new vec3[positions.Length];
-            vec3[] normalDirections = new vec3[positions.Length];
+            var normalPositions = new vec3[positions.Length];
+            var normalDirections = new vec3[positions.Length];
             var normalLengths = new float[positions.Length];
 
             for (int i = 0; i < positions.Length / 3; i++)
@@ -144,6 +146,11 @@ namespace EMGraphics.Demo
             return model;
         }
 
+        /// <summary>
+        /// 为(positions.Length / 3)个三角形计算各自顶点的法线。
+        /// </summary>
+        /// <param name="positions"></param>
+        /// <returns></returns>
         private vec3[] CalculateNormals(vec3[] positions)
         {
             var normals = new vec3[positions.Length];
@@ -163,29 +170,6 @@ namespace EMGraphics.Demo
         private void glCanvas1_OpenGLDraw(object sender, PaintEventArgs e)
         {
             this.scene.Render();
-        }
-
-        private bool whiteClearColor = true;
-
-        private void glCanvas1_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == 'w')
-            {
-                if (this.whiteClearColor)
-                {
-                    this.scene.RootViewPort.Children[0].Content.ClearColor = Color.Black;
-                    this.whiteClearColor = !this.whiteClearColor;
-                }
-                else
-                {
-                    this.scene.RootViewPort.Children[0].Content.ClearColor = Color.White;
-                    this.whiteClearColor = !this.whiteClearColor;
-                }
-            }
-            else if (e.KeyChar == 's')
-            {
-                (new FormProperyGrid(this.scene)).Show();
-            }
         }
     }
 }
