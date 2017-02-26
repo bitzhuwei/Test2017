@@ -372,6 +372,7 @@
     <Compile Include="Canvas\Win32API\WndProc.cs" />
     <Compile Include="CenterAxisModel.cs" />
     <Compile Include="CenterAxisRenderer.cs" />
+    <Compile Include="IHighlightable.cs" />
     <Compile Include="NormalLineModel.cs" />
     <Compile Include="NormalLineRenderer.cs" />
     <Compile Include="NASFile.cs" />

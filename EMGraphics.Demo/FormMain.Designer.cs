@@ -306,9 +306,9 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 596);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 594);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(754, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(754, 24);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -323,7 +323,7 @@
             this.glCanvas1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.glCanvas1.Name = "glCanvas1";
             this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
-            this.glCanvas1.Size = new System.Drawing.Size(754, 568);
+            this.glCanvas1.Size = new System.Drawing.Size(754, 566);
             this.glCanvas1.TabIndex = 2;
             // 
             // FormMain

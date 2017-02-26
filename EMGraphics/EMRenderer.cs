@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class EMRenderer : PickableRenderer
+    public class EMRenderer : PickableRenderer, IHighlightable
     {
         private const string strEMRenderer = "EMRenderer";
         /// <summary>
@@ -69,7 +70,7 @@ namespace EMGraphics
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
-            this.AmbientLightColor = new vec3(0.5f);
+            this.AmbientLightColor = new vec3(0.1f);
             //this.DirectionalLightDirection = new vec3(3, 4, 5).normalize();
             this.DirectionalLightColor = new vec3(1);
             //this.HalfVector = new vec3(1);
@@ -78,6 +79,9 @@ namespace EMGraphics
 
             this.RenderFaces = true;
             this.RenderLines = true;
+
+            this.HighlightIndex = -2;
+            this.HighlightColor = Color.Yellow;
         }
 
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
@@ -112,6 +116,9 @@ namespace EMGraphics
                 //this.SetUniform("halfVector", this.HalfVector.normalize());
                 this.SetUniform("shininess", this.Shininess);
                 this.SetUniform("strength", this.Strength);
+                // highlight options:
+                this.SetUniform("highlightIndex", this.HighlightIndex);
+                this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
 
                 base.DoRender(arg);
 
@@ -132,5 +139,20 @@ namespace EMGraphics
                 this.lineWidthState.Off();
             }
         }
+
+        #region IHighlightable
+
+        /// <summary>
+        /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
+        /// </summary>
+        public int HighlightIndex { get; set; }
+
+        /// <summary>
+        /// 用什么颜色表示高亮？
+        /// </summary>
+        public Color HighlightColor { get; set; }
+
+        #endregion IHighlightable
+
     }
 }

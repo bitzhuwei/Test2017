@@ -20,9 +20,13 @@ namespace EMGraphics.Demo
         {
             InitializeComponent();
 
+            this.CurrentSelectingType = SelectingType.Triangle;
+            this.HighlightColor = Color.Yellow;
+
             this.Load += this.FormMain_Load;
             this.glCanvas1.OpenGLDraw += this.glCanvas1_OpenGLDraw;
             this.glCanvas1.KeyPress += this.glCanvas1_KeyPress;
+            this.glCanvas1.MouseDown += glCanvas1_MouseDown;
 
             Application.Idle += Application_Idle;
         }
