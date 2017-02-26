@@ -153,8 +153,8 @@ namespace EMGraphics.Demo
 
                 vec3 v31 = vertex1 - vertex3;
                 float length = v12.length();
-                float tmp = v23.length(); if (tmp > length) { length = tmp; }
-                tmp = v31.length(); if (tmp > length) { length = tmp; }
+                float tmp = v23.length(); if (length < tmp) { length = tmp; }
+                tmp = v31.length(); if (length < tmp) { length = tmp; }
                 normalLengths[i] = length;
             }
 
