@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
 
@@ -18,6 +19,8 @@ namespace EMGraphics
 
         private SceneRootViewPort rootViewPort;
 
+        private Size canvasLastSize;
+
         /// <summary>
         /// Manages a scene to be rendered and updated.
         /// </summary>
@@ -29,6 +32,8 @@ namespace EMGraphics
             if (camera == null || canvas == null) { throw new ArgumentNullException(); }
 
             this.Canvas = canvas;
+            this.canvasLastSize = canvas.Size;
+
             {
                 this.rootUI = new SceneRootUI();
             }
@@ -61,7 +66,9 @@ namespace EMGraphics
             var control = sender as ICanvas;
             if (control == null) { throw new ArgumentException(); }
 
-            this.FirstCamera.Resize(control.Size.Width, control.Size.Height);
+            Size currentSize = control.Size;
+            this.FirstCamera.Resize(this.canvasLastSize, currentSize);
+            this.canvasLastSize = currentSize;
             this.rootViewPort.Size = control.Size;
 
             this.rootUI.Size = control.Size;
