@@ -84,6 +84,10 @@ namespace EMGraphics.Demo
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
                     this.scene.RootObject.Children.Add(obj);
                 }
+                {
+                    this.camera.ZoomCamera(box);
+                }
+
                 this.glCanvas1.Repaint();
             }
         }
