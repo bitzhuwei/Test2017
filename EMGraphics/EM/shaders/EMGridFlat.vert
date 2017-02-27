@@ -7,10 +7,7 @@ out VS_GS_VERTEX
 	float isHighlight;
 } vertex_out;
 
-uniform mat4 mvpMatrix;
-uniform mat3 normalMatrix;
 uniform int highlightIndex;
-uniform vec3 highlightColor;
 
 void main(void)
 {

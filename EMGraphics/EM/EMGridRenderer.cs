@@ -35,13 +35,6 @@ namespace EMGraphics
         [Category(strEMRenderer)]
         public vec3 DirectionalLightColor { get; set; }
 
-        //public vec3 HalfVector { get; set; }
-        [Category(strEMRenderer)]
-        public float Shininess { get; set; }
-
-        [Category(strEMRenderer)]
-        public float Strength { get; set; }
-
         /// <summary>
         /// 
         /// </summary>
@@ -70,17 +63,15 @@ namespace EMGraphics
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
             this.AmbientLightColor = new vec3(0.1f);
-            //this.DirectionalLightDirection = new vec3(3, 4, 5).normalize();
             this.DirectionalLightColor = new vec3(1);
-            //this.HalfVector = new vec3(1);
-            this.Shininess = 10.0f;
-            this.Strength = 1.0f;
 
             this.RenderFaces = true;
             this.RenderLines = true;
 
             this.HighlightIndex = -2;
             this.HighlightColor = Color.Yellow;
+
+            this.RegularColor = Color.Orange;
         }
 
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
@@ -104,20 +95,17 @@ namespace EMGraphics
 
             if (renderFaces)
             {
-                this.SetUniform("useLineColor", false);
                 this.polygonFaceState.On();
 
+                this.SetUniform("useLineColor", false);
                 this.SetUniform("ambientLight", this.AmbientLightColor);
                 this.SetUniform("directionalLightColor", this.DirectionalLightColor);
                 vec3 lightDirection = (arg.Camera.Target - arg.Camera.Position).normalize();
                 this.SetUniform("directionalLightDirection", lightDirection);
-                this.SetUniform("halfVector", lightDirection);
-                //this.SetUniform("halfVector", this.HalfVector.normalize());
-                this.SetUniform("shininess", this.Shininess);
-                this.SetUniform("strength", this.Strength);
                 // highlight options:
                 this.SetUniform("highlightIndex", this.HighlightIndex);
                 this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
+                this.SetUniform("regularColor", this.RegularColor.ToVec3());
 
                 base.DoRender(arg);
 
@@ -153,5 +141,9 @@ namespace EMGraphics
 
         #endregion IHighlightable
 
+        /// <summary>
+        /// 非高亮时的底色。
+        /// </summary>
+        public Color RegularColor { get; set; }
     }
 }
