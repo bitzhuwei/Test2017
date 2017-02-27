@@ -30,7 +30,7 @@ namespace EMGraphics
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
             map.Add("inPosition", NormalLineModel.strPosition);
-            var renderer = new NormalLineRenderer(model, shaderCodes, map, EMModel.strPosition);
+            var renderer = new NormalLineRenderer(model, shaderCodes, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;

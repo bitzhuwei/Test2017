@@ -4,9 +4,9 @@ uniform mat4 mvpMatrix;
 uniform mat3 normalMatrix;
 uniform int highlightIndex;
 uniform vec3 highlightColor;
+uniform vec3 regularColor;
 
 in vec3 inPosition;
-in vec3 inColor;
 in vec3 inNormal;
 
 out vec3 passNormal;
@@ -19,7 +19,7 @@ void main()
 
 	if (highlightIndex == -2)
 	{
-		passColor = inColor;
+		passColor = regularColor;
 		isHighlight = -1.0;
 	}
 	else if (highlightIndex == -1 // all highlight.
@@ -32,7 +32,7 @@ void main()
 	}
 	else// not highlight.
 	{
-		passColor = inColor;
+		passColor = regularColor;
 		isHighlight = -1.0;
 	}
 

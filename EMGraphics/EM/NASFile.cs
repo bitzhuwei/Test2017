@@ -12,19 +12,21 @@ namespace EMGraphics
     public class NASFile
     {
         private static readonly string[] separator = new string[] { " " };
-        private List<vec3> points;
 
         /// <summary>
         /// vertexes in this *.nas file.
         /// </summary>
-        public List<vec3> Points
-        {
-            get { return points; }
-        }
+        public List<vec3> Points { get; private set; }
 
-        private NASFile(List<vec3> points)
+        /// <summary>
+        /// triangles in this *.nas file.
+        /// </summary>
+        public List<Triangle> Triangles { get; private set; }
+
+        private NASFile(List<vec3> points, List<Triangle> triangles)
         {
-            this.points = points;
+            this.Points = points;
+            this.Triangles = triangles;
         }
 
         public static NASFile Load(string filename)
@@ -38,7 +40,7 @@ namespace EMGraphics
                 float x = 0, y = 0, z = 0;
                 int ctria1, ctria2, ctria3;
                 var points = new List<vec3>();
-                var finalPoints = new List<vec3>();
+                var triangles = new List<Triangle>();
 
                 //points.Add(new vec3(0, 0, 0));//点坐标的数组是从1开始的,不是从0开始的,方便
                 //grids.Add(new Triangle(0, 0, 0));//网格数组也是从1开始的
@@ -94,15 +96,14 @@ namespace EMGraphics
                     }
                     else if (line.Length >= 5 && line.Substring(0, 5) == "CTRIA")
                     {
-                        ctria1 = int.Parse(parts[3]) - pointIndexMin + 1;//第一个点
-                        ctria2 = int.Parse(parts[4]) - pointIndexMin + 1;//第二个点
-                        ctria3 = int.Parse(parts[5]) - pointIndexMin + 1;//第三个点
-                        finalPoints.Add(points[ctria1 - 1]);
-                        finalPoints.Add(points[ctria2 - 1]);
-                        finalPoints.Add(points[ctria3 - 1]);
+                        ctria1 = int.Parse(parts[3]) - pointIndexMin;//第一个点
+                        ctria2 = int.Parse(parts[4]) - pointIndexMin;//第二个点
+                        ctria3 = int.Parse(parts[5]) - pointIndexMin;//第三个点
+                        triangles.Add(new Triangle(ctria1, ctria2, ctria3));
                     }
                 } while (true);
-                result = new NASFile(finalPoints);
+
+                result = new NASFile(points, triangles);
             }
 
             return result;

@@ -20,19 +20,14 @@ namespace EMGraphics.Demo
 
                 NASFile file = NASFile.Load(openFileDlg.FileName);
                 vec3[] positions = file.Points.ToArray();
-                vec3[] colors = new vec3[positions.Length];
-                // temp solution for color:
-                for (int i = 0; i < colors.Length; i++)
-                {
-                    colors[i] = Color.Orange.ToVec3();
-                }
+                Triangle[] triangles = file.Triangles.ToArray();
                 BoundingBox box = positions.Move2Center();
                 vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
                 vec3 size = box.MaxPosition - box.MinPosition;
                 {
                     vec3[] normals = CalculateNormals(positions);
-                    var model = new EMModel(positions, colors, normals);
-                    var renderer = EMGraphics.EMRenderer.Create(model);
+                    var model = new EMGrid(positions, normals, triangles);
+                    var renderer = EMGraphics.EMGridRenderer.Create(model);
                     renderer.WorldPosition = center;
                     renderer.ModelSize = size;
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);

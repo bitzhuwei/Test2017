@@ -372,7 +372,7 @@
     <Compile Include="Canvas\Win32API\WndProc.cs" />
     <Compile Include="EM\CenterAxisModel.cs" />
     <Compile Include="EM\CenterAxisRenderer.cs" />
-    <Compile Include="EM\EMRenderer.ShaderProgram.cs" />
+    <Compile Include="EM\EMGridRenderer.ShaderProgram.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\CodedColorsHelper.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\LinesModel.cs" />
@@ -386,6 +386,7 @@
     <Compile Include="EM\GLUIs\UIColorPalette\UIColorPaletteMarkersRenderer.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\UIColorPaletteRenderer.cs" />
     <Compile Include="EM\IHighlightable.cs" />
+    <Compile Include="EM\NASParser.cs" />
     <Compile Include="EM\NormalLineModel.cs" />
     <Compile Include="EM\NormalLineRenderer.cs" />
     <Compile Include="EM\NASFile.cs" />
@@ -599,7 +600,7 @@
     <Compile Include="Scene\Time.cs" />
     <Compile Include="Scene\ViewPort.cs" />
     <Compile Include="Scene\ViewPort.ILayout.cs" />
-    <Compile Include="EM\EMModel.cs" />
+    <Compile Include="EM\EMGrid.cs" />
     <Compile Include="UIRendering\UIRenderer.cs" />
     <Compile Include="UIRendering\UIRenderer.ILayout.cs" />
     <Compile Include="UIRendering\UIRenderers\UIAxis.cs" />
@@ -638,21 +639,13 @@
     <None Include="0Foundations\Utilities\StringHelper.cs.bak" />
     <None Include="Canvas\readme.md" />
     <None Include="Canvas\RenderContexts\readme.md" />
-    <EmbeddedResource Include="EM\shaders\CenterAxis.frag">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EM\shaders\CenterAxis.vert">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EM\shaders\EMFlat.frag" />
-    <EmbeddedResource Include="EM\shaders\EMFlat.geom" />
-    <EmbeddedResource Include="EM\shaders\EMFlat.vert" />
-    <EmbeddedResource Include="EM\shaders\NormalLine.frag">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EM\shaders\NormalLine.vert">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="EM\shaders\CenterAxis.frag" />
+    <EmbeddedResource Include="EM\shaders\CenterAxis.vert" />
+    <EmbeddedResource Include="EM\shaders\EMGridFlat.frag" />
+    <EmbeddedResource Include="EM\shaders\EMGridFlat.geom" />
+    <EmbeddedResource Include="EM\shaders\EMGridFlat.vert" />
+    <EmbeddedResource Include="EM\shaders\NormalLine.frag" />
+    <EmbeddedResource Include="EM\shaders\NormalLine.vert" />
     <None Include="FontTexture\readme.md" />
     <None Include="Manipulaters\readme.md" />
     <None Include="PropertyGrid\TypeConverters\readme.md" />
@@ -686,13 +679,9 @@
     <EmbeddedResource Include="Resources\TextModel.frag" />
     <EmbeddedResource Include="Resources\TextModel.vert" />
     <None Include="Scene\readme.md" />
-    <EmbeddedResource Include="EM\shaders\EMSmooth.frag">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EM\shaders\EMSmooth.vert">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <Compile Include="EM\EMRenderer.cs" />
+    <EmbeddedResource Include="EM\shaders\EMGridSmooth.frag" />
+    <EmbeddedResource Include="EM\shaders\EMGridSmooth.vert" />
+    <Compile Include="EM\EMGridRenderer.cs" />
     <Compile Include="EM\Triangle.cs" />
     <None Include="UIRendering\readme.md" />
   </ItemGroup>

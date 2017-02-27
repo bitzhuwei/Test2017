@@ -11,7 +11,7 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public partial class EMRenderer : PickableRenderer, IHighlightable
+    public partial class EMGridRenderer : PickableRenderer, IHighlightable
     {
         private const string strEMRenderer = "EMRenderer";
         /// <summary>
@@ -46,16 +46,15 @@ namespace EMGraphics
         /// 
         /// </summary>
         /// <returns></returns>
-        public static EMRenderer Create(EMModel model)
+        public static EMGridRenderer Create(EMGrid model)
         {
-            var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMSmooth.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMSmooth.frag"), ShaderType.FragmentShader);
+            var shaderCodes = new ShaderCode[3];
+            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGridFlat.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGridFlat.geom"), ShaderType.GeometryShader);
+            shaderCodes[2] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGridFlat.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
-            map.Add("inPosition", EMModel.strPosition);
-            map.Add("inColor", EMModel.strColor);
-            map.Add("inNormal", EMModel.strNormal);
-            var renderer = new EMRenderer(model, shaderCodes, map, EMModel.strPosition);
+            map.Add("inPosition", EMGrid.strPosition);
+            var renderer = new EMGridRenderer(model, shaderCodes, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;
@@ -65,7 +64,7 @@ namespace EMGraphics
             return renderer;
         }
 
-        private EMRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        private EMGridRenderer(IBufferable model, ShaderCode[] shaderCodes,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
