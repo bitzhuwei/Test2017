@@ -5,80 +5,37 @@ layout (triangle_strip, max_vertices = 27) out;
 
 in VS_GS_VERTEX
 {
-    vec3 normal;
+	float isHighlight;
 } vertex_in[];
 
 out GS_FS_VERTEX
 {
-    vec3 color;
+	float isHighlight;
+    vec3 normal;
 } vertex_out;
 
-uniform float normalLength = 0.5;
-uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
-uniform bool showModel = true;
-uniform bool showNormal = true;
-uniform float factor1 = 50.0f;
-uniform float factor2 = 10.0f;
+uniform mat4 mvpMatrix;
+uniform mat4 normalMatrix;
 
 void main(void)
 {
     //int i;
-    if (showModel == true)
-    {
-        for (int i = 0; i < gl_in.length(); i++)
-        {
-            vertex_out.color = vec3(inverse(transpose(modelMatrix)) * vec4(vertex_in[i].normal, 1.0f));
-            vec4 position = gl_in[i].gl_Position;
-            gl_Position = projectionMatrix * viewMatrix * (modelMatrix * position);
-            EmitVertex();
-        }
-        EndPrimitive();
-    }
-    if (showNormal == true)
-    {
-        for (int i = 0; i < gl_in.length(); i++)
-        {
-            vertex_out.color = vec3(1, 1, 1);
-            vec4 position = gl_in[i].gl_Position;
-            vec4 target = vec4(position.xyz + vertex_in[i].normal * normalLength, 1.0f);
-            {
-                vec4 v0 = position;
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v0);
-                EmitVertex();
-                vec4 v1 = target;
-                if (target.x > position.x) { v1.x += normalLength / factor1; }
-                else { v1.x -= normalLength / factor2; }
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v1);
-                EmitVertex();
-                vec4 v2 = position;
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v2);
-                EmitVertex();
-                vec4 v3 = target;
-                if (target.y > position.y) { v3.y += normalLength / factor1; }
-                else { v3.y -= normalLength / factor2; }
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v3);
-                EmitVertex();
-                vec4 v4 = position;
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v4);
-                EmitVertex();
-                vec4 v5 = target;
-                if (target.z > position.z) { v5.z += normalLength / factor1; }
-                else { v5.z -= normalLength / factor2; }
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v5);
-                EmitVertex();
-                vec4 v6 = position;
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v6);
-                EmitVertex();
-                vec4 v7 = target;
-                if (target.x > position.x) { v7.x += normalLength / factor1; }
-                else { v7.x -= normalLength / factor2; }
-                gl_Position = projectionMatrix * viewMatrix * (modelMatrix * v7);
-                EmitVertex();
-            }
-            EndPrimitive();
-        }
-    }
+	vec3[3] vertexes;
+	for (int i = 0; i < 3; i++)
+	{
+		vec4 position = gl_in[i].gl_Position;
+		vertexes[i] = vec3(position);
+		gl_Position = mvpMatrix * position;
+		EmitVertex();
+	}
+
+    vec3 v12 = vertexes[1] - vertexes[0];
+    vec3 v23 = vertexes[2] - vertexes[1];
+	vec3 normalLine = vec3(normalMatrix * vec4(cross(v12, v23), 1.0));
+    vertex_out.normal = normalize(normalLine);
+
+    vertex_out.isHighlight = vertex_in[0].isHighlight;
+
+	EndPrimitive();
 }
 

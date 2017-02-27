@@ -1,21 +1,35 @@
 #version 150 core
 
-in vec3 in_Position;
-in vec3 in_Normal;
+in vec3 inPosition;
+
 out VS_GS_VERTEX
 {
-    vec3 normal;
+	float isHighlight;
 } vertex_out;
 
-uniform mat4 modelMatrix;
-uniform mat4 viewMatrix;
-uniform mat4 projectionMatrix;
+uniform mat4 mvpMatrix;
+uniform mat3 normalMatrix;
+uniform int highlightIndex;
+uniform vec3 highlightColor;
 
 void main(void)
 {
-    // TODO: this is where you should start with vertex shader. Only ASCII code are welcome.
-    gl_Position = vec4(in_Position, 1.0f);
-    vertex_out.normal = in_Normal;
-    // this is where your vertex shader ends.
+    gl_Position = vec4(inPosition, 1.0f);
+
+	if (highlightIndex == -2)
+	{
+		vertex_out.isHighlight = -1.0;
+	}
+	else if (highlightIndex == -1 // all highlight.
+		|| gl_VertexID == highlightIndex + 0 // specified highlight.
+		|| gl_VertexID == highlightIndex + 1 // specified highlight.
+		|| gl_VertexID == highlightIndex + 2)// specified highlight.
+	{
+		vertex_out.isHighlight = 1.0;
+	}
+	else// not highlight.
+	{
+		vertex_out.isHighlight = -1.0;
+	}
 }
 

@@ -11,11 +11,12 @@ namespace EMGraphics
     /// </summary>
     public static class NASParser
     {
-        public static void Parse(this NASFile file, out EMGrid grid, out NormalLineModel normalLineModel)
+        public static void Parse(this NASFile file, out EMGrid grid, out NormalLineModel normalLineModel, out BoundingBox box)
         {
             if (file == null) { throw new ArgumentNullException(); }
 
             vec3[] vertexPositions = file.Points.ToArray();
+            box = vertexPositions.Move2Center();
             var vertexNormals = new vec3[vertexPositions.Length];
             Triangle[] triangles = file.Triangles.ToArray();
 
@@ -37,7 +38,6 @@ namespace EMGraphics
 
                 vec3 v12 = vertex2 - vertex1;
                 vec3 v23 = vertex3 - vertex2;
-                //normalDirections[i] = v23.cross(v12).normalize();
                 vec3 faceNormalDirection = v12.cross(v23).normalize();
                 faceNormalDirections[i] = faceNormalDirection;
                 vertexNormals[index1] += faceNormalDirection;
