@@ -31,55 +31,62 @@ namespace EMGraphics.Demo
 
         void glCanvas1_MouseDown(object sender, MouseEventArgs e)
         {
-            List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
-               e.Location, PickingGeometryType.Triangle);
-            PickedGeometry geometry = null;
-            if (allPickedGeometrys != null && allPickedGeometrys.Count > 0)
-            { geometry = allPickedGeometrys[0].Item2; }
-
-            if (geometry != null)
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                // print to window.
-                this.frmDisplayPickedGeometry.SetText(geometry.ToString());
-                this.frmDisplayPickedGeometry.Show();
+                List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
+                   e.Location, PickingGeometryType.Triangle);
+                PickedGeometry geometry = null;
+                if (allPickedGeometrys != null && allPickedGeometrys.Count > 0)
+                { geometry = allPickedGeometrys[0].Item2; }
 
-                var renderer = geometry.FromRenderer as IHighlightable;
-                if (renderer != null)
+                if (geometry != null)
                 {
-                    // TODO: highlight this geometry.
-                    switch (this.CurrentSelectingType)
+                    // print to window.
+                    if (this.frmDisplayPickedGeometry.IsDisposed)
                     {
-                        case SelectingType.Triangle:
-                            renderer.HighlightIndex = (int)geometry.VertexIds[0];
-                            break;
-                        case SelectingType.Mesh:
-                            renderer.HighlightIndex = -1;
-                            break;
-                        case SelectingType.Face:
-                            throw new NotImplementedException();
-                        case SelectingType.Model:
-                            throw new NotImplementedException();
-                        default:
-                            throw new NotImplementedException();
+                        this.frmDisplayPickedGeometry = new FormDisplayText("Picked Geometry");
                     }
-                }
-            }
-            else
-            {
-                PickedGeometry current = this.CurrentPickedGeometry;
-                if (current != null)
-                {
-                    // TODO: de-highlight this geometry...
-                    var renderer = current.FromRenderer as IHighlightable;
+
+                    this.frmDisplayPickedGeometry.SetText(geometry.ToString());
+                    this.frmDisplayPickedGeometry.Show();
+
+                    var renderer = geometry.FromRenderer as IHighlightable;
                     if (renderer != null)
                     {
-                        renderer.HighlightIndex = -2;
+                        // TODO: highlight this geometry.
+                        switch (this.CurrentSelectingType)
+                        {
+                            case SelectingType.Triangle:
+                                renderer.HighlightIndex = (int)geometry.VertexIds[0];
+                                break;
+                            case SelectingType.Mesh:
+                                renderer.HighlightIndex = -1;
+                                break;
+                            case SelectingType.Face:
+                                throw new NotImplementedException();
+                            case SelectingType.Model:
+                                throw new NotImplementedException();
+                            default:
+                                throw new NotImplementedException();
+                        }
                     }
                 }
+                else
+                {
+                    PickedGeometry current = this.CurrentPickedGeometry;
+                    if (current != null)
+                    {
+                        // TODO: de-highlight this geometry...
+                        var renderer = current.FromRenderer as IHighlightable;
+                        if (renderer != null)
+                        {
+                            renderer.HighlightIndex = -2;
+                        }
+                    }
+                }
+
+                this.CurrentPickedGeometry = geometry;
             }
-
-            this.CurrentPickedGeometry = geometry;
         }
-
     }
 }

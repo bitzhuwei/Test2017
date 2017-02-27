@@ -35,7 +35,7 @@ namespace EMGraphics.Demo
                     var renderer = EMGraphics.EMRenderer.Create(model);
                     renderer.WorldPosition = center;
                     renderer.ModelSize = size;
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
                     this.scene.RootObject.Children.Add(obj);
 
                     (new FormProperyGrid(renderer)).Show();
@@ -48,7 +48,8 @@ namespace EMGraphics.Demo
                     renderer.ModelSize = size;
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
-                    obj.Enabled = false;
+
+                    renderer.Enabled = false;
 
                     (new FormProperyGrid(renderer)).Show();
                 }
@@ -81,7 +82,7 @@ namespace EMGraphics.Demo
                     CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
                     renderer.WorldPosition = center;
                     renderer.ModelSize = size;
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
                 }
                 {

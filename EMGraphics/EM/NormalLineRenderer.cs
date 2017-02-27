@@ -26,8 +26,8 @@ namespace EMGraphics
         public static NormalLineRenderer Create(NormalLineModel model)
         {
             var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"NormalLine.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"NormalLine.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
             map.Add("inPosition", NormalLineModel.strPosition);
             var renderer = new NormalLineRenderer(model, shaderCodes, map, EMModel.strPosition);

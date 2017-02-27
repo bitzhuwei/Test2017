@@ -11,7 +11,7 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class EMRenderer : PickableRenderer, IHighlightable
+    public partial class EMRenderer : PickableRenderer, IHighlightable
     {
         private const string strEMRenderer = "EMRenderer";
         /// <summary>
@@ -49,8 +49,8 @@ namespace EMGraphics
         public static EMRenderer Create(EMModel model)
         {
             var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"EM.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"EM.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMSmooth.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMSmooth.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
             map.Add("inPosition", EMModel.strPosition);
             map.Add("inColor", EMModel.strColor);
