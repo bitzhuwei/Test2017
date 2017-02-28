@@ -46,13 +46,12 @@ namespace EMGraphics.Demo
                 }
                 //{
                 //    // generate and display vertexes' normal lines.
-                //    vec3[] normals = positions.CalculateNormals(triangles);
-                //    float[] lengths = new float[positions.Length];
+                //    var lengths = new float[grid.VertexNormals.Length];
                 //    for (int i = 0; i < lengths.Length; i++)
                 //    {
-                //        lengths[i] = 0.5f;
+                //        lengths[i] = 0.1f;
                 //    }
-                //    var model = new NormalLineModel(positions, normals, lengths);
+                //    var model = new NormalLineModel(grid.VertexPositions, grid.VertexNormals, lengths);
                 //    var renderer = EMGraphics.NormalLineRenderer.Create(model);
                 //    renderer.HeadColor.Value = Color.Blue;
                 //    renderer.TailColor.Value = Color.Purple;

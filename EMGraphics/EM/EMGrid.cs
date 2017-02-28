@@ -29,9 +29,19 @@ namespace EMGraphics
         private VertexBuffer positionBuffer;
         private vec3[] vertexPositions;
 
+        public vec3[] VertexPositions
+        {
+            get { return vertexPositions; }
+        }
+
         public const string strNormal = "normal";
         private VertexBuffer normalBuffer;
         private vec3[] vertexNormals;
+
+        public vec3[] VertexNormals
+        {
+            get { return vertexNormals; }
+        }
 
         //public const string strIndex = "index";
         private IndexBuffer indexBuffer = null;

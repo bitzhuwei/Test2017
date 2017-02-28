@@ -52,7 +52,7 @@ void main(void)
 		{
 			gl_Position = mvpMatrix * gl_in[i].gl_Position;
 			vertex_out.isHighlight = highlight ? 1 : -1;
-			vertex_out.normal = normalize(normalMatrix * vertex_in[i].smoothNormal);
+			vertex_out.normal = -normalize(normalMatrix * vertex_in[i].smoothNormal);
 			EmitVertex();
 		}
 		EndPrimitive();	
