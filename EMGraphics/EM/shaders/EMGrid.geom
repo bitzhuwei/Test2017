@@ -35,7 +35,7 @@ void main(void)
 
 		vec3 v12 = vertexes[1] - vertexes[0];
 		vec3 v23 = vertexes[2] - vertexes[1];
-		vec3 normalLine = normalize(normalMatrix * cross(v23, v12));
+		vec3 normalLine = normalize(normalMatrix * cross(v12, v23));
 		
 		for (int i = 0; i < 3; i++)
 		{
@@ -52,7 +52,7 @@ void main(void)
 		{
 			gl_Position = mvpMatrix * gl_in[i].gl_Position;
 			vertex_out.isHighlight = highlight ? 1 : -1;
-			vertex_out.normal = -normalize(normalMatrix * vertex_in[i].smoothNormal);
+			vertex_out.normal = normalize(normalMatrix * vertex_in[i].smoothNormal);
 			EmitVertex();
 		}
 		EndPrimitive();	

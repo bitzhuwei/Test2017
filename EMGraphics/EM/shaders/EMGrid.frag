@@ -30,7 +30,7 @@ void main(void)
 		}
 		else// not highlight.
 		{
-			float diffuse = max(0.0, dot(fragment_in.normal, directionalLightDirection));
+			float diffuse = max(0.0, dot(fragment_in.normal, -directionalLightDirection));
 			
 			vec3 scatteredLight = ambientLight + directionalLightColor * diffuse;
 			vec3 rgb = min(regularColor * scatteredLight, vec3(1.0));

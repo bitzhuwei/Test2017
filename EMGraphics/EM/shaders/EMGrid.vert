@@ -12,7 +12,6 @@ out VS_GS_VERTEX
 uniform int highlightIndex0;
 uniform int highlightIndex1;
 uniform int highlightIndex2;
-uniform bool flatMode = true;
 
 void main(void)
 {
