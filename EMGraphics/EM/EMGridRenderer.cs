@@ -47,6 +47,7 @@ namespace EMGraphics
             shaderCodes[2] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
             map.Add("inPosition", EMGrid.strPosition);
+            map.Add("inNormal", EMGrid.strNormal);
             var renderer = new EMGridRenderer(model, shaderCodes, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
@@ -74,6 +75,8 @@ namespace EMGraphics
             this.HighlightColor = Color.Yellow;
 
             this.RegularColor = Color.Orange;
+
+            this.FlatMode = true;
         }
 
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
@@ -111,6 +114,7 @@ namespace EMGraphics
                 this.SetUniform("highlightIndex2", this.HighlightIndex2);
                 this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
                 this.SetUniform("regularColor", this.RegularColor.ToVec3());
+                this.SetUniform("flatMode", this.FlatMode);
 
                 base.DoRender(arg);
 
@@ -159,16 +163,10 @@ namespace EMGraphics
         /// </summary>
         public Color RegularColor { get; set; }
 
-        public EMRenderMode RenderMode { get; set; }
+        /// <summary>
+        /// true for flat mode; false for smooth mode.
+        /// </summary>
+        public bool FlatMode { get; set; }
 
-    }
-
-    /// <summary>
-    /// Flat or Smooth.
-    /// </summary>
-    public enum EMRenderMode
-    {
-        Flat,
-        Smooth,
     }
 }

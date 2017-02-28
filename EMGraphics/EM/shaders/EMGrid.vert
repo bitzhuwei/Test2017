@@ -1,15 +1,18 @@
 #version 150 core
 
 in vec3 inPosition;
+in vec3 inNormal;
 
 out VS_GS_VERTEX
 {
 	float isHighlight;
+	vec3 smoothNormal;
 } vertex_out;
 
 uniform int highlightIndex0;
 uniform int highlightIndex1;
 uniform int highlightIndex2;
+uniform bool flatMode = true;
 
 void main(void)
 {
@@ -30,5 +33,7 @@ void main(void)
 	{
 		vertex_out.isHighlight = -1.0;
 	}
+
+	vertex_out.smoothNormal = inNormal;
 }
 

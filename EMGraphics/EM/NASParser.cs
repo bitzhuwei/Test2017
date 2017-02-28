@@ -55,7 +55,7 @@ namespace EMGraphics
 
             for (int i = 0; i < vertexNormals.Length; i++)
             {
-                vertexNormals[i] = vertexNormals[i].normalize();
+                vertexNormals[i] = -vertexNormals[i].normalize();
             }
 
             grid = new EMGrid(vertexPositions, vertexNormals, triangles);
