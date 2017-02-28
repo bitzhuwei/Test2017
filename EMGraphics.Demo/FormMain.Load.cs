@@ -16,7 +16,7 @@ namespace EMGraphics.Demo
         {
             {
                 var camera = new Camera(
-                    new vec3(5, 4, 3) * 0.5f, new vec3(0, 0, 0), new vec3(0, 1, 0),
+                    new vec3(5, 4, 3) * 0.5f, new vec3(0, 0, 0), new vec3(0, 0, 1),
                     CameraType.Ortho, this.glCanvas1.Width, this.glCanvas1.Height);
                 var rotator = new SatelliteManipulater(System.Windows.Forms.MouseButtons.Left);
                 rotator.Bind(camera, this.glCanvas1);

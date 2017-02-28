@@ -68,7 +68,9 @@ namespace EMGraphics
             this.RenderFaces = true;
             this.RenderLines = true;
 
-            this.HighlightIndex = -2;
+            this.HighlightIndex0 = -2;
+            this.HighlightIndex1 = -2;
+            this.HighlightIndex2 = -2;
             this.HighlightColor = Color.Yellow;
 
             this.RegularColor = Color.Orange;
@@ -77,8 +79,9 @@ namespace EMGraphics
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
         private PolygonModeState polygonLineState = new PolygonModeState(PolygonMode.Line);
         private PolygonOffsetState offsetState = new PolygonOffsetLineState();
-        private LineWidthState lineWidthState = new LineWidthState(1.0f);
+        private LineWidthState lineWidthState = new LineWidthState(0.5f);
 
+		public LineWidthState LineWidth { get { return this.lineWidthState; } }
         protected override void DoRender(RenderEventArgs arg)
         {
             bool renderFaces = this.RenderFaces;
@@ -103,7 +106,9 @@ namespace EMGraphics
                 vec3 lightDirection = (arg.Camera.Target - arg.Camera.Position).normalize();
                 this.SetUniform("directionalLightDirection", lightDirection);
                 // highlight options:
-                this.SetUniform("highlightIndex", this.HighlightIndex);
+                this.SetUniform("highlightIndex0", this.HighlightIndex0);
+                this.SetUniform("highlightIndex1", this.HighlightIndex1);
+                this.SetUniform("highlightIndex2", this.HighlightIndex2);
                 this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
                 this.SetUniform("regularColor", this.RegularColor.ToVec3());
 
@@ -132,7 +137,15 @@ namespace EMGraphics
         /// <summary>
         /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
         /// </summary>
-        public int HighlightIndex { get; set; }
+        public int HighlightIndex0 { get; set; }
+        /// <summary>
+        /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
+        /// </summary>
+        public int HighlightIndex1 { get; set; }
+        /// <summary>
+        /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
+        /// </summary>
+        public int HighlightIndex2 { get; set; }
 
         /// <summary>
         /// 用什么颜色表示高亮？

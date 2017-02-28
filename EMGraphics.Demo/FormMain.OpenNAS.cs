@@ -71,7 +71,7 @@ namespace EMGraphics.Demo
                     if (max < size.z) { max = size.z; }
                     var model = new CenterAxisModel(max);
                     CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
-                    renderer.WorldPosition = center;
+                    //renderer.WorldPosition = center;
                     renderer.ModelSize = size;
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);

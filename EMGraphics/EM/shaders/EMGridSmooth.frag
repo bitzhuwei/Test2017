@@ -8,6 +8,7 @@ uniform float shininess;
 uniform float strength;
 uniform bool useLineColor;
 uniform int highlightIndex;
+uniform vec3 lineColor = vec3(0.8, 0.8, 0.8);
 
 in float isHighlight;
 in vec3 passNormal;
@@ -19,7 +20,7 @@ void main()
 {
 	if (useLineColor)
 	{
-		outColor = vec4(1, 1, 1, 1);
+		outColor = vec4(lineColor, 1);
 	}
 	else 
 	{

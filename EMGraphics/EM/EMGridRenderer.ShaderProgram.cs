@@ -31,24 +31,31 @@ namespace EMGraphics
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mode"></param>
-        public void SetRenderMode(EMRenderMode mode)
-        {
-            switch (mode)
-            {
-                case EMRenderMode.Flat:
-                    this.Program = this.flatShaderProgram;
-                    break;
-                case EMRenderMode.Smooth:
-                    this.Program = this.smoothShaderProgram;
-                    break;
-                default:
-                    throw new NotImplementedException();
-            }
-        }
+		public EMRenderMode RenderMode {
+			get
+			{
+				if (this.Program == this.flatShaderProgram)
+				{ return EMRenderMode.Flat; }
+				else if (this.Program == this.smoothShaderProgram)
+				{ return EMRenderMode.Smooth; }
+				else 
+				{ throw new NotImplementedException(); }
+			}
+			set
+			{
+				switch (value)
+				{
+					case EMRenderMode.Flat:
+						this.Program = this.flatShaderProgram;
+						break;
+					case EMRenderMode.Smooth:
+						this.Program = this.smoothShaderProgram;
+						break;
+					default:
+						throw new NotImplementedException();
+				}
+			}			
+		}
     }
 
     public enum EMRenderMode

@@ -15,27 +15,31 @@ out GS_FS_VERTEX
 } vertex_out;
 
 uniform mat4 mvpMatrix;
-uniform mat4 normalMatrix;
+uniform mat3 normalMatrix;
 
 void main(void)
 {
-    //int i;
 	vec3[3] vertexes;
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < gl_in.length(); i++)
 	{
-		vec4 position = gl_in[i].gl_Position;
-		vertexes[i] = vec3(position);
-		gl_Position = mvpMatrix * position;
-		EmitVertex();
+		vertexes[i] = vec3(gl_in[i].gl_Position);
 	}
 
     vec3 v12 = vertexes[1] - vertexes[0];
     vec3 v23 = vertexes[2] - vertexes[1];
-	vec3 normalLine = vec3(normalMatrix * vec4(cross(v12, v23), 1.0));
-    vertex_out.normal = normalize(normalLine);
-
-    vertex_out.isHighlight = vertex_in[0].isHighlight;
-
+	vec3 normalLine = normalize(normalMatrix * cross(v23, v12));
+	
+	bool highlight = (vertex_in[0].isHighlight > 0)
+		&& (vertex_in[1].isHighlight > 0)
+		&& (vertex_in[2].isHighlight > 0);
+	
+	for (int i = 0; i < 3; i++)
+	{
+		gl_Position = mvpMatrix * vec4(vertexes[i], 1.0);
+		vertex_out.isHighlight = highlight ? 1 : -1;
+		vertex_out.normal = normalLine;
+		EmitVertex();
+	}
 	EndPrimitive();
 }
 

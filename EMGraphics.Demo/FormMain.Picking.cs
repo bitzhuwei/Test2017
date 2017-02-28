@@ -57,10 +57,14 @@ namespace EMGraphics.Demo
                         switch (this.CurrentSelectingType)
                         {
                             case SelectingType.Triangle:
-                                renderer.HighlightIndex = (int)geometry.VertexIds[0];
+                                renderer.HighlightIndex0 = (int)geometry.VertexIds[0];
+                                renderer.HighlightIndex1 = (int)geometry.VertexIds[1];
+                                renderer.HighlightIndex2 = (int)geometry.VertexIds[2];
                                 break;
                             case SelectingType.Mesh:
-                                renderer.HighlightIndex = -1;
+                                renderer.HighlightIndex0 = -1;
+                                renderer.HighlightIndex1 = -1;
+                                renderer.HighlightIndex2 = -1;
                                 break;
                             case SelectingType.Face:
                                 throw new NotImplementedException();
@@ -80,7 +84,9 @@ namespace EMGraphics.Demo
                         var renderer = current.FromRenderer as IHighlightable;
                         if (renderer != null)
                         {
-                            renderer.HighlightIndex = -2;
+                            renderer.HighlightIndex0 = -2;
+                            renderer.HighlightIndex1 = -2;
+                            renderer.HighlightIndex2 = -2;
                         }
                     }
                 }

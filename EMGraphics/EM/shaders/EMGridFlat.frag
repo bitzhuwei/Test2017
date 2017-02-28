@@ -12,8 +12,7 @@ uniform vec3 directionalLightDirection;
 uniform bool useLineColor;
 uniform vec3 highlightColor;
 uniform vec3 regularColor;
-
-in float isHighlight;
+uniform vec3 lineColor = vec3(0.8, 0.8, 0.8);
 
 out vec4 outColor;
 
@@ -21,7 +20,7 @@ void main(void)
 {
 	if (useLineColor)
 	{
-		outColor = vec4(1, 1, 1, 1);
+		outColor = vec4(lineColor, 1);
 	}
 	else 
 	{
