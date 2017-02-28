@@ -39,7 +39,7 @@ void main(void)
 		
 		for (int i = 0; i < 3; i++)
 		{
-			gl_Position = mvpMatrix * vec4(vertexes[i], 1.0);
+			gl_Position = mvpMatrix * gl_in[i].gl_Position;
 			vertex_out.isHighlight = highlight ? 1 : -1;
 			vertex_out.normal = normalLine;
 			EmitVertex();
