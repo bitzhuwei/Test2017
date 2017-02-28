@@ -42,9 +42,9 @@ namespace EMGraphics
         public static EMGridRenderer Create(EMGrid model)
         {
             var shaderCodes = new ShaderCode[3];
-            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGridFlat.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGridFlat.geom"), ShaderType.GeometryShader);
-            shaderCodes[2] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGridFlat.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.geom"), ShaderType.GeometryShader);
+            shaderCodes[2] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.frag"), ShaderType.FragmentShader);
             var map = new AttributeMap();
             map.Add("inPosition", EMGrid.strPosition);
             var renderer = new EMGridRenderer(model, shaderCodes, map, EMGrid.strPosition);

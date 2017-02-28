@@ -640,9 +640,9 @@
     <None Include="Canvas\RenderContexts\readme.md" />
     <EmbeddedResource Include="EM\shaders\CenterAxis.frag" />
     <EmbeddedResource Include="EM\shaders\CenterAxis.vert" />
-    <EmbeddedResource Include="EM\shaders\EMGridFlat.frag" />
-    <EmbeddedResource Include="EM\shaders\EMGridFlat.geom" />
-    <EmbeddedResource Include="EM\shaders\EMGridFlat.vert" />
+    <EmbeddedResource Include="EM\shaders\EMGrid.frag" />
+    <EmbeddedResource Include="EM\shaders\EMGrid.geom" />
+    <EmbeddedResource Include="EM\shaders\EMGrid.vert" />
     <EmbeddedResource Include="EM\shaders\NormalLine.frag" />
     <EmbeddedResource Include="EM\shaders\NormalLine.vert" />
     <None Include="FontTexture\readme.md" />
