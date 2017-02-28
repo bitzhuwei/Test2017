@@ -81,7 +81,7 @@ namespace EMGraphics
         private PolygonOffsetState offsetState = new PolygonOffsetLineState();
         private LineWidthState lineWidthState = new LineWidthState(0.5f);
 
-		public LineWidthState LineWidth { get { return this.lineWidthState; } }
+        public LineWidthState LineWidth { get { return this.lineWidthState; } }
         protected override void DoRender(RenderEventArgs arg)
         {
             bool renderFaces = this.RenderFaces;
@@ -158,5 +158,17 @@ namespace EMGraphics
         /// 非高亮时的底色。
         /// </summary>
         public Color RegularColor { get; set; }
+
+        public EMRenderMode RenderMode { get; set; }
+
+    }
+
+    /// <summary>
+    /// Flat or Smooth.
+    /// </summary>
+    public enum EMRenderMode
+    {
+        Flat,
+        Smooth,
     }
 }

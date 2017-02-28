@@ -372,7 +372,6 @@
     <Compile Include="Canvas\Win32API\WndProc.cs" />
     <Compile Include="EM\CenterAxisModel.cs" />
     <Compile Include="EM\CenterAxisRenderer.cs" />
-    <Compile Include="EM\EMGridRenderer.ShaderProgram.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\CodedColorsHelper.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\LinesModel.cs" />
@@ -679,8 +678,6 @@
     <EmbeddedResource Include="Resources\TextModel.frag" />
     <EmbeddedResource Include="Resources\TextModel.vert" />
     <None Include="Scene\readme.md" />
-    <EmbeddedResource Include="EM\shaders\EMGridSmooth.frag" />
-    <EmbeddedResource Include="EM\shaders\EMGridSmooth.vert" />
     <Compile Include="EM\EMGridRenderer.cs" />
     <Compile Include="EM\Triangle.cs" />
     <None Include="UIRendering\readme.md" />
