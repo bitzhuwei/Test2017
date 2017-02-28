@@ -62,8 +62,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.glCanvas1 = new EMGraphics.GLCanvas();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnPickTriangle = new System.Windows.Forms.ToolStripButton();
+            this.btnPickMesh = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -306,9 +310,9 @@
             // statusStrip1
             // 
             this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Location = new System.Drawing.Point(0, 594);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 596);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(754, 24);
+            this.statusStrip1.Size = new System.Drawing.Size(754, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -323,14 +327,48 @@
             this.glCanvas1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.glCanvas1.Name = "glCanvas1";
             this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
-            this.glCanvas1.Size = new System.Drawing.Size(754, 566);
+            this.glCanvas1.Size = new System.Drawing.Size(754, 568);
             this.glCanvas1.TabIndex = 2;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnPickTriangle,
+            this.btnPickMesh});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(754, 27);
+            this.toolStrip1.TabIndex = 3;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // btnPickTriangle
+            // 
+            this.btnPickTriangle.BackColor = System.Drawing.SystemColors.Control;
+            this.btnPickTriangle.Image = ((System.Drawing.Image)(resources.GetObject("btnPickTriangle.Image")));
+            this.btnPickTriangle.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPickTriangle.Name = "btnPickTriangle";
+            this.btnPickTriangle.Size = new System.Drawing.Size(92, 24);
+            this.btnPickTriangle.Text = "Triangle";
+            this.btnPickTriangle.ToolTipText = "Pick Triangle";
+            this.btnPickTriangle.Click += new System.EventHandler(this.btnPickTriangle_Click);
+            // 
+            // btnPickMesh
+            // 
+            this.btnPickMesh.Image = ((System.Drawing.Image)(resources.GetObject("btnPickMesh.Image")));
+            this.btnPickMesh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPickMesh.Name = "btnPickMesh";
+            this.btnPickMesh.Size = new System.Drawing.Size(73, 24);
+            this.btnPickMesh.Text = "Mesh";
+            this.btnPickMesh.ToolTipText = "Pick Mesh";
+            this.btnPickMesh.Click += new System.EventHandler(this.btnPickMesh_Click);
             // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(754, 618);
+            this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.glCanvas1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.menuStrip1);
@@ -341,6 +379,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).EndInit();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -381,5 +421,8 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private EMGraphics.GLCanvas glCanvas1;
         private System.Windows.Forms.OpenFileDialog openFileDlg;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton btnPickTriangle;
+        private System.Windows.Forms.ToolStripButton btnPickMesh;
     }
 }

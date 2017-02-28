@@ -40,6 +40,10 @@ namespace EMGraphics.Demo
             //    builder.AppendLine("2: Canvas' property grid.");
             //    MessageBox.Show(builder.ToString());
             //}
+
+            {
+                this.btnPickTriangle_Click(this.btnPickTriangle, e);
+            }
         }
     }
 }

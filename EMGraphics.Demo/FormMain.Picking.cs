@@ -22,6 +22,22 @@ namespace EMGraphics.Demo
         /// </summary>
         public PickedGeometry CurrentPickedGeometry { get; set; }
 
+        private void btnPickTriangle_Click(object sender, EventArgs e)
+        {
+            this.CurrentSelectingType = SelectingType.Triangle;
+
+            this.btnPickTriangle.ForeColor = Color.Green;
+            this.btnPickMesh.ForeColor = Color.Black;
+        }
+
+        private void btnPickMesh_Click(object sender, EventArgs e)
+        {
+            this.CurrentSelectingType = SelectingType.Mesh;
+
+            this.btnPickTriangle.ForeColor = Color.Black;
+            this.btnPickMesh.ForeColor = Color.Green;
+        }
+
         /// <summary>
         /// 用什么颜色表示高亮？
         /// </summary>

@@ -40,5 +40,6 @@ namespace EMGraphics.Demo
         {
             this.scene.Render();
         }
+
     }
 }
