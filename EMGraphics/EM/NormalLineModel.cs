@@ -10,13 +10,16 @@ namespace EMGraphics
     /// </summary>
     public class NormalLineModel : IBufferable, IModelSpace
     {
+        public string Label { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="normalPositions">root positions of every normal line.</param>
         /// <param name="normalDirections">directions of every normal line.</param>
         /// <param name="normalLengths">lengths of every normal line.</param>
-        public NormalLineModel(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths)
+        /// <param name="label"></param>
+        public NormalLineModel(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths, string label)
         {
             if (normalPositions == null || normalDirections == null || normalLengths == null)
             { throw new ArgumentNullException(); }
@@ -28,6 +31,7 @@ namespace EMGraphics
             this.vertexCount = normalPositions.Length * 4;
             BoundingBox box = normalPositions.Move2Center();
             this.normalPositions = normalPositions;
+            this.Label = label;
             this.ModelSize = box.MaxPosition - box.MinPosition;
             this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             this.normalDirections = normalDirections;

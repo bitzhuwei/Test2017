@@ -10,12 +10,23 @@ namespace EMGraphics
     /// </summary>
     public class EMGrid : IBufferable, IModelSpace
     {
-        public EMGrid(vec3[] vertexPositions, vec3[] normals, Triangle[] triangles)
+
+        public string Label { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vertexPositions"></param>
+        /// <param name="normals"></param>
+        /// <param name="triangles"></param>
+        /// <param name="label"></param>
+        public EMGrid(vec3[] vertexPositions, vec3[] normals, Triangle[] triangles, string label)
         {
             BoundingBox box = vertexPositions.Move2Center();
             this.vertexPositions = vertexPositions;
             this.vertexNormals = normals;
             this.triangles = triangles;
+            this.Label = label;
             this.ModelSize = box.MaxPosition - box.MinPosition;
             this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             this.RotationAngleDegree = 0;

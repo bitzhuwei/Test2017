@@ -18,31 +18,32 @@ namespace EMGraphics.Demo
             {
                 this.scene.RootObject.Children.Clear();
 
-                EMGrid grid; NormalLineModel normalLineModel; BoundingBox box;
+                List<EMGrid> gridList; List<NormalLineModel> normalLineModelList; BoundingBox box;
                 NASFile file = NASFile.Load(openFileDlg.FileName);
-                file.Parse(out grid, out normalLineModel, out box);
+                file.Parse(out gridList, out normalLineModelList, out box);
                 vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
                 vec3 size = box.MaxPosition - box.MinPosition;
+                foreach (EMGrid grid in gridList)
                 {
                     var renderer = EMGraphics.EMGridRenderer.Create(grid);
-                    renderer.WorldPosition = center;
+                    renderer.WorldPosition += center;
                     renderer.ModelSize = size;
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: true);
+                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
-
-                    (new FormProperyGrid(renderer)).Show();
+                    //(new FormProperyGrid(renderer)).Show();
                 }
+                foreach (NormalLineModel model in normalLineModelList)
                 {
                     // generate and display faces' normal lines.
-                    var renderer = EMGraphics.NormalLineRenderer.Create(normalLineModel);
-                    renderer.WorldPosition = center;
+                    var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                    renderer.WorldPosition += center;
                     renderer.ModelSize = size;
                     SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(obj);
 
                     renderer.Enabled = false;
 
-                    (new FormProperyGrid(renderer)).Show();
+                    //(new FormProperyGrid(renderer)).Show();
                 }
                 //{
                 //    // generate and display vertexes' normal lines.

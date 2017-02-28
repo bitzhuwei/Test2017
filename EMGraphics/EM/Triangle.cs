@@ -40,11 +40,24 @@ namespace EMGraphics
         /// </summary>
         public double Area { get; set; }
 
-        public Triangle(int num1, int num2, int num3)
+        /// <summary>
+        /// 网格的标签
+        /// </summary>
+        public string FaceLabel { get; set; }
+
+        public Triangle(int num1, int num2, int num3, string faceLabel)
         {
             this.Num1 = num1;
             this.Num2 = num2;
             this.Num3 = num3;
+            this.FaceLabel = faceLabel;
+        }
+
+        internal int IndexOfTriangles { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}, {2}, label: {3}", this.Num1, this.Num2, this.Num3, this.FaceLabel);
         }
     }
 }

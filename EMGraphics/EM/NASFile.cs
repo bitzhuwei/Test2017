@@ -16,14 +16,14 @@ namespace EMGraphics
         /// <summary>
         /// vertexes in this *.nas file.
         /// </summary>
-        public List<vec3> Points { get; private set; }
+        public vec3[] Points { get; private set; }
 
         /// <summary>
         /// triangles in this *.nas file.
         /// </summary>
-        public List<Triangle> Triangles { get; private set; }
+        public Triangle[] Triangles { get; private set; }
 
-        private NASFile(List<vec3> points, List<Triangle> triangles)
+        private NASFile(vec3[] points, Triangle[] triangles)
         {
             this.Points = points;
             this.Triangles = triangles;
@@ -96,14 +96,35 @@ namespace EMGraphics
                     }
                     else if (line.Length >= 5 && line.Substring(0, 5) == "CTRIA")
                     {
+                        string label = parts[2];
                         ctria1 = int.Parse(parts[3]) - pointIndexMin;//第一个点
                         ctria2 = int.Parse(parts[4]) - pointIndexMin;//第二个点
                         ctria3 = int.Parse(parts[5]) - pointIndexMin;//第三个点
-                        triangles.Add(new Triangle(ctria1, ctria2, ctria3));
+                        var triangle = new Triangle(ctria1, ctria2, ctria3, label);
+                        triangle.IndexOfTriangles = triangles.Count;
+                        triangles.Add(triangle);
                     }
                 } while (true);
 
-                result = new NASFile(points, triangles);
+                //for (int i = 0; i < triangles.Count - 1; i++)
+                //{
+                //    int p = i;
+                //    for (int j = i + 1; j < triangles.Count; j++)
+                //    {
+                //        if (triangles[p].FaceLabel.CompareTo(triangles[j].FaceLabel) > 0)
+                //        {
+                //            p = j;
+                //        }
+                //    }
+                //    if (p != i)
+                //    {
+                //        Triangle tmp = triangles[i];
+                //        triangles[i] = triangles[p];
+                //        triangles[p] = tmp;
+                //    }
+                //}
+
+                result = new NASFile(points.ToArray(), triangles.ToArray());
             }
 
             return result;
