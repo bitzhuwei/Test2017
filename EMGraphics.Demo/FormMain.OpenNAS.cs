@@ -39,7 +39,7 @@ namespace EMGraphics.Demo
                     notPickedGroup.PickingEnabled = false;
                     this.scene.RootObject.Children.Add(notPickedGroup);
                     this.notPickedGroup = notPickedGroup;
-                    var pickedGroup = new SceneObject(); pickedGroup.Name = string.Format("Picked Grids.");
+                    var pickedGroup = new SceneObject(); pickedGroup.Name = string.Format("Picked Group.");
                     pickedGroup.RenderingEnabled = false;
                     pickedGroup.PickingEnabled = false;
                     this.scene.RootObject.Children.Add(pickedGroup);
@@ -80,14 +80,21 @@ namespace EMGraphics.Demo
         private static SceneObject GetNotPickedGroup(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
         {
             var gridObjects = new SceneObject[gridList.Count];
+            for (int i = 0; i < gridObjects.Length; i++)
+            {
+                var obj = new SceneObject();
+                obj.Name = string.Format("Mesh & Face Normal [{0}/{1}]", i + 1, gridObjects.Length);
+                gridObjects[i] = obj;
+            }
             for (int i = 0; i < gridList.Count; i++)
             {
                 EMGrid grid = gridList[i];
                 var renderer = EMGridRenderer.Create(grid);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
-                gridObjects[i] = renderer.WrapToSceneObject(string.Format(
+                SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
+                gridObjects[i].Children.Add(obj);
             }
             // generate and display faces' normal lines.
             for (int i = 0; i < normalLineModelList.Count; i++)
@@ -99,10 +106,11 @@ namespace EMGraphics.Demo
                 SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Face Normal Line of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
                 obj.RenderingEnabled = false;
+                obj.PickingEnabled = false;
                 gridObjects[i].Children.Add(obj);
             }
 
-            var notPickedGroup = new SceneObject(); notPickedGroup.Name = string.Format("Not Picked Grids.");
+            var notPickedGroup = new SceneObject(); notPickedGroup.Name = string.Format("Not Picked Group.");
             for (int i = 0; i < gridObjects.Length; i++) { notPickedGroup.Children.Add(gridObjects[i]); }
             return notPickedGroup;
         }
