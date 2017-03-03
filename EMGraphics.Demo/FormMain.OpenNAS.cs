@@ -23,49 +23,10 @@ namespace EMGraphics.Demo
                 file.Parse(out gridList, out normalLineModelList, out box);
                 vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
                 vec3 size = box.MaxPosition - box.MinPosition;
-                var gridObjects = new SceneObject[gridList.Count];
-                for (int i = 0; i < gridList.Count; i++)
-                {
-                    EMGrid grid = gridList[i];
-                    var renderer = EMGraphics.EMGridRenderer.Create(grid);
-                    renderer.WorldPosition += center;
-                    renderer.ModelSize = size;
-                    gridObjects[i] = renderer.WrapToSceneObject(generateBoundingBox: false);
-                }
-                // generate and display faces' normal lines.
-                for (int i = 0; i < normalLineModelList.Count; i++)
-                {
-                    NormalLineModel model = normalLineModelList[i];
-                    var renderer = EMGraphics.NormalLineRenderer.Create(model);
-                    renderer.WorldPosition += center;
-                    renderer.ModelSize = size;
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    obj.Enabled = false;
-                    gridObjects[i].Children.Add(obj);
-                }
 
-                var partsObject = new SceneObject(); partsObject.Name = string.Format("Model's all [{0}] meshes.", gridObjects.Length);
-                for (int i = 0; i < gridObjects.Length; i++) { partsObject.Children.Add(gridObjects[i]); }
+                SceneObject partsObject = GetPartsObject(gridList, normalLineModelList, center, size);
 
                 this.scene.RootObject.Children.Add(partsObject);
-                //{
-                //    // generate and display vertexes' normal lines.
-                //    var lengths = new float[grid.VertexNormals.Length];
-                //    for (int i = 0; i < lengths.Length; i++)
-                //    {
-                //        lengths[i] = 0.1f;
-                //    }
-                //    var model = new NormalLineModel(grid.VertexPositions, grid.VertexNormals, lengths);
-                //    var renderer = EMGraphics.NormalLineRenderer.Create(model);
-                //    renderer.HeadColor.Value = Color.Blue;
-                //    renderer.TailColor.Value = Color.Purple;
-                //    renderer.WorldPosition = center;
-                //    renderer.ModelSize = size;
-                //    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                //    this.scene.RootObject.Children.Add(obj);
-
-                //    (new FormProperyGrid(renderer)).Show();
-                //}
                 {
                     // center axis 
                     // NOTE: this renderer must be the last one!
@@ -85,6 +46,34 @@ namespace EMGraphics.Demo
 
                 this.glCanvas1.Repaint();
             }
+        }
+
+        private static SceneObject GetPartsObject(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
+        {
+            var gridObjects = new SceneObject[gridList.Count];
+            for (int i = 0; i < gridList.Count; i++)
+            {
+                EMGrid grid = gridList[i];
+                var renderer = EMGraphics.EMGridRenderer.Create(grid);
+                renderer.WorldPosition += center;
+                renderer.ModelSize = size;
+                gridObjects[i] = renderer.WrapToSceneObject(generateBoundingBox: false);
+            }
+            // generate and display faces' normal lines.
+            for (int i = 0; i < normalLineModelList.Count; i++)
+            {
+                NormalLineModel model = normalLineModelList[i];
+                var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                renderer.WorldPosition += center;
+                renderer.ModelSize = size;
+                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                obj.Enabled = false;
+                gridObjects[i].Children.Add(obj);
+            }
+
+            var partsObject = new SceneObject(); partsObject.Name = string.Format("Model's all [{0}] meshes.", gridObjects.Length);
+            for (int i = 0; i < gridObjects.Length; i++) { partsObject.Children.Add(gridObjects[i]); }
+            return partsObject;
         }
 
     }
