@@ -15,7 +15,86 @@ namespace EMGraphics.Demo
         /// <summary>
         /// 选中模式：三角形、网格、面、模型？
         /// </summary>
-        public SelectingType CurrentSelectingType { get; set; }
+        public SelectingType CurrentSelectingType
+        {
+            get { return this.currentSelectingType; }
+            set
+            {
+                this.currentSelectingType = value;
+                switch (value)
+                {
+                    case SelectingType.Triangle:
+                        {
+                            SceneObject whole = this.wholeObject;
+                            if (whole != null)
+                            {
+                                whole.RenderingEnabled = true;
+                                whole.PickingEnabled = true;
+                            }
+                            SceneObject notPicked = this.notPickedGroup;
+                            if (notPicked != null)
+                            {
+                                notPicked.RenderingEnabled = false;
+                                notPicked.PickingEnabled = false;
+                            }
+                            SceneObject picked = this.pickedGroup;
+                            if (picked != null)
+                            {
+                                picked.RenderingEnabled = false;
+                                picked.PickingEnabled = false;
+                            }
+                        }
+                        break;
+                    case SelectingType.Mesh:
+                        {
+                            SceneObject whole = this.wholeObject;
+                            if (whole != null)
+                            {
+                                whole.RenderingEnabled = true;
+                                whole.PickingEnabled = false;
+                            }
+                            SceneObject notPicked = this.notPickedGroup;
+                            if (notPicked != null)
+                            {
+                                notPicked.RenderingEnabled = false;
+                                notPicked.PickingEnabled = true;
+                            }
+                            SceneObject picked = this.pickedGroup;
+                            if (picked != null)
+                            {
+                                picked.RenderingEnabled = true;
+                                picked.PickingEnabled = true;
+                            }
+                        }
+                        break;
+                    case SelectingType.Model:
+                        {
+                            SceneObject whole = this.wholeObject;
+                            if (whole != null)
+                            {
+                                whole.RenderingEnabled = true;
+                                whole.PickingEnabled = true;
+                            }
+                            SceneObject notPicked = this.notPickedGroup;
+                            if (notPicked != null)
+                            {
+                                notPicked.RenderingEnabled = false;
+                                notPicked.PickingEnabled = false;
+                            }
+                            SceneObject picked = this.pickedGroup;
+                            if (picked != null)
+                            {
+                                picked.RenderingEnabled = false;
+                                picked.PickingEnabled = false;
+                            }
+                        }
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
+            }
+        }
+        private SelectingType currentSelectingType;
 
         /// <summary>
         /// 当前选中的几何图形（三角形）及其上下文信息。
@@ -59,11 +138,49 @@ namespace EMGraphics.Demo
                 if (current != null)
                 {
                     DeHighlight(current);
+
+                    var renderer = current.FromRenderer as RendererBase;
+                    if (renderer != null)
+                    {
+                        SceneObject obj = renderer.BindingSceneObject;
+                        if (obj != null)
+                        {
+                            ITreeNode<SceneObject> parent = obj.Parent;
+                            if (parent != null)
+                            {
+                                ITreeNode<SceneObject> target = parent.Parent;
+                                if (target == this.pickedGroup)
+                                {
+                                    this.pickedGroup.Children.Remove(renderer.BindingSceneObject);
+                                    this.notPickedGroup.Children.Add(renderer.BindingSceneObject);
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (geometry != null)
                 {
                     Highlight(geometry);
+
+                    var renderer = geometry.FromRenderer as RendererBase;
+                    if (renderer != null)
+                    {
+                        SceneObject obj = renderer.BindingSceneObject;
+                        if (obj != null)
+                        {
+                            ITreeNode<SceneObject> parent = obj.Parent;
+                            if (parent != null)
+                            {
+                                ITreeNode<SceneObject> target = parent.Parent;
+                                if (target == this.notPickedGroup)
+                                {
+                                    this.notPickedGroup.Children.Remove(renderer.BindingSceneObject);
+                                    this.pickedGroup.Children.Add(renderer.BindingSceneObject);
+                                }
+                            }
+                        }
+                    }
                 }
 
                 this.CurrentPickedGeometry = geometry;
@@ -109,7 +226,10 @@ namespace EMGraphics.Demo
                         renderer.HighlightIndex2 = -1;
                         break;
                     case SelectingType.Model:
-                        throw new NotImplementedException();
+                        renderer.HighlightIndex0 = -1;
+                        renderer.HighlightIndex1 = -1;
+                        renderer.HighlightIndex2 = -1;
+                        break;
                     default:
                         throw new NotImplementedException();
                 }
