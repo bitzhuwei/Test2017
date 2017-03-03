@@ -29,8 +29,13 @@ namespace EMGraphics.Demo
 
                 {
                     SceneObject notPickedGroup = GetNotPickedGroup(gridList, normalLineModelList, center, size);
+                    notPickedGroup.RenderingEnabled = false;
+                    notPickedGroup.PickingEnabled = false;
+                    this.scene.RootObject.Children.Add(notPickedGroup);
                     var pickedGroup = new SceneObject(); pickedGroup.Name = string.Format("Picked Grids.");
-                    //this.scene.RootObject.Children.Add(partsObject);
+                    pickedGroup.RenderingEnabled = false;
+                    pickedGroup.PickingEnabled = false;
+                    this.scene.RootObject.Children.Add(pickedGroup);
                 }
 
                 {
@@ -85,7 +90,7 @@ namespace EMGraphics.Demo
                 renderer.ModelSize = size;
                 SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Face Normal Line of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
-                obj.Enabled = false;
+                obj.RenderingEnabled = false;
                 gridObjects[i].Children.Add(obj);
             }
 

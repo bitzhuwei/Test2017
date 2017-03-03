@@ -145,7 +145,7 @@ namespace EMGraphics
 
         private void RenderPickableObject(SceneObject sceneObject, RenderEventArgs arg, ref  uint renderedVertexCount, List<IPickable> pickedRendererList)
         {
-            if ((sceneObject == null) || (!sceneObject.Enabled)) { return; }
+            if ((sceneObject == null) || (!sceneObject.PickingEnabled)) { return; }
 
             // global switches on.
             GLState[] switchArray = sceneObject.GroupStateList.ToArray();

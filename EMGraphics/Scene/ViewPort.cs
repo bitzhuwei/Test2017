@@ -226,7 +226,7 @@ namespace EMGraphics
         /// <param name="arg"></param>
         private void RenderObject(ITreeNode<SceneObject> sceneObject, RenderEventArgs arg)
         {
-            if (sceneObject.Content.Enabled)
+            if (sceneObject.Content.RenderingEnabled)
             {
                 //sceneObject.DoBeforeRendering();
                 GLState[] switchArray = sceneObject.Content.GroupStateList.ToArray();
