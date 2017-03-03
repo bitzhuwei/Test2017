@@ -21,27 +21,27 @@ namespace EMGraphics
             vec3[] allVertexPositions = file.VertexPositions;
             box = allVertexPositions.Move2Center();
 
-            var meshGroups = from item in file.Triangles
+            var gridGroups = from item in file.Triangles
                              group item by item.FaceLabel;
 
-            gridList = FindGridList(file, meshGroups);
+            gridList = FindGridList(file, gridGroups);
 
-            normalLineModelList = FindNormaLineModelList(file, meshGroups);
+            normalLineModelList = FindNormaLineModelList(file, gridGroups);
 
             //gridList.Add(new EMGrid(allVertexPositions, allVertexNormals, allTriangles, "test"));
             //normalLineModelList.Add(new NormalLineModel(allFaceNormalPositions, allFaceNormalDirections, allFaceNormalLengths, "test2"));
         }
 
-        private static List<NormalLineModel> FindNormaLineModelList(NASFile file, IEnumerable<IGrouping<string, Triangle>> meshGroups)
+        private static List<NormalLineModel> FindNormaLineModelList(NASFile file, IEnumerable<IGrouping<string, Triangle>> gridGroups)
         {
             var list = new List<NormalLineModel>();
             vec3[] positions = file.FaceNormalPositions;
             vec3[] normals = file.FaceNormalDirections;
             float[] lengths = file.FaceNormalLengths;
 
-            foreach (var group in meshGroups)
+            foreach (var group in gridGroups)
             {
-                var dict = new Dictionary<int, int>();// index of all -> index of this mesh
+                var dict = new Dictionary<int, int>();// index of all -> index of this grid
                 string label = group.Key;
                 int count = group.Count();
 
@@ -65,15 +65,15 @@ namespace EMGraphics
             return list;
         }
 
-        private static List<EMGrid> FindGridList(NASFile file, IEnumerable<IGrouping<string, Triangle>> meshGroups)
+        private static List<EMGrid> FindGridList(NASFile file, IEnumerable<IGrouping<string, Triangle>> gridGroups)
         {
             var list = new List<EMGrid>();
             vec3[] allVertexPositions = file.VertexPositions;
             vec3[] allVertexNormals = file.VertexNormals;
 
-            foreach (var group in meshGroups)
+            foreach (var group in gridGroups)
             {
-                var dict = new Dictionary<int, int>();// index of all -> index of this mesh
+                var dict = new Dictionary<int, int>();// index of all -> index of this grid
                 string label = group.Key;
                 int count = group.Count();
                 var positions = new List<vec3>();

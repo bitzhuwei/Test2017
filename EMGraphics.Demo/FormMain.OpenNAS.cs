@@ -25,11 +25,14 @@ namespace EMGraphics.Demo
                 vec3 size = box.MaxPosition - box.MinPosition;
 
                 SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
-
-                //SceneObject partsObject = GetPartsObject(gridList, normalLineModelList, center, size);
-
                 this.scene.RootObject.Children.Add(wholeObject);
-                //this.scene.RootObject.Children.Add(partsObject);
+
+                {
+                    SceneObject notPickedGroup = GetNotPickedGroup(gridList, normalLineModelList, center, size);
+                    var pickedGroup = new SceneObject(); pickedGroup.Name = string.Format("Picked Grids.");
+                    //this.scene.RootObject.Children.Add(partsObject);
+                }
+
                 {
                     // center axis 
                     // NOTE: this renderer must be the last one!
@@ -61,7 +64,7 @@ namespace EMGraphics.Demo
             return obj;
         }
 
-        private static SceneObject GetPartsObject(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
+        private static SceneObject GetNotPickedGroup(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
         {
             var gridObjects = new SceneObject[gridList.Count];
             for (int i = 0; i < gridList.Count; i++)
@@ -70,7 +73,8 @@ namespace EMGraphics.Demo
                 var renderer = EMGridRenderer.Create(grid);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
-                gridObjects[i] = renderer.WrapToSceneObject(generateBoundingBox: false);
+                gridObjects[i] = renderer.WrapToSceneObject(string.Format(
+                    "Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
             }
             // generate and display faces' normal lines.
             for (int i = 0; i < normalLineModelList.Count; i++)
@@ -79,14 +83,15 @@ namespace EMGraphics.Demo
                 var renderer = NormalLineRenderer.Create(model);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
-                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                SceneObject obj = renderer.WrapToSceneObject(string.Format(
+                    "Face Normal Line of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
                 obj.Enabled = false;
                 gridObjects[i].Children.Add(obj);
             }
 
-            var partsObject = new SceneObject(); partsObject.Name = string.Format("Model's all [{0}] meshes.", gridObjects.Length);
-            for (int i = 0; i < gridObjects.Length; i++) { partsObject.Children.Add(gridObjects[i]); }
-            return partsObject;
+            var notPickedGroup = new SceneObject(); notPickedGroup.Name = string.Format("Not Picked Grids.");
+            for (int i = 0; i < gridObjects.Length; i++) { notPickedGroup.Children.Add(gridObjects[i]); }
+            return notPickedGroup;
         }
 
     }
