@@ -40,7 +40,7 @@ namespace EMGraphics.Demo
                     this.scene.RootObject.Children.Add(notPickedGroup);
                     this.notPickedGroup = notPickedGroup;
                     var pickedGroup = new SceneObject(); pickedGroup.Name = string.Format("Picked Group.");
-                    pickedGroup.RenderingEnabled = false;
+                    //pickedGroup.RenderingEnabled = true;
                     pickedGroup.PickingEnabled = false;
                     this.scene.RootObject.Children.Add(pickedGroup);
                     this.pickedGroup = pickedGroup;

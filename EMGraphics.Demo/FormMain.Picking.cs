@@ -28,19 +28,16 @@ namespace EMGraphics.Demo
                             SceneObject whole = this.wholeObject;
                             if (whole != null)
                             {
-                                whole.RenderingEnabled = true;
                                 whole.PickingEnabled = true;
                             }
                             SceneObject notPicked = this.notPickedGroup;
                             if (notPicked != null)
                             {
-                                notPicked.RenderingEnabled = false;
                                 notPicked.PickingEnabled = false;
                             }
                             SceneObject picked = this.pickedGroup;
                             if (picked != null)
                             {
-                                picked.RenderingEnabled = false;
                                 picked.PickingEnabled = false;
                             }
                         }
@@ -50,19 +47,16 @@ namespace EMGraphics.Demo
                             SceneObject whole = this.wholeObject;
                             if (whole != null)
                             {
-                                whole.RenderingEnabled = true;
                                 whole.PickingEnabled = false;
                             }
                             SceneObject notPicked = this.notPickedGroup;
                             if (notPicked != null)
                             {
-                                notPicked.RenderingEnabled = false;
                                 notPicked.PickingEnabled = true;
                             }
                             SceneObject picked = this.pickedGroup;
                             if (picked != null)
                             {
-                                picked.RenderingEnabled = true;
                                 picked.PickingEnabled = true;
                             }
                         }
@@ -72,19 +66,16 @@ namespace EMGraphics.Demo
                             SceneObject whole = this.wholeObject;
                             if (whole != null)
                             {
-                                whole.RenderingEnabled = true;
                                 whole.PickingEnabled = true;
                             }
                             SceneObject notPicked = this.notPickedGroup;
                             if (notPicked != null)
                             {
-                                notPicked.RenderingEnabled = false;
                                 notPicked.PickingEnabled = false;
                             }
                             SceneObject picked = this.pickedGroup;
                             if (picked != null)
                             {
-                                picked.RenderingEnabled = false;
                                 picked.PickingEnabled = false;
                             }
                         }
@@ -105,16 +96,68 @@ namespace EMGraphics.Demo
         {
             this.CurrentSelectingType = SelectingType.Triangle;
 
+            PickedGeometry current = this.CurrentPickedGeometry;
+            if (current != null)
+            {
+                DeHighlight(current);
+                this.CurrentPickedGeometry = null;
+            }
+
+            ResetPickedGroup();
+
             this.btnPickTriangle.ForeColor = Color.Green;
             this.btnPickMesh.ForeColor = Color.Black;
+            this.btnPickModel.ForeColor = Color.Black;
         }
 
         private void btnPickMesh_Click(object sender, EventArgs e)
         {
             this.CurrentSelectingType = SelectingType.Mesh;
 
+            PickedGeometry current = this.CurrentPickedGeometry;
+            if (current != null)
+            {
+                DeHighlight(current);
+                this.CurrentPickedGeometry = null;
+            }
+
+            ResetPickedGroup();
+
             this.btnPickTriangle.ForeColor = Color.Black;
             this.btnPickMesh.ForeColor = Color.Green;
+            this.btnPickModel.ForeColor = Color.Black;
+        }
+
+        private void btnPickModel_Click(object sender, EventArgs e)
+        {
+            this.CurrentSelectingType = SelectingType.Model;
+
+            PickedGeometry current = this.CurrentPickedGeometry;
+            if (current != null)
+            {
+                DeHighlight(current);
+                this.CurrentPickedGeometry = null;
+            }
+
+            ResetPickedGroup();
+
+            this.btnPickTriangle.ForeColor = Color.Black;
+            this.btnPickMesh.ForeColor = Color.Black;
+            this.btnPickModel.ForeColor = Color.Green;
+        }
+
+        private void ResetPickedGroup()
+        {
+            SceneObject picked = this.pickedGroup;
+            SceneObject notPicked = this.notPickedGroup;
+            if (picked != null && notPicked != null)
+            {
+                foreach (var item in picked.Children)
+                {
+                    notPickedGroup.Children.Add(item);
+                }
+                picked.Children.Clear();
+            }
         }
 
         /// <summary>
@@ -138,49 +181,12 @@ namespace EMGraphics.Demo
                 if (current != null)
                 {
                     DeHighlight(current);
-
-                    var renderer = current.FromRenderer as RendererBase;
-                    if (renderer != null)
-                    {
-                        SceneObject obj = renderer.BindingSceneObject;
-                        if (obj != null)
-                        {
-                            ITreeNode<SceneObject> parent = obj.Parent;
-                            if (parent != null)
-                            {
-                                ITreeNode<SceneObject> target = parent.Parent;
-                                if (target == this.pickedGroup)
-                                {
-                                    this.pickedGroup.Children.Remove(renderer.BindingSceneObject);
-                                    this.notPickedGroup.Children.Add(renderer.BindingSceneObject);
-                                }
-                            }
-                        }
-                    }
+                    this.CurrentPickedGeometry = null;
                 }
 
                 if (geometry != null)
                 {
                     Highlight(geometry);
-
-                    var renderer = geometry.FromRenderer as RendererBase;
-                    if (renderer != null)
-                    {
-                        SceneObject obj = renderer.BindingSceneObject;
-                        if (obj != null)
-                        {
-                            ITreeNode<SceneObject> parent = obj.Parent;
-                            if (parent != null)
-                            {
-                                ITreeNode<SceneObject> target = parent.Parent;
-                                if (target == this.notPickedGroup)
-                                {
-                                    this.notPickedGroup.Children.Remove(renderer.BindingSceneObject);
-                                    this.pickedGroup.Children.Add(renderer.BindingSceneObject);
-                                }
-                            }
-                        }
-                    }
                 }
 
                 this.CurrentPickedGeometry = geometry;
@@ -189,12 +195,35 @@ namespace EMGraphics.Demo
 
         private void DeHighlight(PickedGeometry pickedGeometry)
         {
-            var renderer = pickedGeometry.FromRenderer as IHighlightable;
-            if (renderer != null)
             {
-                renderer.HighlightIndex0 = -2;
-                renderer.HighlightIndex1 = -2;
-                renderer.HighlightIndex2 = -2;
+                var renderer = pickedGeometry.FromRenderer as IHighlightable;
+                if (renderer != null)
+                {
+                    renderer.HighlightIndex0 = -2;
+                    renderer.HighlightIndex1 = -2;
+                    renderer.HighlightIndex2 = -2;
+                }
+            }
+
+            {
+                var renderer = pickedGeometry.FromRenderer as RendererBase;
+                if (renderer != null)
+                {
+                    SceneObject obj = renderer.BindingSceneObject;// mesh xxx/yyy
+                    if (obj != null)
+                    {
+                        ITreeNode<SceneObject> parent = obj.Parent;// mesh & face normal xxx/yyy
+                        if (parent != null)
+                        {
+                            ITreeNode<SceneObject> target = parent.Parent;
+                            if (target == this.pickedGroup)
+                            {
+                                this.pickedGroup.Children.Remove(parent);
+                                this.notPickedGroup.Children.Add(parent);
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -209,29 +238,51 @@ namespace EMGraphics.Demo
             this.frmDisplayPickedGeometry.SetText(geometry.ToString());
             this.frmDisplayPickedGeometry.Show();
 
-            var renderer = geometry.FromRenderer as IHighlightable;
-            if (renderer != null)
             {
-                // TODO: highlight this geometry.
-                switch (this.CurrentSelectingType)
+                var renderer = geometry.FromRenderer as IHighlightable;
+                if (renderer != null)
                 {
-                    case SelectingType.Triangle:
-                        renderer.HighlightIndex0 = (int)geometry.VertexIds[0];
-                        renderer.HighlightIndex1 = (int)geometry.VertexIds[1];
-                        renderer.HighlightIndex2 = (int)geometry.VertexIds[2];
-                        break;
-                    case SelectingType.Mesh:
-                        renderer.HighlightIndex0 = -1;
-                        renderer.HighlightIndex1 = -1;
-                        renderer.HighlightIndex2 = -1;
-                        break;
-                    case SelectingType.Model:
-                        renderer.HighlightIndex0 = -1;
-                        renderer.HighlightIndex1 = -1;
-                        renderer.HighlightIndex2 = -1;
-                        break;
-                    default:
-                        throw new NotImplementedException();
+                    // TODO: highlight this geometry.
+                    switch (this.CurrentSelectingType)
+                    {
+                        case SelectingType.Triangle:
+                            renderer.HighlightIndex0 = (int)geometry.VertexIds[0];
+                            renderer.HighlightIndex1 = (int)geometry.VertexIds[1];
+                            renderer.HighlightIndex2 = (int)geometry.VertexIds[2];
+                            break;
+                        case SelectingType.Mesh:
+                            renderer.HighlightIndex0 = -1;
+                            renderer.HighlightIndex1 = -1;
+                            renderer.HighlightIndex2 = -1;
+                            break;
+                        case SelectingType.Model:
+                            renderer.HighlightIndex0 = -1;
+                            renderer.HighlightIndex1 = -1;
+                            renderer.HighlightIndex2 = -1;
+                            break;
+                        default:
+                            throw new NotImplementedException();
+                    }
+                }
+            }
+            {
+                var renderer = geometry.FromRenderer as RendererBase;
+                if (renderer != null)
+                {
+                    SceneObject obj = renderer.BindingSceneObject;// mesh xxx/yyy
+                    if (obj != null)
+                    {
+                        ITreeNode<SceneObject> parent = obj.Parent;// mesh & face normal xxx/yyy
+                        if (parent != null)
+                        {
+                            ITreeNode<SceneObject> target = parent.Parent;
+                            if (target == this.notPickedGroup)
+                            {
+                                this.notPickedGroup.Children.Remove(parent);
+                                this.pickedGroup.Children.Add(parent);
+                            }
+                        }
+                    }
                 }
             }
         }

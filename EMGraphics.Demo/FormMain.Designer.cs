@@ -65,6 +65,7 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnPickTriangle = new System.Windows.Forms.ToolStripButton();
             this.btnPickMesh = new System.Windows.Forms.ToolStripButton();
+            this.btnPickModel = new System.Windows.Forms.ToolStripButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -335,7 +336,8 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnPickTriangle,
-            this.btnPickMesh});
+            this.btnPickMesh,
+            this.btnPickModel});
             this.toolStrip1.Location = new System.Drawing.Point(0, 28);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(754, 27);
@@ -362,6 +364,16 @@
             this.btnPickMesh.Text = "Mesh";
             this.btnPickMesh.ToolTipText = "Pick Mesh";
             this.btnPickMesh.Click += new System.EventHandler(this.btnPickMesh_Click);
+            // 
+            // btnModel
+            // 
+            this.btnPickModel.Image = ((System.Drawing.Image)(resources.GetObject("btnModel.Image")));
+            this.btnPickModel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnPickModel.Name = "btnModel";
+            this.btnPickModel.Size = new System.Drawing.Size(81, 24);
+            this.btnPickModel.Text = "Model";
+            this.btnPickModel.ToolTipText = "Pick Model";
+            this.btnPickModel.Click += new System.EventHandler(this.btnPickModel_Click);
             // 
             // FormMain
             // 
@@ -424,5 +436,6 @@
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnPickTriangle;
         private System.Windows.Forms.ToolStripButton btnPickMesh;
+        private System.Windows.Forms.ToolStripButton btnPickModel;
     }
 }
