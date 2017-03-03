@@ -16,19 +16,72 @@ namespace EMGraphics
         /// <summary>
         /// vertexes in this *.nas file.
         /// </summary>
-        public vec3[] Points { get; private set; }
+        public vec3[] VertexPositions { get; private set; }
+
+        public vec3[] VertexNormals { get; private set; }
 
         /// <summary>
         /// triangles in this *.nas file.
         /// </summary>
         public Triangle[] Triangles { get; private set; }
 
-        private NASFile(vec3[] points, Triangle[] triangles)
+        public vec3[] FaceNormalPositions { get; private set; }
+        public vec3[] FaceNormalDirections { get; private set; }
+        public float[] FaceNormalLengths { get; private set; }
+
+        private NASFile(vec3[] vertexPositions, Triangle[] triangles)
         {
-            this.Points = points;
+            this.VertexPositions = vertexPositions;
             this.Triangles = triangles;
+            var veretxNormals = new vec3[vertexPositions.Length];
+            var facePositions = new vec3[triangles.Length];
+            var faceDirections = new vec3[triangles.Length];
+            var faceLengths = new float[triangles.Length];
+            InitAll(vertexPositions, triangles, veretxNormals, facePositions, faceDirections, faceLengths);
+            this.VertexNormals = veretxNormals;
+            this.FaceNormalPositions = facePositions;
+            this.FaceNormalDirections = faceDirections;
+            this.FaceNormalLengths = faceLengths;
         }
 
+        private void InitAll(vec3[] vertexPositions, Triangle[] triangles,
+            vec3[] vertexNormals,
+            vec3[] facePositions, vec3[] faceDirections, float[] faceLengths)
+        {
+            for (int i = 0; i < triangles.Length; i++)
+            {
+                int index1 = triangles[i].Num1;
+                int index2 = triangles[i].Num2;
+                int index3 = triangles[i].Num3;
+                vec3 vertex1 = vertexPositions[index1];
+                vec3 vertex2 = vertexPositions[index2];
+                vec3 vertex3 = vertexPositions[index3];
+
+                vec3 position = vertex1 / 3.0f + vertex2 / 3.0f + vertex3 / 3.0f;
+                facePositions[i] = position;
+
+                vec3 v12 = vertex2 - vertex1;
+                vec3 v23 = vertex3 - vertex2;
+                vec3 faceNormalDirection = v12.cross(v23).normalize();
+                faceDirections[i] = faceNormalDirection;
+                vertexNormals[index1] += faceNormalDirection;
+                vertexNormals[index2] += faceNormalDirection;
+                vertexNormals[index3] += faceNormalDirection;
+
+                vec3 v31 = vertex1 - vertex3;
+                float length = v12.length();
+                float tmp = v23.length(); if (length < tmp) { length = tmp; }
+                tmp = v31.length(); if (length < tmp) { length = tmp; }
+                faceLengths[i] = length;
+            }
+
+            //normalLineModel = new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths);
+
+            for (int i = 0; i < vertexNormals.Length; i++)
+            {
+                vertexNormals[i] = vertexNormals[i].normalize();
+            }
+        }
         public static NASFile Load(string filename)
         {
             NASFile result;

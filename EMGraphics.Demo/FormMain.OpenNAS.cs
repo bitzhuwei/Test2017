@@ -24,9 +24,12 @@ namespace EMGraphics.Demo
                 vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
                 vec3 size = box.MaxPosition - box.MinPosition;
 
-                SceneObject partsObject = GetPartsObject(gridList, normalLineModelList, center, size);
+                SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
 
-                this.scene.RootObject.Children.Add(partsObject);
+                //SceneObject partsObject = GetPartsObject(gridList, normalLineModelList, center, size);
+
+                this.scene.RootObject.Children.Add(wholeObject);
+                //this.scene.RootObject.Children.Add(partsObject);
                 {
                     // center axis 
                     // NOTE: this renderer must be the last one!
@@ -48,13 +51,23 @@ namespace EMGraphics.Demo
             }
         }
 
+        private SceneObject GetWholeObject(vec3[] positions, vec3[] normals, Triangle[] triangles, vec3 center, vec3 size)
+        {
+            var grid = new EMGrid(positions, normals, triangles, "Whole Model");
+            var renderer = EMGridRenderer.Create(grid);
+            renderer.WorldPosition += center;
+            renderer.ModelSize = size;
+            SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: true);
+            return obj;
+        }
+
         private static SceneObject GetPartsObject(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
         {
             var gridObjects = new SceneObject[gridList.Count];
             for (int i = 0; i < gridList.Count; i++)
             {
                 EMGrid grid = gridList[i];
-                var renderer = EMGraphics.EMGridRenderer.Create(grid);
+                var renderer = EMGridRenderer.Create(grid);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
                 gridObjects[i] = renderer.WrapToSceneObject(generateBoundingBox: false);
@@ -63,7 +76,7 @@ namespace EMGraphics.Demo
             for (int i = 0; i < normalLineModelList.Count; i++)
             {
                 NormalLineModel model = normalLineModelList[i];
-                var renderer = EMGraphics.NormalLineRenderer.Create(model);
+                var renderer = NormalLineRenderer.Create(model);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
                 SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);

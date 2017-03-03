@@ -18,35 +18,27 @@ namespace EMGraphics
         {
             if (file == null) { throw new ArgumentNullException(); }
 
-            vec3[] allVertexPositions = file.Points;
+            vec3[] allVertexPositions = file.VertexPositions;
             box = allVertexPositions.Move2Center();
-            var allVertexNormals = new vec3[allVertexPositions.Length];
-            Triangle[] allTriangles = file.Triangles;
 
-            var allFaceNormalPositions = new vec3[allTriangles.Length];
-            var allFaceNormalDirections = new vec3[allTriangles.Length];
-            var allFaceNormalLengths = new float[allTriangles.Length];
-
-            InitAll(
-                allVertexPositions, allVertexNormals, allTriangles,
-                allFaceNormalPositions, allFaceNormalDirections, allFaceNormalLengths);
-
-            var meshGroups = from item in allTriangles
+            var meshGroups = from item in file.Triangles
                              group item by item.FaceLabel;
 
-            gridList = FindGridList(allVertexPositions, allVertexNormals, meshGroups);
+            gridList = FindGridList(file, meshGroups);
 
-            normalLineModelList = new List<NormalLineModel>();
-            FindNormaLineModelList(
-                allTriangles, normalLineModelList,
-                allFaceNormalPositions, allFaceNormalDirections, allFaceNormalLengths, meshGroups);
+            normalLineModelList = FindNormaLineModelList(file, meshGroups);
 
             //gridList.Add(new EMGrid(allVertexPositions, allVertexNormals, allTriangles, "test"));
             //normalLineModelList.Add(new NormalLineModel(allFaceNormalPositions, allFaceNormalDirections, allFaceNormalLengths, "test2"));
         }
 
-        private static void FindNormaLineModelList(Triangle[] triangles, List<NormalLineModel> normalLineModelList, vec3[] allFaceNormalPositions, vec3[] allFaceNormalDirections, float[] allFaceNormalLengths, IEnumerable<IGrouping<string, Triangle>> meshGroups)
+        private static List<NormalLineModel> FindNormaLineModelList(NASFile file, IEnumerable<IGrouping<string, Triangle>> meshGroups)
         {
+            var list = new List<NormalLineModel>();
+            vec3[] positions = file.FaceNormalPositions;
+            vec3[] normals = file.FaceNormalDirections;
+            float[] lengths = file.FaceNormalLengths;
+
             foreach (var group in meshGroups)
             {
                 var dict = new Dictionary<int, int>();// index of all -> index of this mesh
@@ -61,19 +53,24 @@ namespace EMGraphics
                 foreach (var triangle in group)
                 {
                     int index = triangle.IndexOfTriangles;// triangles.IndexOf(triangle);
-                    faceNormalPositions[i] = allFaceNormalPositions[index];
-                    faceNormalDirections[i] = allFaceNormalDirections[index];
-                    faceNormalLengths[i] = allFaceNormalLengths[index];
+                    faceNormalPositions[i] = positions[index];
+                    faceNormalDirections[i] = normals[index];
+                    faceNormalLengths[i] = lengths[index];
                     i++;
                 }
 
-                normalLineModelList.Add(new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, label));
+                list.Add(new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, label));
             }
+
+            return list;
         }
 
-        private static List<EMGrid> FindGridList(vec3[] allVertexPositions, vec3[] allVertexNormals, IEnumerable<IGrouping<string, Triangle>> meshGroups)
+        private static List<EMGrid> FindGridList(NASFile file, IEnumerable<IGrouping<string, Triangle>> meshGroups)
         {
             var list = new List<EMGrid>();
+            vec3[] allVertexPositions = file.VertexPositions;
+            vec3[] allVertexNormals = file.VertexNormals;
+
             foreach (var group in meshGroups)
             {
                 var dict = new Dictionary<int, int>();// index of all -> index of this mesh
@@ -122,41 +119,6 @@ namespace EMGraphics
             return list;
         }
 
-        private static void InitAll(vec3[] allVertexPositions, vec3[] allVertexNormals, Triangle[] allTriangles, vec3[] allFaceNormalPositions, vec3[] allFaceNormalDirections, float[] allFaceNormalLengths)
-        {
-            for (int i = 0; i < allTriangles.Length; i++)
-            {
-                int index1 = allTriangles[i].Num1;
-                int index2 = allTriangles[i].Num2;
-                int index3 = allTriangles[i].Num3;
-                vec3 vertex1 = allVertexPositions[index1];
-                vec3 vertex2 = allVertexPositions[index2];
-                vec3 vertex3 = allVertexPositions[index3];
 
-                vec3 position = vertex1 / 3.0f + vertex2 / 3.0f + vertex3 / 3.0f;
-                allFaceNormalPositions[i] = position;
-
-                vec3 v12 = vertex2 - vertex1;
-                vec3 v23 = vertex3 - vertex2;
-                vec3 faceNormalDirection = v12.cross(v23).normalize();
-                allFaceNormalDirections[i] = faceNormalDirection;
-                allVertexNormals[index1] += faceNormalDirection;
-                allVertexNormals[index2] += faceNormalDirection;
-                allVertexNormals[index3] += faceNormalDirection;
-
-                vec3 v31 = vertex1 - vertex3;
-                float length = v12.length();
-                float tmp = v23.length(); if (length < tmp) { length = tmp; }
-                tmp = v31.length(); if (length < tmp) { length = tmp; }
-                allFaceNormalLengths[i] = length;
-            }
-
-            //normalLineModel = new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths);
-
-            for (int i = 0; i < allVertexNormals.Length; i++)
-            {
-                allVertexNormals[i] = allVertexNormals[i].normalize();
-            }
-        }
     }
 }
