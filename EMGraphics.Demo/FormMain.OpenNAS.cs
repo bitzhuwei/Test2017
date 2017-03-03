@@ -12,6 +12,9 @@ namespace EMGraphics.Demo
 {
     public partial class FormMain
     {
+        private SceneObject wholeObject;
+        private SceneObject notPickedGroup;
+        private SceneObject pickedGroup;
         private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
@@ -24,18 +27,23 @@ namespace EMGraphics.Demo
                 vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
                 vec3 size = box.MaxPosition - box.MinPosition;
 
-                SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
-                this.scene.RootObject.Children.Add(wholeObject);
+                {
+                    SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
+                    this.scene.RootObject.Children.Add(wholeObject);
+                    this.wholeObject = wholeObject;
+                }
 
                 {
                     SceneObject notPickedGroup = GetNotPickedGroup(gridList, normalLineModelList, center, size);
                     notPickedGroup.RenderingEnabled = false;
                     notPickedGroup.PickingEnabled = false;
                     this.scene.RootObject.Children.Add(notPickedGroup);
+                    this.notPickedGroup = notPickedGroup;
                     var pickedGroup = new SceneObject(); pickedGroup.Name = string.Format("Picked Grids.");
                     pickedGroup.RenderingEnabled = false;
                     pickedGroup.PickingEnabled = false;
                     this.scene.RootObject.Children.Add(pickedGroup);
+                    this.pickedGroup = pickedGroup;
                 }
 
                 {
