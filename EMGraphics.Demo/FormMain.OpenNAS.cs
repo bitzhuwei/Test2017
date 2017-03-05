@@ -34,7 +34,7 @@ namespace EMGraphics.Demo
                 }
 
                 {
-                    SceneObject notPickedGroup = GetNotPickedGroup(gridList, normalLineModelList, center, size);
+                    SceneObject notPickedGroup = GetPartedGrids(gridList, normalLineModelList, center, size);
                     notPickedGroup.RenderingEnabled = false;
                     notPickedGroup.PickingEnabled = false;
                     this.scene.RootObject.Children.Add(notPickedGroup);
@@ -77,41 +77,41 @@ namespace EMGraphics.Demo
             return obj;
         }
 
-        private static SceneObject GetNotPickedGroup(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
+        private static SceneObject GetPartedGrids(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
         {
-            var gridObjects = new SceneObject[gridList.Count];
-            for (int i = 0; i < gridObjects.Length; i++)
+            var partedGridObjects = new SceneObject[gridList.Count];
+            for (int i = 0; i < partedGridObjects.Length; i++)
             {
                 var obj = new SceneObject();
-                obj.Name = string.Format("Mesh & Face Normal [{0}/{1}]", i + 1, gridObjects.Length);
-                gridObjects[i] = obj;
+                obj.Name = string.Format("Mesh & Face Normal [{0}/{1}]", i + 1, partedGridObjects.Length);
+                partedGridObjects[i] = obj;
             }
             for (int i = 0; i < gridList.Count; i++)
             {
                 EMGrid grid = gridList[i];
-                var renderer = EMGridRenderer.Create(grid);
+                EMGridRenderer renderer = EMGridRenderer.Create(grid);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
                 SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
-                gridObjects[i].Children.Add(obj);
+                partedGridObjects[i].Children.Add(obj);
             }
             // generate and display faces' normal lines.
             for (int i = 0; i < normalLineModelList.Count; i++)
             {
                 NormalLineModel model = normalLineModelList[i];
-                var renderer = NormalLineRenderer.Create(model);
+                NormalLineRenderer renderer = NormalLineRenderer.Create(model);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
                 SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Face Normal Line of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
                 obj.RenderingEnabled = false;
                 obj.PickingEnabled = false;
-                gridObjects[i].Children.Add(obj);
+                partedGridObjects[i].Children.Add(obj);
             }
 
             var notPickedGroup = new SceneObject(); notPickedGroup.Name = string.Format("Not Picked Group.");
-            for (int i = 0; i < gridObjects.Length; i++) { notPickedGroup.Children.Add(gridObjects[i]); }
+            for (int i = 0; i < partedGridObjects.Length; i++) { notPickedGroup.Children.Add(partedGridObjects[i]); }
             return notPickedGroup;
         }
 
