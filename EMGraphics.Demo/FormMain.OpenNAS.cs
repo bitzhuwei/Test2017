@@ -94,7 +94,6 @@ namespace EMGraphics.Demo
                 EMGridRenderer renderer = EMGridRenderer.Create(grid);
                 renderer.WorldPosition += center;
                 renderer.ModelSize = size;
-                renderer.LineColor = Color.Black;
                 SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
                 partedGridObjects[i].Children.Add(obj);

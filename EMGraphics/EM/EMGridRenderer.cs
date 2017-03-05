@@ -72,10 +72,11 @@ namespace EMGraphics
             this.HighlightIndex0 = -2;
             this.HighlightIndex1 = -2;
             this.HighlightIndex2 = -2;
-            this.HighlightColor = Color.Yellow;
 
-            this.RegularColor = Color.Orange;
-            this.LineColor = (new vec3(0.8f, 0.8f, 0.8f)).ToColor();
+            this.RegularColor = Color.FromArgb(255, 202, 122, 0);
+            this.RegularLineColor = Color.FromArgb(255, 211, 211, 211);
+            this.HighlightColor = Color.FromArgb(255, 204, 203, 0);
+            this.HighlightLineColor = Color.FromArgb(255, 100, 100, 100);
 
             this.FlatMode = true;
         }
@@ -93,7 +94,8 @@ namespace EMGraphics
         /// <summary>
         /// 
         /// </summary>
-        public Color LineColor { get; set; }
+        public Color HighlightLineColor { get; set; }
+        public Color RegularLineColor { get; set; }
 
         protected override void DoRender(RenderEventArgs arg)
         {
@@ -122,8 +124,8 @@ namespace EMGraphics
                 this.SetUniform("highlightIndex0", this.HighlightIndex0);
                 this.SetUniform("highlightIndex1", this.HighlightIndex1);
                 this.SetUniform("highlightIndex2", this.HighlightIndex2);
-                this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
                 this.SetUniform("regularColor", this.RegularColor.ToVec3());
+                this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
                 this.SetUniform("flatMode", this.FlatMode);
 
                 base.DoRender(arg);
@@ -134,7 +136,8 @@ namespace EMGraphics
             if (renderLines)
             {
                 this.SetUniform("useLineColor", true);
-                this.SetUniform("lineColor", this.LineColor.ToVec3());
+                this.SetUniform("regularLineColor", this.RegularLineColor.ToVec3());
+                this.SetUniform("highlightLineColor", this.HighlightLineColor.ToVec3());
                 this.lineWidthState.On();
                 this.offsetState.On();
                 this.polygonLineState.On();
