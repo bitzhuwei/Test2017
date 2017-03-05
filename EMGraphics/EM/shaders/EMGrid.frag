@@ -24,18 +24,19 @@ void main(void)
 	}
 	else 
 	{
+		float diffuse = max(0.0, dot(fragment_in.normal, -directionalLightDirection));
+		vec3 scatteredLight = ambientLight + directionalLightColor * diffuse;
+		vec3 rgb;
 		if (fragment_in.isHighlight > 0.0)
 		{
-			outColor = vec4(highlightColor, 1.0);
+			rgb = min(highlightColor * scatteredLight, vec3(1.0));
 		}
-		else// not highlight.
+		else
 		{
-			float diffuse = max(0.0, dot(fragment_in.normal, -directionalLightDirection));
-			
-			vec3 scatteredLight = ambientLight + directionalLightColor * diffuse;
-			vec3 rgb = min(regularColor * scatteredLight, vec3(1.0));
-			outColor = vec4(rgb, 1.0);
+			rgb = min(regularColor * scatteredLight, vec3(1.0));
 		}
+
+		outColor = vec4(rgb, 1.0);
 	}
 }
 
