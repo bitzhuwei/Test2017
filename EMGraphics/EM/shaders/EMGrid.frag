@@ -21,7 +21,14 @@ void main(void)
 {
 	if (useLineColor)
 	{
-		outColor = vec4(regularLineColor, 1);
+		if (fragment_in.isHighlight > 0.0)
+		{
+			outColor = vec4(highlightLineColor, 1);
+		}
+		else
+		{
+			outColor = vec4(regularLineColor, 1);
+		}
 	}
 	else 
 	{
