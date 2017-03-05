@@ -75,6 +75,7 @@ namespace EMGraphics
             this.HighlightColor = Color.Yellow;
 
             this.RegularColor = Color.Orange;
+            this.LineColor = (new vec3(0.8f, 0.8f, 0.8f)).ToColor();
 
             this.FlatMode = true;
         }
@@ -84,7 +85,16 @@ namespace EMGraphics
         private PolygonOffsetState offsetState = new PolygonOffsetLineState();
         private LineWidthState lineWidthState = new LineWidthState(0.5f);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public LineWidthState LineWidth { get { return this.lineWidthState; } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Color LineColor { get; set; }
+
         protected override void DoRender(RenderEventArgs arg)
         {
             bool renderFaces = this.RenderFaces;
@@ -124,6 +134,7 @@ namespace EMGraphics
             if (renderLines)
             {
                 this.SetUniform("useLineColor", true);
+                this.SetUniform("lineColor", this.LineColor.ToVec3());
                 this.lineWidthState.On();
                 this.offsetState.On();
                 this.polygonLineState.On();
