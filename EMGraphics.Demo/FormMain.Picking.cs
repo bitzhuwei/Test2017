@@ -21,68 +21,73 @@ namespace EMGraphics.Demo
             set
             {
                 this.currentSelectingType = value;
-                switch (value)
-                {
-                    case SelectingType.Triangle:
+                UpdatePickingState(value);
+            }
+        }
+
+        private void UpdatePickingState(SelectingType value)
+        {
+            switch (value)
+            {
+                case SelectingType.Triangle:
+                    {
+                        SceneObject whole = this.wholeObject;
+                        if (whole != null)
                         {
-                            SceneObject whole = this.wholeObject;
-                            if (whole != null)
-                            {
-                                whole.PickingEnabled = true;
-                            }
-                            SceneObject notPicked = this.notPickedGroup;
-                            if (notPicked != null)
-                            {
-                                notPicked.PickingEnabled = false;
-                            }
-                            SceneObject picked = this.pickedGroup;
-                            if (picked != null)
-                            {
-                                picked.PickingEnabled = false;
-                            }
+                            whole.PickingEnabled = true;
                         }
-                        break;
-                    case SelectingType.Mesh:
+                        SceneObject notPicked = this.notPickedGroup;
+                        if (notPicked != null)
                         {
-                            SceneObject whole = this.wholeObject;
-                            if (whole != null)
-                            {
-                                whole.PickingEnabled = false;
-                            }
-                            SceneObject notPicked = this.notPickedGroup;
-                            if (notPicked != null)
-                            {
-                                notPicked.PickingEnabled = true;
-                            }
-                            SceneObject picked = this.pickedGroup;
-                            if (picked != null)
-                            {
-                                picked.PickingEnabled = true;
-                            }
+                            notPicked.PickingEnabled = false;
                         }
-                        break;
-                    case SelectingType.Model:
+                        SceneObject picked = this.pickedGroup;
+                        if (picked != null)
                         {
-                            SceneObject whole = this.wholeObject;
-                            if (whole != null)
-                            {
-                                whole.PickingEnabled = true;
-                            }
-                            SceneObject notPicked = this.notPickedGroup;
-                            if (notPicked != null)
-                            {
-                                notPicked.PickingEnabled = false;
-                            }
-                            SceneObject picked = this.pickedGroup;
-                            if (picked != null)
-                            {
-                                picked.PickingEnabled = false;
-                            }
+                            picked.PickingEnabled = false;
                         }
-                        break;
-                    default:
-                        throw new NotImplementedException();
-                }
+                    }
+                    break;
+                case SelectingType.Mesh:
+                    {
+                        SceneObject whole = this.wholeObject;
+                        if (whole != null)
+                        {
+                            whole.PickingEnabled = false;
+                        }
+                        SceneObject notPicked = this.notPickedGroup;
+                        if (notPicked != null)
+                        {
+                            notPicked.PickingEnabled = true;
+                        }
+                        SceneObject picked = this.pickedGroup;
+                        if (picked != null)
+                        {
+                            picked.PickingEnabled = true;
+                        }
+                    }
+                    break;
+                case SelectingType.Model:
+                    {
+                        SceneObject whole = this.wholeObject;
+                        if (whole != null)
+                        {
+                            whole.PickingEnabled = true;
+                        }
+                        SceneObject notPicked = this.notPickedGroup;
+                        if (notPicked != null)
+                        {
+                            notPicked.PickingEnabled = false;
+                        }
+                        SceneObject picked = this.pickedGroup;
+                        if (picked != null)
+                        {
+                            picked.PickingEnabled = false;
+                        }
+                    }
+                    break;
+                default:
+                    throw new NotImplementedException();
             }
         }
         private SelectingType currentSelectingType;

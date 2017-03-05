@@ -45,7 +45,9 @@ namespace EMGraphics.Demo
                     this.scene.RootObject.Children.Add(pickedGroup);
                     this.pickedGroup = pickedGroup;
                 }
-
+                {
+                    this.UpdatePickingState(this.CurrentSelectingType);
+                }
                 {
                     // center axis 
                     // NOTE: this renderer must be the last one!
