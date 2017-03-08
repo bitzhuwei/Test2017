@@ -83,7 +83,13 @@ namespace EMGraphics
 
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
         private PolygonModeState polygonLineState = new PolygonModeState(PolygonMode.Line);
-        private PolygonOffsetState offsetState = new PolygonOffsetLineState();
+        private PolygonOffsetState lineOffsetState = new PolygonOffsetLineState(true);
+        private PolygonOffsetState fillOffsetState = new PolygonOffsetFillState(false);
+
+        public PolygonOffsetState OffsetState
+        {
+            get { return lineOffsetState; }
+        }
         private LineWidthState lineWidthState = new LineWidthState(0.5f);
 
         /// <summary>
@@ -114,6 +120,7 @@ namespace EMGraphics
             if (renderFaces)
             {
                 this.polygonFaceState.On();
+                this.fillOffsetState.On();
 
                 this.SetUniform("useLineColor", false);
                 this.SetUniform("ambientLight", this.AmbientLightColor);
@@ -130,6 +137,7 @@ namespace EMGraphics
 
                 base.DoRender(arg);
 
+                this.fillOffsetState.Off();
                 this.polygonFaceState.Off();
             }
 
@@ -139,13 +147,13 @@ namespace EMGraphics
                 this.SetUniform("regularLineColor", this.RegularLineColor.ToVec3());
                 this.SetUniform("highlightLineColor", this.HighlightLineColor.ToVec3());
                 this.lineWidthState.On();
-                this.offsetState.On();
+                this.lineOffsetState.On();
                 this.polygonLineState.On();
 
                 base.DoRender(arg);
 
                 this.polygonLineState.Off();
-                this.offsetState.Off();
+                this.lineOffsetState.Off();
                 this.lineWidthState.Off();
             }
         }
