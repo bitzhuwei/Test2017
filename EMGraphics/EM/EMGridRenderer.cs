@@ -27,13 +27,13 @@ namespace EMGraphics
         public bool RenderLines { get; set; }
 
         [Category(strEMRenderer)]
-        public vec3 AmbientLightColor { get; set; }
+        public Color AmbientLightColor { get; set; }
 
         //[Category(strEMRenderer)]
         //public vec3 DirectionalLightDirection { get; set; }
 
         [Category(strEMRenderer)]
-        public vec3 DirectionalLightColor { get; set; }
+        public Color DirectionalLightColor { get; set; }
 
         /// <summary>
         /// 
@@ -63,8 +63,8 @@ namespace EMGraphics
             params GLState[] switches)
             : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
         {
-            this.AmbientLightColor = new vec3(0.3f);
-            this.DirectionalLightColor = new vec3(1);
+			this.AmbientLightColor = Color.FromArgb(255, 70, 70, 70);
+			this.DirectionalLightColor = Color.White;
 
             this.RenderFaces = true;
             this.RenderLines = true;
@@ -128,8 +128,8 @@ namespace EMGraphics
                 this.fillOffsetState.On();
 
                 this.SetUniform("useLineColor", false);
-                this.SetUniform("ambientLight", this.AmbientLightColor);
-                this.SetUniform("directionalLightColor", this.DirectionalLightColor);
+                this.SetUniform("ambientLight", this.AmbientLightColor.ToVec3());
+                this.SetUniform("directionalLightColor", this.DirectionalLightColor.ToVec3());
                 vec3 lightDirection = (arg.Camera.Target - arg.Camera.Position).normalize();
                 this.SetUniform("directionalLightDirection", lightDirection);
                 // highlight options:

@@ -41,5 +41,10 @@ namespace EMGraphics.Demo
             this.scene.Render();
         }
 
-    }
+
+		private void btnEMGridRendererProperties_Click(object sender, EventArgs e)
+		{
+			(new FormEMGridRenderer(this.scene)).Show();
+		}
+	}
 }
