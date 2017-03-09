@@ -83,13 +83,18 @@ namespace EMGraphics
 
         private PolygonModeState polygonFaceState = new PolygonModeState(PolygonMode.Fill);
         private PolygonModeState polygonLineState = new PolygonModeState(PolygonMode.Line);
-        private PolygonOffsetState lineOffsetState = new PolygonOffsetLineState(true);
-        private PolygonOffsetState fillOffsetState = new PolygonOffsetFillState(false);
+        //private PolygonOffsetState lineOffsetState = new PolygonOffsetLineState(true);
+        private PolygonOffsetState fillOffsetState = new PolygonOffsetFillState(pullNear: false);
 
-        public PolygonOffsetState OffsetState
-        {
-            get { return lineOffsetState; }
-        }
+  //      public PolygonOffsetState LineOffsetState
+  //      {
+  //          get { return lineOffsetState; }
+  //      }
+		//public PolygonOffsetState FillOffsetState
+		//{
+		//	get { return fillOffsetState; }
+		//}
+
         private LineWidthState lineWidthState = new LineWidthState(0.5f);
 
         /// <summary>
@@ -147,13 +152,13 @@ namespace EMGraphics
                 this.SetUniform("regularLineColor", this.RegularLineColor.ToVec3());
                 this.SetUniform("highlightLineColor", this.HighlightLineColor.ToVec3());
                 this.lineWidthState.On();
-                this.lineOffsetState.On();
+                //this.lineOffsetState.On();
                 this.polygonLineState.On();
 
                 base.DoRender(arg);
 
                 this.polygonLineState.Off();
-                this.lineOffsetState.Off();
+                //this.lineOffsetState.Off();
                 this.lineWidthState.Off();
             }
         }
@@ -189,6 +194,5 @@ namespace EMGraphics
         /// true for flat mode; false for smooth mode.
         /// </summary>
         public bool FlatMode { get; set; }
-
-    }
+	}
 }
