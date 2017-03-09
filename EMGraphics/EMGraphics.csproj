@@ -22,6 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -374,18 +375,30 @@
     <Compile Include="EMModel.cs" />
     <Compile Include="EM\CenterAxisModel.cs" />
     <Compile Include="EM\CenterAxisRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\CodedColor.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\CodedColorsHelper.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\LinesModel.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\LinesRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\QuadStripColoredModel.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\QuadStripColoredRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\QuadStripModel.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\QuadStripRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPaletteBarRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPaletteColoredBarRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPaletteMarkersRenderer.cs" />
-    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPaletteRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\LinesModel.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\LinesRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\QuadStripColoredModel.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\QuadStripColoredRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\QuadStripModel.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\QuadStripRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteBarRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteColoredBarRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteMarkersRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColor.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColorsHelper.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\LinesModel.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\LinesRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripColoredModel.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripColoredRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripModel.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteBarRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteColoredBarRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteMarkersRenderer.cs" />
+    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteRenderer.cs" />
     <Compile Include="EM\IHighlightable.cs" />
     <Compile Include="EM\NASParser.cs" />
     <Compile Include="EM\NormalLineModel.cs" />
@@ -709,6 +722,7 @@
     <EmbeddedResource Include="Resources\cursor_gold.png" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="EM\Scripts\" />
     <Folder Include="UIRendering\0Foundations\" />
     <Folder Include="UIRendering\Canvas\" />
     <Folder Include="UIRendering\FontTexture\" />
