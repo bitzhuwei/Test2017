@@ -28,8 +28,6 @@ namespace EMGraphics
         /// </summary>
         private UIColorPaletteColoredBarRenderer colorPaletteBar2;
 
-        private UIColorPaletteMarkersRenderer markers;
-
         /// <summary>
         /// current marker's count.
         /// </summary>
@@ -98,17 +96,6 @@ namespace EMGraphics
                 this.Children.Add(bar);
                 this.colorPaletteBar2 = bar;
                 bar.Enabled = false;
-            }
-            // white vertical lines.
-            {
-                var markers = new UIColorPaletteMarkersRenderer(maxMarkerCount,
-                System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
-                new System.Windows.Forms.Padding(marginLeft, 1, marginRight, 0),
-                new System.Drawing.Size(size.Width - marginLeft - marginRight, size.Height / 2),
-                zNear, zFar);
-                //markers.StateList.Add(new ClearColorState(Color.Red));
-                this.Children.Add(markers);
-                this.markers = markers;
             }
             // labels that display values(float values)
             {
@@ -194,10 +181,6 @@ namespace EMGraphics
 
         public void SetCodedColor(double axisMin, double axisMax, double step)
         {
-            // update markers(white vertical lines).
-            {
-                this.markers.UpdateCodedColors(axisMin, axisMax, step);
-            }
             // update labels.
             {
                 int labelCount = (int)((axisMax - axisMin) / step) + 1;
