@@ -21,17 +21,18 @@ namespace EMGraphics
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\CenterAxis.vert"), ShaderType.VertexShader);
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\CenterAxis.frag"), ShaderType.FragmentShader);
+			var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
             map.Add("inPosition", CenterAxisModel.strPosition);
             map.Add("inColor", CenterAxisModel.strColor);
-            var renderer = new CenterAxisRenderer(model, shaderCodes, map);
+            var renderer = new CenterAxisRenderer(model, provider, map);
 
             return renderer;
         }
 
-        private CenterAxisRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        private CenterAxisRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
             AttributeMap attributeMap, params GLState[] switches)
-            : base(model, shaderCodes, attributeMap, switches)
+            : base(model, shaderProgramProvider, attributeMap, switches)
         {
         }
 

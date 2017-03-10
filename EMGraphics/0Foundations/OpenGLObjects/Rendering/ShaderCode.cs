@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace EMGraphics
 {
@@ -6,8 +7,8 @@ namespace EMGraphics
     /// 某种类型的shader代码。
     /// <para>Some type of shader code.</para>
     /// </summary>
-    public class ShaderCode
-    {
+    public class ShaderCode: IShaderProgramProvider
+	{
         /// <summary>
         /// 某种类型的shader代码。
         /// <para>Some type of shader code.</para>
@@ -50,7 +51,12 @@ namespace EMGraphics
 
             return shader;
         }
-    }
+
+		public ShaderProgram GetShaderProgram()
+		{
+			return this.CreateProgram();
+		}
+	}
 
     /// <summary>
     ///

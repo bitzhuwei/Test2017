@@ -42,8 +42,12 @@ namespace EMGraphics
                     // Dispose managed resources.
                 } // end if
 
-                // Dispose unmanaged resources.
-                glDeleteShader(this.ShaderId);
+				// Dispose unmanaged resources.
+				IntPtr renderContext = Win32.wglGetCurrentContext();
+				if (renderContext != IntPtr.Zero)
+				{
+					glDeleteShader(this.ShaderId);
+				}
                 ShaderId = 0;
             } // end if
 

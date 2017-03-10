@@ -140,6 +140,7 @@ namespace EMGraphics.Demo
 				renderer.RegularLineColor = properties.regularLineColor;
 				renderer.HighlightLineColor = properties.highlightLineColor;
 				renderer.FlatMode = properties.flatMode;
+				renderer.RenderFaces = properties.renderFaces;
 				renderer.RenderLines = properties.renderLines;
 			}
 

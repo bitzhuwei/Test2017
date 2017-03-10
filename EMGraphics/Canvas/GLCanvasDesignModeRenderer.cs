@@ -52,7 +52,7 @@
 //        }
 
 //        private GLCanvasDesignModeRenderer()
-//            : base(model, shaderCodes, map, positionNameInIBufferable)
+//            : base(model, shaderProgramProvider, map, positionNameInIBufferable)
 //        { }
 
 //        private static readonly GLCanvasDesignModeRenderer instance = new GLCanvasDesignModeRenderer();

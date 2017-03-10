@@ -46,6 +46,12 @@ namespace EMGraphics.Demo
 					this.pickedGroup = pickedGroup;
 				}
 				{
+					// pick a mesh for the first time which runs very slow.
+					this.UpdatePickingState(SelectingType.Mesh);
+					List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
+						Point.Empty, PickingGeometryType.Triangle);
+				}
+				{
 					this.UpdatePickingState(this.CurrentSelectingType);
 				}
 				{
@@ -75,7 +81,7 @@ namespace EMGraphics.Demo
 			var renderer = EMGridRenderer.Create(grid);
 			renderer.WorldPosition += center;
 			renderer.ModelSize = size;
-			renderer.Initialize();
+			//renderer.Initialize();
 			SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: true);
 			return obj;
 		}
@@ -95,7 +101,7 @@ namespace EMGraphics.Demo
 				EMGridRenderer renderer = EMGridRenderer.Create(grid);
 				renderer.WorldPosition += center;
 				renderer.ModelSize = size;
-				renderer.Initialize();
+				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
 				partedGridObjects[i].Children.Add(obj);
@@ -107,7 +113,7 @@ namespace EMGraphics.Demo
 				NormalLineRenderer renderer = NormalLineRenderer.Create(model);
 				renderer.WorldPosition += center;
 				renderer.ModelSize = size;
-				renderer.Initialize();
+				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Face Normal Line of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
 				obj.RenderingEnabled = false;

@@ -240,6 +240,7 @@
     <Compile Include="0Foundations\OpenGLObjects\Rendering\RendererBase.IModelSpace.User.cs" />
     <Compile Include="0Foundations\OpenGLObjects\Rendering\RendererBase.IRenderable.cs" />
     <Compile Include="0Foundations\OpenGLObjects\Rendering\Renderer\AttributeMap.cs" />
+    <Compile Include="0Foundations\OpenGLObjects\Rendering\Renderer\IShaderProgramProvider.cs" />
     <Compile Include="0Foundations\OpenGLObjects\Rendering\Renderer\IBufferable.cs" />
     <Compile Include="0Foundations\OpenGLObjects\Rendering\Renderer\Renderer.cs" />
     <Compile Include="0Foundations\OpenGLObjects\Rendering\Renderer\Renderer.Dispose.cs" />

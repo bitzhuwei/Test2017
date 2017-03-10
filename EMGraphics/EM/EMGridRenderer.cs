@@ -35,20 +35,27 @@ namespace EMGraphics
         [Category(strEMRenderer)]
         public Color DirectionalLightColor { get; set; }
 
+		private static IShaderProgramProvider provider;
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public static EMGridRenderer Create(EMGrid model)
         {
-            var shaderCodes = new ShaderCode[3];
-            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.geom"), ShaderType.GeometryShader);
-            shaderCodes[2] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.frag"), ShaderType.FragmentShader);
+			if (provider == null)
+			{
+				var shaderCodes = new ShaderCode[3];
+				shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.vert"), ShaderType.VertexShader);
+				shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.geom"), ShaderType.GeometryShader);
+				shaderCodes[2] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\EMGrid.frag"), ShaderType.FragmentShader);
+				provider = new ShaderCodeArray(shaderCodes);
+			}
             var map = new AttributeMap();
             map.Add("inPosition", EMGrid.strPosition);
-            map.Add("inNormal", EMGrid.strNormal);
-            var renderer = new EMGridRenderer(model, shaderCodes, map, EMGrid.strPosition);
+			map.Add("inNormal", EMGrid.strNormal);
+			IShaderProgramProvider pro = null;
+			var renderer = new EMGridRenderer(model, provider, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;
@@ -58,10 +65,10 @@ namespace EMGraphics
             return renderer;
         }
 
-        private EMGridRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        private EMGridRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
-            : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
+            : base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
         {
 			this.AmbientLightColor = Color.FromArgb(255, 70, 70, 70);
 			this.DirectionalLightColor = Color.White;
@@ -161,6 +168,7 @@ namespace EMGraphics
                 //this.lineOffsetState.Off();
                 this.lineWidthState.Off();
             }
+
         }
 
         #region IHighlightable

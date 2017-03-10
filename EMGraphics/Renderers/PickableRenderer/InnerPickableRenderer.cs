@@ -41,10 +41,10 @@ namespace EMGraphics
         /// <param name="attributeMap">Mapping relations between 'in' variables in vertex shader in <paramref name="shaderCodes"/> and buffers in <paramref name="model"/>.</param>
         /// <param name="positionNameInIBufferable">Name of buffer that describes model's position.</param>
         ///<param name="switches">OpenGL switches.</param>
-        internal InnerPickableRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        internal InnerPickableRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
-            : base(model, shaderCodes, attributeMap, switches)
+            : base(model, shaderProgramProvider, attributeMap, switches)
         {
             this.PositionNameInIBufferable = positionNameInIBufferable;
             this.stateList.Add(polygonModeState);

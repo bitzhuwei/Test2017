@@ -19,18 +19,24 @@ namespace EMGraphics
         public MarkableStruct<Color> TailColor { get; set; }
         private long tailColorUpdatedTicks;
 
+		private static IShaderProgramProvider provider;
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public static NormalLineRenderer Create(NormalLineModel model)
         {
-            var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.frag"), ShaderType.FragmentShader);
+			if (provider == null)
+			{
+				var shaderCodes = new ShaderCode[2];
+				shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.vert"), ShaderType.VertexShader);
+				shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\NormalLine.frag"), ShaderType.FragmentShader);
+				provider = new ShaderCodeArray(shaderCodes);
+			}
             var map = new AttributeMap();
             map.Add("inPosition", NormalLineModel.strPosition);
-            var renderer = new NormalLineRenderer(model, shaderCodes, map, EMGrid.strPosition);
+            var renderer = new NormalLineRenderer(model, provider, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;
@@ -40,10 +46,10 @@ namespace EMGraphics
             return renderer;
         }
 
-        private NormalLineRenderer(IBufferable model, ShaderCode[] shaderCodes,
+        private NormalLineRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
-            : base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
+            : base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
         {
             this.HeadColor = new MarkableStruct<Color>(Color.Aqua);
             this.TailColor = new MarkableStruct<Color>(Color.Red);

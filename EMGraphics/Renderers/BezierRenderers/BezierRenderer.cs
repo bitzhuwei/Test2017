@@ -18,10 +18,11 @@ namespace EMGraphics
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Points.vert"), ShaderType.VertexShader);
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Points.frag"), ShaderType.FragmentShader);
-            var map = new EMGraphics.AttributeMap();
+			var provider = new ShaderCodeArray(shaderCodes);
+			var map = new EMGraphics.AttributeMap();
             map.Add("in_Position", Points.strposition);
             var model = new Points(controlPoints);
-            var renderer = new BezierRenderer(controlPoints, type, model, shaderCodes, map, Points.strposition);
+            var renderer = new BezierRenderer(controlPoints, type, model, provider, map, Points.strposition);
             renderer.ModelSize = model.Lengths;
             renderer.WorldPosition = model.WorldPosition;
             renderer.stateList.Add(new PointSizeState(10));
@@ -39,8 +40,8 @@ namespace EMGraphics
         /// <param name="attributeMap"></param>
         /// <param name="positionNameInIBufferable"></param>
         /// <param name="switches"></param>
-        private BezierRenderer(IList<vec3> controlPoints, BezierType type, Points model, EMGraphics.ShaderCode[] shaderCodes, EMGraphics.AttributeMap attributeMap, string positionNameInIBufferable, params GLState[] switches) :
-            base(model, shaderCodes, attributeMap, positionNameInIBufferable, switches)
+        private BezierRenderer(IList<vec3> controlPoints, BezierType type, Points model, EMGraphics.IShaderProgramProvider shaderProgramProvider, EMGraphics.AttributeMap attributeMap, string positionNameInIBufferable, params GLState[] switches) :
+            base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
         {
             switch (type)
             {

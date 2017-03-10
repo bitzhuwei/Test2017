@@ -38,11 +38,11 @@ namespace EMGraphics
 
             if (model.UsesZeroIndexBuffer())
             {
-                return new ZeroIndexRenderer(model, PickingShaderHelper.GetShaderCodes(), map, positionNameInIBufferable, switches);
+                return new ZeroIndexRenderer(model, PickingShaderHelper.GetPickingShaderProgramProvider(), map, positionNameInIBufferable, switches);
             }
             else
             {
-                return new OneIndexRenderer(model, PickingShaderHelper.GetShaderCodes(), map, positionNameInIBufferable, switches);
+                return new OneIndexRenderer(model, PickingShaderHelper.GetPickingShaderProgramProvider(), map, positionNameInIBufferable, switches);
             }
         }
     }

@@ -59,6 +59,9 @@ namespace EMGraphics
                 if (!isInitialized) { Initialize(); }
 
                 DoRender(arg);
+
+				OpenGL.Flush();
+				OpenGL.Finish();
             }
         }
 
