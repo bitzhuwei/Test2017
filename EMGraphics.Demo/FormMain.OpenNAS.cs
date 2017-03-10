@@ -115,7 +115,7 @@ namespace EMGraphics.Demo
 				renderer.ModelSize = size;
 				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
-					"Face Normal Line of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
+					"Face Normal of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
 				obj.RenderingEnabled = false;
 				obj.PickingEnabled = false;
 				partedGridObjects[i].Children.Add(obj);
