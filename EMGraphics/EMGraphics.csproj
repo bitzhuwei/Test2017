@@ -395,6 +395,8 @@
     <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteColoredBarRenderer.cs" />
     <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteMarkersRenderer.cs" />
     <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteRenderer.cs" />
+    <Compile Include="EM\NASDataSource.cs" />
+    <Compile Include="EM\IEMDataSource.cs" />
     <Compile Include="EM\IHighlightable.cs" />
     <Compile Include="EM\NASParser.cs" />
     <Compile Include="EM\NormalLineModel.cs" />

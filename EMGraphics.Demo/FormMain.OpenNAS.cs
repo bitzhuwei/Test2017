@@ -21,19 +21,28 @@ namespace EMGraphics.Demo
 			{
 				this.scene.RootObject.Children.Clear();
 
-				List<EMGrid> gridList; List<NormalLineModel> normalLineModelList; BoundingBox box;
 				NASFile file = NASFile.Load(openFileDlg.FileName);
-				file.Parse(out gridList, out normalLineModelList, out box);
+				IEMDataSource dataSource = file.Parse();
+				BoundingBox box = dataSource.Box;
 				vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
 				vec3 size = box.MaxPosition - box.MinPosition;
 
+				// 将整个nas模型作为一个单独的模型
+				// get nas model as a single model
 				{
-					SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
+					//SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
+					SceneObject wholeObject = GetWholeObject(
+						dataSource.VertexPositions,dataSource.VertexNormals,
+						dataSource.Triangles, center, size);
 					this.scene.RootObject.Children.Add(wholeObject);
 					this.wholeObject = wholeObject;
 				}
 
+				// 分别加载nas模型里的各个face，这是为了实现拾取face功能
+				// get parted grids(faces) for fast picking 
 				{
+					IList<EMGrid> gridList = dataSource.GridList;
+					IList<NormalLineModel> normalLineModelList = dataSource.NormalList;
 					SceneObject notPickedGroup = GetPartedGrids(gridList, normalLineModelList, center, size);
 					notPickedGroup.RenderingEnabled = false;
 					notPickedGroup.PickingEnabled = false;
@@ -45,8 +54,9 @@ namespace EMGraphics.Demo
 					this.scene.RootObject.Children.Add(pickedGroup);
 					this.pickedGroup = pickedGroup;
 				}
+
+				// pick a mesh for the first time which runs very slow.
 				{
-					// pick a mesh for the first time which runs very slow.
 					this.UpdatePickingState(SelectingType.Mesh);
 					List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
 						Point.Empty, PickingGeometryType.Triangle);
@@ -86,7 +96,7 @@ namespace EMGraphics.Demo
 			return obj;
 		}
 
-		private static SceneObject GetPartedGrids(List<EMGrid> gridList, List<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
+		private static SceneObject GetPartedGrids(IList<EMGrid> gridList, IList<NormalLineModel> normalLineModelList, vec3 center, vec3 size)
 		{
 			var partedGridObjects = new SceneObject[gridList.Count];
 			for (int i = 0; i < partedGridObjects.Length; i++)
