@@ -372,8 +372,6 @@
     <Compile Include="Canvas\Win32API\WindowStylesEx.cs" />
     <Compile Include="Canvas\Win32API\WNDCLASSEX.cs" />
     <Compile Include="Canvas\Win32API\WndProc.cs" />
-    <Compile Include="EMFace.cs" />
-    <Compile Include="EMModel.cs" />
     <Compile Include="EM\CenterAxisModel.cs" />
     <Compile Include="EM\CenterAxisRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
