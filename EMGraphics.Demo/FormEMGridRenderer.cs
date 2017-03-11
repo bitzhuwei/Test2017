@@ -123,25 +123,35 @@ namespace EMGraphics.Demo
 			var properties = new EMGridProperties(ambient, directinalLight,
 				regular, highlight, regularLine, highlightLine,
 				this.rdoFlat.Checked,
-				this.chkRenderFaces.Checked, this.chkRenderLines.Checked);
+				this.chkRenderFaces.Checked, this.chkRenderLines.Checked,
+				this.chkRenderNormal.Checked);
 
 			UpdateProperties(this.scene.RootObject, properties);
 		}
 
 		private void UpdateProperties(SceneObject sceneObject, EMGridProperties properties)
 		{
-			var renderer = sceneObject.Renderer as EMGridRenderer;
-			if (renderer != null)
 			{
-				renderer.AmbientLightColor = properties.ambientColor;
-				renderer.DirectionalLightColor = properties.directionalLightColor;
-				renderer.RegularColor = properties.regularColor;
-				renderer.HighlightColor = properties.highlightColor;
-				renderer.RegularLineColor = properties.regularLineColor;
-				renderer.HighlightLineColor = properties.highlightLineColor;
-				renderer.FlatMode = properties.flatMode;
-				renderer.RenderFaces = properties.renderFaces;
-				renderer.RenderLines = properties.renderLines;
+				var renderer = sceneObject.Renderer as EMGridRenderer;
+				if (renderer != null)
+				{
+					renderer.AmbientLightColor = properties.ambientColor;
+					renderer.DirectionalLightColor = properties.directionalLightColor;
+					renderer.RegularColor = properties.regularColor;
+					renderer.HighlightColor = properties.highlightColor;
+					renderer.RegularLineColor = properties.regularLineColor;
+					renderer.HighlightLineColor = properties.highlightLineColor;
+					renderer.FlatMode = properties.flatMode;
+					renderer.RenderFaces = properties.renderFaces;
+					renderer.RenderLines = properties.renderLines;
+				}
+			}
+			{
+				var renderer = sceneObject.Renderer as NormalLineRenderer;
+				if (renderer != null)
+				{
+					sceneObject.RenderingEnabled = properties.rendernormal;
+				}
 			}
 
 			foreach (SceneObject item in sceneObject.Children)
@@ -178,11 +188,13 @@ namespace EMGraphics.Demo
 		public bool flatMode;
 		public bool renderFaces;
 		public bool renderLines;
+		public bool rendernormal;
 
 		public EMGridProperties(Color ambient, Color directionalLight,
 			Color regular, Color highlight,
 			Color regularLine, Color highlightLine,
-			bool flatMode, bool renderFaces, bool renderLines)
+			bool flatMode, bool renderFaces, bool renderLines,
+			bool renderNormal)
 		{
 			this.ambientColor = ambient;
 			this.directionalLightColor = directionalLight;
@@ -193,6 +205,7 @@ namespace EMGraphics.Demo
 			this.flatMode = flatMode;
 			this.renderFaces = renderFaces;
 			this.renderLines = renderLines;
+			this.rendernormal = renderNormal;
 		}
 	}
 }

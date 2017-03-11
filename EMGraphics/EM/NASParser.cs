@@ -15,9 +15,6 @@ namespace EMGraphics
 		{
 			if (file == null) { throw new ArgumentNullException(); }
 
-			vec3[] allVertexPositions = file.VertexPositions;
-			BoundingBox box = allVertexPositions.Move2Center();
-
 			var gridGroups = from item in file.Triangles
 							 group item by item.FaceLabel;
 
@@ -32,7 +29,7 @@ namespace EMGraphics
 			return new NASDataSource(
 				file.VertexPositions, file.VertexNormals, file.Triangles,
 				file.FaceNormalPositions, file.FaceNormalDirections, file.FaceNormalLengths,
-				gridList, normalLineModelList, box);
+				gridList, normalLineModelList, file.Box);
 		}
 
 		private static List<NormalLineModel> FindNormaLineModelList(

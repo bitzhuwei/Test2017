@@ -20,6 +20,8 @@ namespace EMGraphics
 
         public vec3[] VertexNormals { get; private set; }
 
+		public BoundingBox Box { get; private set; }
+
         /// <summary>
         /// triangles in this *.nas file.
         /// </summary>
@@ -31,6 +33,7 @@ namespace EMGraphics
 
         private NASFile(vec3[] vertexPositions, Triangle[] triangles)
         {
+			this.Box = vertexPositions.Move2Center();
             this.VertexPositions = vertexPositions;
             this.Triangles = triangles;
             var veretxNormals = new vec3[vertexPositions.Length];

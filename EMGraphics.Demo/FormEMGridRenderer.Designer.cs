@@ -50,6 +50,7 @@
 			this.chkRenderFaces = new System.Windows.Forms.CheckBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.chkRenderLines = new System.Windows.Forms.CheckBox();
+			this.chkRenderNormal = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -223,7 +224,7 @@
 			this.chkRenderFaces.AutoSize = true;
 			this.chkRenderFaces.Checked = true;
 			this.chkRenderFaces.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkRenderFaces.Location = new System.Drawing.Point(9, 343);
+			this.chkRenderFaces.Location = new System.Drawing.Point(15, 343);
 			this.chkRenderFaces.Name = "chkRenderFaces";
 			this.chkRenderFaces.Size = new System.Drawing.Size(130, 19);
 			this.chkRenderFaces.TabIndex = 5;
@@ -235,27 +236,40 @@
 			this.label8.AutoSize = true;
 			this.label8.Location = new System.Drawing.Point(6, 325);
 			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(120, 15);
+			this.label8.Size = new System.Drawing.Size(37, 15);
 			this.label8.TabIndex = 0;
-			this.label8.Text = "是否渲染面\\线条";
+			this.label8.Text = "其他";
 			// 
 			// chkRenderLines
 			// 
 			this.chkRenderLines.AutoSize = true;
 			this.chkRenderLines.Checked = true;
 			this.chkRenderLines.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkRenderLines.Location = new System.Drawing.Point(166, 343);
+			this.chkRenderLines.Location = new System.Drawing.Point(151, 343);
 			this.chkRenderLines.Name = "chkRenderLines";
 			this.chkRenderLines.Size = new System.Drawing.Size(145, 19);
 			this.chkRenderLines.TabIndex = 5;
 			this.chkRenderLines.Text = "渲染线条(Lines)";
 			this.chkRenderLines.UseVisualStyleBackColor = true;
 			// 
+			// chkRenderNormal
+			// 
+			this.chkRenderNormal.AutoSize = true;
+			this.chkRenderNormal.Checked = true;
+			this.chkRenderNormal.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.chkRenderNormal.Location = new System.Drawing.Point(302, 343);
+			this.chkRenderNormal.Name = "chkRenderNormal";
+			this.chkRenderNormal.Size = new System.Drawing.Size(153, 19);
+			this.chkRenderNormal.TabIndex = 5;
+			this.chkRenderNormal.Text = "渲染法线(Normal)";
+			this.chkRenderNormal.UseVisualStyleBackColor = true;
+			// 
 			// FormEMGridRenderer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(735, 467);
+			this.Controls.Add(this.chkRenderNormal);
 			this.Controls.Add(this.chkRenderLines);
 			this.Controls.Add(this.chkRenderFaces);
 			this.Controls.Add(this.rdoSmooth);
@@ -309,5 +323,6 @@
 		private System.Windows.Forms.CheckBox chkRenderFaces;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.CheckBox chkRenderLines;
+		private System.Windows.Forms.CheckBox chkRenderNormal;
 	}
 }
