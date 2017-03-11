@@ -37,6 +37,13 @@ namespace EMGraphics
             x = y = z = s;
         }
 
+		public vec3(dvec3 v)
+		{
+			x = (float)v.x;
+			y = (float)v.y;
+			z = (float)v.z;
+		}
+
         /// <summary>
         ///
         /// </summary>

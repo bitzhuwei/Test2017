@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="0Foundations\DataStructrues\BoundingBox\BoundingBoxd.cs" />
     <Compile Include="0Foundations\DataStructrues\BoundingBox\BoundingBox.cs" />
     <Compile Include="0Foundations\DataStructrues\BoundingBox\BoundingBox2D.cs" />
+    <Compile Include="0Foundations\DataStructrues\BoundingBox\IBoundingBoxd.cs" />
     <Compile Include="0Foundations\DataStructrues\BoundingBox\IBoundingBox.cs" />
     <Compile Include="0Foundations\DataStructrues\BoundingBox\IBoundingBox2D.cs" />
     <Compile Include="0Foundations\DataStructrues\BoundingBox\IBoundingBoxHelper.cs" />
@@ -496,14 +498,6 @@
     <Compile Include="Renderers\IBufferables\Cube.cs" />
     <Compile Include="Renderers\IBufferables\CubeModel.cs" />
     <Compile Include="Renderers\IBufferables\Points.cs" />
-    <Compile Include="Renderers\IBufferables\Sphere.cs" />
-    <Compile Include="Renderers\IBufferables\SphereModel.cs" />
-    <Compile Include="Renderers\IBufferables\Square.cs" />
-    <Compile Include="Renderers\IBufferables\SquareModel.cs" />
-    <Compile Include="Renderers\IBufferables\Teapot.cs" />
-    <Compile Include="Renderers\IBufferables\TeapotModel.cs" />
-    <Compile Include="Renderers\IBufferables\TeapotModel.Faces.cs" />
-    <Compile Include="Renderers\IBufferables\TeapotModel.positionData.cs" />
     <Compile Include="Renderers\IBufferables\Tetrahedron.cs" />
     <Compile Include="Renderers\IBufferables\TetrahedronModel.cs" />
     <Compile Include="Renderers\IBufferables\TextModel.cs" />
@@ -585,12 +579,10 @@
     <Compile Include="Renderers\PickableRenderer\ZeroIndexRenderer\ZeroIndexRenderer.Picking.cs" />
     <Compile Include="Renderers\PickableRenderer\ZeroIndexRenderer\ZeroIndexRenderer.Property.cs" />
     <Compile Include="Renderers\PointsRenderer.cs" />
-    <Compile Include="Renderers\SimpleRenderer.cs" />
     <Compile Include="Renderers\TextRenderer\TextRenderer.cs" />
     <Compile Include="Renderers\TextRenderer\TextRenderer.DoInitialize.cs" />
     <Compile Include="Renderers\TextRenderer\TextRenderer.DoRender.cs" />
     <Compile Include="Renderers\TextRenderer\TextRenderer.Property.cs" />
-    <Compile Include="Renderers\TextureRenderer.cs" />
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Scene\Scene.Engine.cs" />
     <Compile Include="Scene\Scene.IDisposable.cs" />
@@ -616,7 +608,6 @@
     <Compile Include="UIRendering\UIRenderer.cs" />
     <Compile Include="UIRendering\UIRenderer.ILayout.cs" />
     <Compile Include="UIRendering\UIRenderers\UIAxis.cs" />
-    <Compile Include="UIRendering\UIRenderers\UICursor.cs" />
     <Compile Include="UIRendering\UIRenderers\UIText.cs" />
     <Compile Include="UIRendering\UIRenderers\UIText.DoInitialize.cs" />
     <Compile Include="UIRendering\UIRenderers\UIText.DoRender.cs" />

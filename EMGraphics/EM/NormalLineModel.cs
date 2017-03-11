@@ -19,7 +19,7 @@ namespace EMGraphics
         /// <param name="normalDirections">directions of every normal line.</param>
         /// <param name="normalLengths">lengths of every normal line.</param>
         /// <param name="label"></param>
-        public NormalLineModel(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths, string label)
+        public NormalLineModel(dvec3[] normalPositions, dvec3[] normalDirections, double[] normalLengths, string label)
         {
             if (normalPositions == null || normalDirections == null || normalLengths == null)
             { throw new ArgumentNullException(); }
@@ -29,11 +29,11 @@ namespace EMGraphics
             { throw new ArgumentException(); }
 
             this.vertexCount = normalPositions.Length * 4;
-            BoundingBox box = normalPositions.Move2Center();
+            BoundingBoxd box = normalPositions.Move2Center();
             this.normalPositions = normalPositions;
             this.Label = label;
-            this.ModelSize = box.MaxPosition - box.MinPosition;
-            this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
+			this.ModelSize = new vec3(box.MaxPosition - box.MinPosition);
+			this.WorldPosition = new vec3(box.MaxPosition / 2.0 + box.MinPosition / 2.0);
             this.normalDirections = normalDirections;
             this.normalLengths = normalLengths;
             this.RotationAngleDegree = 0;
@@ -44,9 +44,9 @@ namespace EMGraphics
         public const string strPosition = "position";
         private VertexBuffer positionBuffer;
 
-        private vec3[] normalPositions;
-        private vec3[] normalDirections;
-        private float[] normalLengths;
+        private dvec3[] normalPositions;
+        private dvec3[] normalDirections;
+        private double[] normalLengths;
 
         private IndexBuffer indexBuffer = null;
 
@@ -58,17 +58,17 @@ namespace EMGraphics
             {
                 if (this.positionBuffer == null)
                 {
-                    vec3[] positions = new vec3[this.normalPositions.Length * 4];
+                    dvec3[] positions = new dvec3[this.normalPositions.Length * 4];
                     for (int i = 0; i < this.normalPositions.Length; i++)
                     {
-                        vec3 root = this.normalPositions[i];
-                        vec3 direction = this.normalDirections[i].normalize() * normalLengths[i];
+                        dvec3 root = this.normalPositions[i];
+                        dvec3 direction = this.normalDirections[i].normalize() * normalLengths[i];
                         positions[i * 4 + 0] = root;
                         positions[i * 4 + 1] = root + direction * 2.0f / 3.0f;
                         positions[i * 4 + 2] = root + direction * 2.0f / 3.0f;
                         positions[i * 4 + 3] = root + direction;
                     }
-                    this.positionBuffer = positions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                    this.positionBuffer = positions.GenVertexBuffer(VBOConfig.DVec3, varNameInShader, BufferUsage.StaticDraw);
                     // be ready to release array by GC.
                     this.normalPositions = null;
                     this.normalDirections = null;

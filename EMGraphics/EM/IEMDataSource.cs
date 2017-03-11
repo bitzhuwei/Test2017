@@ -13,12 +13,12 @@ namespace EMGraphics
 		/// <summary>
 		/// whole model's vertex positions.
 		/// </summary>
-		vec3[] VertexPositions { get; }
+		dvec3[] VertexPositions { get; }
 
 		/// <summary>
 		/// whole model's vertex normals.
 		/// </summary>
-		vec3[] VertexNormals { get; }
+		dvec3[] VertexNormals { get; }
 
 		/// <summary>
 		/// whole model's triangles.
@@ -28,17 +28,17 @@ namespace EMGraphics
 		/// <summary>
 		/// whole model's triangles' positions(center of triangle).
 		/// </summary>
-		vec3[] FaceNormalPositions { get; }
+		dvec3[] FaceNormalPositions { get; }
 
 		/// <summary>
 		/// whole model's triangles' normals' directions.
 		/// </summary>
-		vec3[] FaceNormalDirections { get; }
+		dvec3[] FaceNormalDirections { get; }
 
 		/// <summary>
 		/// whole model's triangles' normals' lengths.
 		/// </summary>
-		float[] FaceNormalLengths { get; }
+		double[] FaceNormalLengths { get; }
 
 		#endregion whole model
 
@@ -59,7 +59,7 @@ namespace EMGraphics
 		/// <summary>
 		/// Whole model's position and size.
 		/// </summary>
-		BoundingBox Box { get; }
+		BoundingBoxd Box { get; }
 
 	}
 }

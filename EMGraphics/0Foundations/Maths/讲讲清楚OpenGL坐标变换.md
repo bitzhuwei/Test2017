@@ -111,15 +111,15 @@ Model Matrix负责将模型从Model Space变换到World Space。
 
 设模型在Model Space里的任意一个顶点坐标为(x, y, z)，我们想把模型放到World Space里的(tx, ty, tz)处，且绕y轴旋转r&deg;，缩放为原来的s倍。那么：
 
-平移矩阵为&nbsp;<span class="cnblogs_code">mat4 translate = glm.translate(mat4.identity(), <span style="color: #0000ff;">new</span> vec3(tx, ty, tz));</span>&nbsp;；
+平移矩阵为&nbsp;<span class="cnblogs_code">mat4 translate = glm.translate(mat4.identity(), <span style="color: #0000ff;">new</span> dvec3(tx, ty, tz));</span>&nbsp;；
 
-缩放矩阵为&nbsp;<span class="cnblogs_code">mat4 scale = glm.scale(mat4.identity(), <span style="color: #0000ff;">new</span> vec3(s, s, s));</span>&nbsp;；
+缩放矩阵为&nbsp;<span class="cnblogs_code">mat4 scale = glm.scale(mat4.identity(), <span style="color: #0000ff;">new</span> dvec3(s, s, s));</span>&nbsp;；
 
-旋转矩阵为&nbsp;<span class="cnblogs_code">mat4 rotation = glm.rotate(mat4.identity(), (<span style="color: #0000ff;">float</span>)(r * Math.PI / <span style="color: #800080;">180.0</span>), <span style="color: #0000ff;">new</span> vec3(<span style="color: #800080;">0</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">0</span>));</span>&nbsp;；
+旋转矩阵为&nbsp;<span class="cnblogs_code">mat4 rotation = glm.rotate(mat4.identity(), (<span style="color: #0000ff;">float</span>)(r * Math.PI / <span style="color: #800080;">180.0</span>), <span style="color: #0000ff;">new</span> dvec3(<span style="color: #800080;">0</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">0</span>));</span>&nbsp;；
 
 总的Model Matrix为&nbsp;<span class="cnblogs_code">mat4 modelMatrix = translate * scale * rotation;</span>&nbsp;。
 
-为了获取(x, y, z)变换到World Space上的位置，首先将其扩充为四元向量(x, y, z, 1)。（不用管为什么不是(x, y, z, 0)），然后可得：<span class="cnblogs_code">vec4 worldPos = modelMatrix * <span style="color: #0000ff;">new</span> vec4(x, y, z, <span style="color: #800080;">1</span>);</span>&nbsp;
+为了获取(x, y, z)变换到World Space上的位置，首先将其扩充为四元向量(x, y, z, 1)。（不用管为什么不是(x, y, z, 0)），然后可得：<span class="cnblogs_code">dvec4 worldPos = modelMatrix * <span style="color: #0000ff;">new</span> dvec4(x, y, z, <span style="color: #800080;">1</span>);</span>&nbsp;
 
 ## 性质
 
@@ -156,14 +156,14 @@ Camera的参数(Position, Target, Up)决定了view matrix。模型在World Space
 <span style="color: #008080;"> 6</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="center"&gt;</span><span style="color: #008000;">The center.</span><span style="color: #808080;">&lt;/param&gt;</span>
 <span style="color: #008080;"> 7</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="up"&gt;</span><span style="color: #008000;">Up.</span><span style="color: #808080;">&lt;/param&gt;</span>
 <span style="color: #008080;"> 8</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;returns&gt;&lt;/returns&gt;</span>
-<span style="color: #008080;"> 9</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span><span style="color: #000000;"> mat4 lookAt(vec3 eye, vec3 center, vec3 upVector)
+<span style="color: #008080;"> 9</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span><span style="color: #000000;"> mat4 lookAt(dvec3 eye, dvec3 center, dvec3 upVector)
 </span><span style="color: #008080;">10</span> <span style="color: #000000;">        {
 </span><span style="color: #008080;">11</span>             <span style="color: #008000;">//</span><span style="color: #008000;"> camera's back in world space coordinate system</span>
-<span style="color: #008080;">12</span>             vec3 back = (eye -<span style="color: #000000;"> center).normalize();
+<span style="color: #008080;">12</span>             dvec3 back = (eye -<span style="color: #000000;"> center).normalize();
 </span><span style="color: #008080;">13</span>             <span style="color: #008000;">//</span><span style="color: #008000;"> camera's right in world space coordinate system</span>
-<span style="color: #008080;">14</span>             vec3 right =<span style="color: #000000;"> upVector.cross(back).normalize();
+<span style="color: #008080;">14</span>             dvec3 right =<span style="color: #000000;"> upVector.cross(back).normalize();
 </span><span style="color: #008080;">15</span>             <span style="color: #008000;">//</span><span style="color: #008000;"> camera's up in world space coordinate system</span>
-<span style="color: #008080;">16</span>             vec3 up =<span style="color: #000000;"> back.cross(right);
+<span style="color: #008080;">16</span>             dvec3 up =<span style="color: #000000;"> back.cross(right);
 </span><span style="color: #008080;">17</span> 
 <span style="color: #008080;">18</span>             mat4 viewMatrix = <span style="color: #0000ff;">new</span> mat4(<span style="color: #800080;">1</span><span style="color: #000000;">);
 </span><span style="color: #008080;">19</span>             viewMatrix.col0.x =<span style="color: #000000;"> right.x;
@@ -383,19 +383,19 @@ Camera摆好之后，要实现透视投影或正交投影。经过投影之后�
 <span style="color: #008080;"> 6</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="proj"&gt;</span><span style="color: #008000;">The projection matrix.</span><span style="color: #808080;">&lt;/param&gt;</span>
 <span style="color: #008080;"> 7</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="viewport"&gt;</span><span style="color: #008000;">The viewport.</span><span style="color: #808080;">&lt;/param&gt;</span>
 <span style="color: #008080;"> 8</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;returns&gt;&lt;/returns&gt;</span>
-<span style="color: #008080;"> 9</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span><span style="color: #000000;"> vec3 project(vec3 modelPosition, mat4 view, mat4 proj, vec4 viewport)
+<span style="color: #008080;"> 9</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span><span style="color: #000000;"> dvec3 project(dvec3 modelPosition, mat4 view, mat4 proj, dvec4 viewport)
 </span><span style="color: #008080;">10</span> <span style="color: #000000;">        {
-</span><span style="color: #008080;">11</span>             vec4 tmp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> vec4(modelPosition, (1f));
+</span><span style="color: #008080;">11</span>             dvec4 tmp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> dvec4(modelPosition, (1f));
 </span><span style="color: #008080;">12</span>             tmp = view *<span style="color: #000000;"> tmp;
 </span><span style="color: #008080;">13</span>             tmp = proj * tmp;<span style="color: #008000;">//</span><span style="color: #008000;"> this is gl_Position</span>
 <span style="color: #008080;">14</span> 
 <span style="color: #008080;">15</span>             tmp /= tmp.w;<span style="color: #008000;">//</span><span style="color: #008000;"> after this, tmp is normalized device coordinate.</span>
 <span style="color: #008080;">16</span> 
-<span style="color: #008080;">17</span>             tmp = tmp * <span style="color: #800080;">0.5f</span> + <span style="color: #0000ff;">new</span> vec4(<span style="color: #800080;">0.5f</span>, <span style="color: #800080;">0.5f</span>, <span style="color: #800080;">0.5f</span>, <span style="color: #800080;">0.5f</span><span style="color: #000000;">);
+<span style="color: #008080;">17</span>             tmp = tmp * <span style="color: #800080;">0.5f</span> + <span style="color: #0000ff;">new</span> dvec4(<span style="color: #800080;">0.5f</span>, <span style="color: #800080;">0.5f</span>, <span style="color: #800080;">0.5f</span>, <span style="color: #800080;">0.5f</span><span style="color: #000000;">);
 </span><span style="color: #008080;">18</span>             tmp[<span style="color: #800080;">0</span>] = tmp[<span style="color: #800080;">0</span>] * viewport[<span style="color: #800080;">2</span>] + viewport[<span style="color: #800080;">0</span><span style="color: #000000;">];
 </span><span style="color: #008080;">19</span>             tmp[<span style="color: #800080;">1</span>] = tmp[<span style="color: #800080;">1</span>] * viewport[<span style="color: #800080;">3</span>] + viewport[<span style="color: #800080;">1</span>];<span style="color: #008000;">//</span><span style="color: #008000;"> after this, tmp is window coordinate.</span>
 <span style="color: #008080;">20</span> 
-<span style="color: #008080;">21</span>             <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> vec3(tmp.x, tmp.y, tmp.z);
+<span style="color: #008080;">21</span>             <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> dvec3(tmp.x, tmp.y, tmp.z);
 </span><span style="color: #008080;">22</span>         }</pre>
 </div>
 
@@ -414,19 +414,19 @@ Camera摆好之后，要实现透视投影或正交投影。经过投影之后�
 <span style="color: #008080;"> 6</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="proj"&gt;</span><span style="color: #008000;">The proj.</span><span style="color: #808080;">&lt;/param&gt;</span>
 <span style="color: #008080;"> 7</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;param name="viewport"&gt;</span><span style="color: #008000;">The viewport.</span><span style="color: #808080;">&lt;/param&gt;</span>
 <span style="color: #008080;"> 8</span>         <span style="color: #808080;">///</span> <span style="color: #808080;">&lt;returns&gt;&lt;/returns&gt;</span>
-<span style="color: #008080;"> 9</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span><span style="color: #000000;"> vec3 unProject(vec3 windowPos, mat4 view, mat4 proj, vec4 viewport)
+<span style="color: #008080;"> 9</span>         <span style="color: #0000ff;">public</span> <span style="color: #0000ff;">static</span><span style="color: #000000;"> dvec3 unProject(dvec3 windowPos, mat4 view, mat4 proj, dvec4 viewport)
 </span><span style="color: #008080;">10</span> <span style="color: #000000;">        {
 </span><span style="color: #008080;">11</span>             mat4 Inverse = glm.inverse(proj *<span style="color: #000000;"> view);
 </span><span style="color: #008080;">12</span> 
-<span style="color: #008080;">13</span>             vec4 tmp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> vec4(windowPos, (1f));
+<span style="color: #008080;">13</span>             dvec4 tmp = <span style="color: #0000ff;">new</span><span style="color: #000000;"> dvec4(windowPos, (1f));
 </span><span style="color: #008080;">14</span>             tmp.x = (tmp.x - (viewport[<span style="color: #800080;">0</span>])) / (viewport[<span style="color: #800080;">2</span><span style="color: #000000;">]);
 </span><span style="color: #008080;">15</span>             tmp.y = (tmp.y - (viewport[<span style="color: #800080;">1</span>])) / (viewport[<span style="color: #800080;">3</span><span style="color: #000000;">]);
-</span><span style="color: #008080;">16</span>             tmp = tmp * (2f) - <span style="color: #0000ff;">new</span> vec4(<span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>);<span style="color: #008000;">//</span><span style="color: #008000;"> after this, tmp is normalized device coordinate.</span>
+</span><span style="color: #008080;">16</span>             tmp = tmp * (2f) - <span style="color: #0000ff;">new</span> dvec4(<span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>, <span style="color: #800080;">1</span>);<span style="color: #008000;">//</span><span style="color: #008000;"> after this, tmp is normalized device coordinate.</span>
 <span style="color: #008080;">17</span> 
-<span style="color: #008080;">18</span>             vec4 obj = Inverse *<span style="color: #000000;"> tmp;
+<span style="color: #008080;">18</span>             dvec4 obj = Inverse *<span style="color: #000000;"> tmp;
 </span><span style="color: #008080;">19</span>             obj /= obj.w;<span style="color: #008000;">//</span><span style="color: #008000;"> after this, tmp is model coordinate.</span>
 <span style="color: #008080;">20</span> 
-<span style="color: #008080;">21</span>             <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> vec3(obj);
+<span style="color: #008080;">21</span>             <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">new</span><span style="color: #000000;"> dvec3(obj);
 </span><span style="color: #008080;">22</span>         }</pre>
 </div>
 

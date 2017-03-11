@@ -10,13 +10,13 @@ namespace EMGraphics
 	{
 		#region whole model
 
-		public vec3[] VertexPositions { get; private set; }
-		public vec3[] VertexNormals { get; private set; }
+		public dvec3[] VertexPositions { get; private set; }
+		public dvec3[] VertexNormals { get; private set; }
 		public Triangle[] Triangles { get; private set; }
 
-		public vec3[] FaceNormalPositions { get; private set; }
-		public vec3[] FaceNormalDirections { get; private set; }
-		public float[] FaceNormalLengths { get; private set; }
+		public dvec3[] FaceNormalPositions { get; private set; }
+		public dvec3[] FaceNormalDirections { get; private set; }
+		public double[] FaceNormalLengths { get; private set; }
 
 		#endregion whole model
 
@@ -30,12 +30,12 @@ namespace EMGraphics
 		/// <summary>
 		/// Whole model's position and size.
 		/// </summary>
-		public BoundingBox Box { get; private set; }
+		public BoundingBoxd Box { get; private set; }
 
 		public NASDataSource(
-			vec3[] vertexPositions, vec3[] vertexNormals, Triangle[] triangles,
-			vec3[] faceNormalPositions, vec3[] faceNormalDirections, float[] faceNormalLengths,
-			IList<EMGrid> gridList, IList<NormalLineModel> normalList, BoundingBox box)
+			dvec3[] vertexPositions, dvec3[] vertexNormals, Triangle[] triangles,
+			dvec3[] faceNormalPositions, dvec3[] faceNormalDirections, double[] faceNormalLengths,
+			IList<EMGrid> gridList, IList<NormalLineModel> normalList, BoundingBoxd box)
 		{
 			if (vertexPositions == null || vertexNormals == null || triangles == null)
 			{

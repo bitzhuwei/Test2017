@@ -15,8 +15,8 @@ namespace EMGraphics
 		{
 			if (file == null) { throw new ArgumentNullException(); }
 
-			vec3[] allVertexPositions = file.VertexPositions;
-			BoundingBox box = allVertexPositions.Move2Center();
+			dvec3[] allVertexPositions = file.VertexPositions;
+			BoundingBoxd box = allVertexPositions.Move2Center();
 
 			var gridGroups = from item in file.Triangles
 							 group item by item.FaceLabel;
@@ -36,9 +36,9 @@ namespace EMGraphics
 		}
 
 		private static List<NormalLineModel> FindNormaLineModelList(
-			vec3[] allFaceNormalPositions,
-			vec3[] allFaceNormalDirections,
-			float[] allFaceNormalLengths,
+			dvec3[] allFaceNormalPositions,
+			dvec3[] allFaceNormalDirections,
+			double[] allFaceNormalLengths,
 			IEnumerable<IGrouping<string, Triangle>> gridGroups)
 		{
 			var list = new List<NormalLineModel>();
@@ -49,9 +49,9 @@ namespace EMGraphics
 				string label = group.Key;
 				int count = group.Count();
 
-				var faceNormalPositions = new vec3[count];
-				var faceNormalDirections = new vec3[count];
-				var faceNormalLengths = new float[count];
+				var faceNormalPositions = new dvec3[count];
+				var faceNormalDirections = new dvec3[count];
+				var faceNormalLengths = new double[count];
 
 				int i = 0;
 				foreach (var triangle in group)
@@ -70,7 +70,7 @@ namespace EMGraphics
 		}
 
 		private static List<EMGrid> FindGridList(
-			vec3[] allVertexPositions, vec3[] allVertexNormals,
+			dvec3[] allVertexPositions, dvec3[] allVertexNormals,
 			IEnumerable<IGrouping<string, Triangle>> gridGroups)
 		{
 			var list = new List<EMGrid>();
@@ -80,8 +80,8 @@ namespace EMGraphics
 				var dict = new Dictionary<int, int>();// index of all -> index of this grid
 				string label = group.Key;
 				int count = group.Count();
-				var positions = new List<vec3>();
-				var normals = new List<vec3>();
+				var positions = new List<dvec3>();
+				var normals = new List<dvec3>();
 				var triangles = new Triangle[count];
 				int i = 0;
 				foreach (var triangle in group)

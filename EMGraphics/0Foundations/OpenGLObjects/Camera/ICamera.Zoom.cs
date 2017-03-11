@@ -29,13 +29,29 @@ namespace EMGraphics
             }
         }
 
-        /// <summary>
-        /// Adjusts camera's settings according to bounding box.
-        /// <para>Use this when bounding box's size or positon is changed.</para>
-        /// </summary>
-        /// <param name="camera"></param>
-        /// <param name="boundingBox"></param>
-        public static void ZoomCamera(this IPerspectiveViewCamera camera, IBoundingBox boundingBox)
+		/// TODO:摄像机的perspective和ortho视角，是否应该同时变化？
+		/// <summary>
+		/// Zoom camera to fit in specified <paramref name="boundingBox"/>.
+		/// </summary>
+		/// <param name="camera"></param>
+		/// <param name="boundingBox"></param>
+		public static void ZoomCamera(this ICamera camera, IBoundingBoxd boundingBox)
+		{
+			if (boundingBox == null || camera == null) { throw new ArgumentNullException(); }
+
+			IBoundingBox box = new BoundingBox(
+				new vec3(boundingBox.MinPosition),
+				new vec3(boundingBox.MaxPosition));
+			ZoomCamera(camera, box);
+		}
+
+		/// <summary>
+		/// Adjusts camera's settings according to bounding box.
+		/// <para>Use this when bounding box's size or positon is changed.</para>
+		/// </summary>
+		/// <param name="camera"></param>
+		/// <param name="boundingBox"></param>
+		public static void ZoomCamera(this IPerspectiveViewCamera camera, IBoundingBox boundingBox)
         {
             vec3 length = boundingBox.MaxPosition - boundingBox.MinPosition;
             float size = Math.Max(Math.Max(length.x, length.y), length.z);

@@ -33,7 +33,7 @@ namespace EMGraphics
             }
 
             // 由于picking.vert/frag只支持vec3的position buffer，所以有此硬性规定。
-            if (positionBuffer == null || positionBuffer.Config != VBOConfig.Vec3)
+            if (positionBuffer == null || (!(positionBuffer.Config == VBOConfig.Vec3||positionBuffer.Config== VBOConfig.DVec3)))
             { throw new Exception(string.Format("Position buffer must use a type composed of 3 float as PropertyBuffer<T>'s T!")); }
 
             // init index buffer.

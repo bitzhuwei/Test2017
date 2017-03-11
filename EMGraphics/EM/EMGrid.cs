@@ -20,15 +20,15 @@ namespace EMGraphics
         /// <param name="normals"></param>
         /// <param name="triangles"></param>
         /// <param name="label"></param>
-        public EMGrid(vec3[] vertexPositions, vec3[] normals, Triangle[] triangles, string label)
+        public EMGrid(dvec3[] vertexPositions, dvec3[] normals, Triangle[] triangles, string label)
         {
-            BoundingBox box = vertexPositions.Move2Center();
+            BoundingBoxd box = vertexPositions.Move2Center();
             this.vertexPositions = vertexPositions;
             this.vertexNormals = normals;
             this.triangles = triangles;
             this.Label = label;
-            this.ModelSize = box.MaxPosition - box.MinPosition;
-            this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
+			this.ModelSize = new vec3(box.MaxPosition - box.MinPosition);
+			this.WorldPosition = new vec3(box.MaxPosition / 2.0 + box.MinPosition / 2.0);
             this.RotationAngleDegree = 0;
             this.RotationAxis = new vec3(0, 1, 0);
             this.Scale = new vec3(1, 1, 1);
@@ -38,18 +38,18 @@ namespace EMGraphics
 
         public const string strPosition = "position";
         private VertexBuffer positionBuffer;
-        private vec3[] vertexPositions;
+        private dvec3[] vertexPositions;
 
-        public vec3[] VertexPositions
+        public dvec3[] VertexPositions
         {
             get { return vertexPositions; }
         }
 
         public const string strNormal = "normal";
         private VertexBuffer normalBuffer;
-        private vec3[] vertexNormals;
+        private dvec3[] vertexNormals;
 
-        public vec3[] VertexNormals
+        public dvec3[] VertexNormals
         {
             get { return vertexNormals; }
         }
@@ -66,7 +66,7 @@ namespace EMGraphics
             {
                 if (this.positionBuffer == null)
                 {
-                    this.positionBuffer = this.vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                    this.positionBuffer = this.vertexPositions.GenVertexBuffer(VBOConfig.DVec3, varNameInShader, BufferUsage.StaticDraw);
                 }
                 return this.positionBuffer;
             }
@@ -74,7 +74,7 @@ namespace EMGraphics
             {
                 if (this.normalBuffer == null)
                 {
-                    this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                    this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.DVec3, varNameInShader, BufferUsage.StaticDraw);
                 }
                 return this.normalBuffer;
             }
