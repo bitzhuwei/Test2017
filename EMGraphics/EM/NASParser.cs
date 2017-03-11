@@ -21,9 +21,13 @@ namespace EMGraphics
 			var gridGroups = from item in file.Triangles
 							 group item by item.FaceLabel;
 
-			IList<EMGrid> gridList = FindGridList(file, gridGroups);
+			IList<EMGrid> gridList = FindGridList(file.VertexPositions, file.VertexNormals, gridGroups);
 
-			IList<NormalLineModel> normalLineModelList = FindNormaLineModelList(file, gridGroups);
+			IList<NormalLineModel> normalLineModelList = FindNormaLineModelList(
+				file.FaceNormalPositions,
+				file.FaceNormalDirections,
+				file.FaceNormalLengths, 
+				gridGroups);
 
 			return new NASDataSource(
 				file.VertexPositions, file.VertexNormals, file.Triangles,
@@ -31,12 +35,13 @@ namespace EMGraphics
 				gridList, normalLineModelList, box);
 		}
 
-		private static List<NormalLineModel> FindNormaLineModelList(NASFile file, IEnumerable<IGrouping<string, Triangle>> gridGroups)
+		private static List<NormalLineModel> FindNormaLineModelList(
+			vec3[] allFaceNormalPositions,
+			vec3[] allFaceNormalDirections,
+			float[] allFaceNormalLengths,
+			IEnumerable<IGrouping<string, Triangle>> gridGroups)
 		{
 			var list = new List<NormalLineModel>();
-			vec3[] positions = file.FaceNormalPositions;
-			vec3[] normals = file.FaceNormalDirections;
-			float[] lengths = file.FaceNormalLengths;
 
 			foreach (var group in gridGroups)
 			{
@@ -52,9 +57,9 @@ namespace EMGraphics
 				foreach (var triangle in group)
 				{
 					int index = triangle.IndexOfTriangles;// triangles.IndexOf(triangle);
-					faceNormalPositions[i] = positions[index];
-					faceNormalDirections[i] = normals[index];
-					faceNormalLengths[i] = lengths[index];
+					faceNormalPositions[i] = allFaceNormalPositions[index];
+					faceNormalDirections[i] = allFaceNormalDirections[index];
+					faceNormalLengths[i] = allFaceNormalLengths[index];
 					i++;
 				}
 
@@ -64,11 +69,11 @@ namespace EMGraphics
 			return list;
 		}
 
-		private static List<EMGrid> FindGridList(NASFile file, IEnumerable<IGrouping<string, Triangle>> gridGroups)
+		private static List<EMGrid> FindGridList(
+			vec3[] allVertexPositions, vec3[] allVertexNormals,
+			IEnumerable<IGrouping<string, Triangle>> gridGroups)
 		{
 			var list = new List<EMGrid>();
-			vec3[] allVertexPositions = file.VertexPositions;
-			vec3[] allVertexNormals = file.VertexNormals;
 
 			foreach (var group in gridGroups)
 			{
