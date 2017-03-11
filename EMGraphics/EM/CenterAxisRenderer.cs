@@ -26,6 +26,7 @@ namespace EMGraphics
             map.Add("inPosition", CenterAxisModel.strPosition);
             map.Add("inColor", CenterAxisModel.strColor);
             var renderer = new CenterAxisRenderer(model, provider, map);
+			renderer.ModelSize = model.ModelSize;
 
             return renderer;
         }

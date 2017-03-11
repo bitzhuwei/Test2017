@@ -27,7 +27,6 @@ namespace EMGraphics.Demo
 				IEMDataSource dataSource = file.Parse();
 				BoundingBox box = dataSource.Box;
 				vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
-				vec3 size = box.MaxPosition - box.MinPosition;
 
 				// 将整个nas模型作为一个单独的模型
 				// get nas model as a single model
@@ -35,13 +34,13 @@ namespace EMGraphics.Demo
 					//SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
 					SceneObject wholeObject = GetWholeObject(
 						dataSource.VertexPositions,dataSource.VertexNormals,
-						dataSource.Triangles);
+						dataSource.Triangles, center);
 					this.scene.RootObject.Children.Add(wholeObject);
 					this.wholeObject = wholeObject;
 					//SceneObject wholeNormal = GetWholeNormal(
 					//	dataSource.FaceNormalPositions,
 					//	dataSource.FaceNormalDirections,
-					//	dataSource.FaceNormalLengths);
+					//	dataSource.FaceNormalLengths, center);
 					//this.scene.RootObject.Children.Add(wholeNormal);
 					//this.wholeNormal = wholeNormal;
 				}
@@ -51,7 +50,8 @@ namespace EMGraphics.Demo
 				{
 					IList<EMGrid> gridList = dataSource.GridList;
 					IList<NormalLineModel> normalLineModelList = dataSource.NormalList;
-					SceneObject notPickedGroup = GetPartedGrids(gridList, normalLineModelList);
+					SceneObject notPickedGroup = GetPartedGrids(
+						gridList, normalLineModelList, center);
 					notPickedGroup.RenderingEnabled = false;
 					notPickedGroup.PickingEnabled = false;
 					this.scene.RootObject.Children.Add(notPickedGroup);
@@ -75,13 +75,12 @@ namespace EMGraphics.Demo
 				{
 					// center axis 
 					// NOTE: this renderer must be the last one!
+					vec3 size = box.MaxPosition - box.MinPosition;
 					float max = size.x;
 					if (max < size.y) { max = size.y; }
 					if (max < size.z) { max = size.z; }
 					var model = new CenterAxisModel(max);
 					CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
-					//renderer.WorldPosition = center;
-					renderer.ModelSize = size;
 					SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
 					this.scene.RootObject.Children.Add(obj);
 				}
@@ -96,26 +95,28 @@ namespace EMGraphics.Demo
 		private SceneObject GetWholeNormal(
 			vec3[] faceNormalPositions, 
 			vec3[] faceNormalDirections, 
-			float[] faceNormalLengths)
+			float[] faceNormalLengths, vec3 center)
 		{
 			var model = new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, "Whole Face Normal");
 			var renderer = NormalLineRenderer.Create(model);
+			renderer.WorldPosition = center;
 			SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
 			return obj;
 		}
 
 		private SceneObject GetWholeObject(
-			vec3[] positions, vec3[] normals, Triangle[] triangles)
+			vec3[] positions, vec3[] normals, Triangle[] triangles, vec3 center)
 		{
 			var grid = new EMGrid(positions, normals, triangles, "Whole Model");
 			var renderer = EMGridRenderer.Create(grid);
+			renderer.WorldPosition = center;
 			//renderer.Initialize();
 			SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: true);
 			return obj;
 		}
 
 		private static SceneObject GetPartedGrids(
-			IList<EMGrid> gridList, IList<NormalLineModel> normalLineModelList)
+			IList<EMGrid> gridList, IList<NormalLineModel> normalLineModelList, vec3 center)
 		{
 			var partedGridObjects = new SceneObject[gridList.Count];
 			for (int i = 0; i < partedGridObjects.Length; i++)
@@ -128,6 +129,7 @@ namespace EMGraphics.Demo
 			{
 				EMGrid grid = gridList[i];
 				EMGridRenderer renderer = EMGridRenderer.Create(grid);
+				renderer.WorldPosition = center;
 				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
@@ -138,6 +140,7 @@ namespace EMGraphics.Demo
 			{
 				NormalLineModel model = normalLineModelList[i];
 				NormalLineRenderer renderer = NormalLineRenderer.Create(model);
+				renderer.WorldPosition = center;
 				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Face Normal of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
