@@ -46,15 +46,15 @@ namespace EMGraphics
             return renderer;
         }
 
-        private NormalLineRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
-            AttributeMap attributeMap, string positionNameInIBufferable,
-            params GLState[] switches)
-            : base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
-        {
-            this.HeadColor = new MarkableStruct<Color>(Color.Aqua);
-            this.TailColor = new MarkableStruct<Color>(Color.Red);
-            this.StateList.Add(new LineWidthState(2));
-        }
+		private NormalLineRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
+			AttributeMap attributeMap, string positionNameInIBufferable,
+			params GLState[] switches)
+			: base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
+		{
+			this.HeadColor = new MarkableStruct<Color>(Color.FromArgb(255, 100, 150, 150));
+			this.TailColor = new MarkableStruct<Color>(Color.Red);
+			this.StateList.Add(new LineWidthState(2));
+		}
 
         protected override void DoRender(RenderEventArgs arg)
         {
