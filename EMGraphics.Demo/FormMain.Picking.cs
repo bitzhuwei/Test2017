@@ -172,31 +172,53 @@ namespace EMGraphics.Demo
 
         private FormDisplayText frmDisplayPickedGeometry = new FormDisplayText("Picked Geometry");
 
+		private Point leftMouseDownPosition;
+
         void glCanvas1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+            if (e.Button == MouseButtons.Left)
             {
-                List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
-                   e.Location, PickingGeometryType.Triangle);
-                PickedGeometry geometry = null;
-                if (allPickedGeometrys != null && allPickedGeometrys.Count > 0)
-                { geometry = allPickedGeometrys[0].Item2; }
-
-                PickedGeometry current = this.CurrentPickedGeometry;
-                if (current != null)
-                {
-                    DeHighlight(current);
-                    this.CurrentPickedGeometry = null;
-                }
-
-                if (geometry != null)
-                {
-                    Highlight(geometry);
-                }
-
-                this.CurrentPickedGeometry = geometry;
+				this.leftMouseDownPosition = e.Location; 
             }
         }
+
+		private void GlCanvas1_MouseMove(object sender, MouseEventArgs e)
+		{
+		}
+
+		private void GlCanvas1_MouseUp(object sender, MouseEventArgs e)
+		{
+			if (e.Button == MouseButtons.Left)
+			{
+				if (e.Location == this.leftMouseDownPosition)
+				{
+					TryPicking(sender, e);
+				}
+			}
+		}
+
+		private void TryPicking(object sender, MouseEventArgs e)
+		{
+			List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
+				   e.Location, PickingGeometryType.Triangle);
+			PickedGeometry geometry = null;
+			if (allPickedGeometrys != null && allPickedGeometrys.Count > 0)
+			{ geometry = allPickedGeometrys[0].Item2; }
+
+			PickedGeometry current = this.CurrentPickedGeometry;
+			if (current != null)
+			{
+				DeHighlight(current);
+				this.CurrentPickedGeometry = null;
+			}
+
+			if (geometry != null)
+			{
+				Highlight(geometry);
+			}
+
+			this.CurrentPickedGeometry = geometry;
+		}
 
         private void DeHighlight(PickedGeometry pickedGeometry)
         {

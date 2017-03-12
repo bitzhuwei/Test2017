@@ -27,11 +27,14 @@ namespace EMGraphics.Demo
             this.glCanvas1.OpenGLDraw += this.glCanvas1_OpenGLDraw;
             this.glCanvas1.KeyPress += this.glCanvas1_KeyPress;
             this.glCanvas1.MouseDown += glCanvas1_MouseDown;
+			this.glCanvas1.MouseMove += GlCanvas1_MouseMove;
+			this.glCanvas1.MouseUp += GlCanvas1_MouseUp;
 
             Application.Idle += Application_Idle;
         }
 
-        private void Application_Idle(object sender, EventArgs e)
+
+		private void Application_Idle(object sender, EventArgs e)
         {
             this.Text = string.Format("EMGraphics DEMO - FPS: {0}", this.glCanvas1.FPS.ToShortString());
         }
