@@ -83,17 +83,17 @@ namespace EMGraphics
 
                 if (width > height)
                 {
-                    camera.Left = -size * width / height;
-                    camera.Right = size * width / height;
-                    camera.Bottom = -size;
-                    camera.Top = size;
+					camera.Left = -size * width / height / 2;
+					camera.Right = size * width / height / 2;
+					camera.Bottom = -size / 2;
+					camera.Top = size / 2;
                 }
                 else
                 {
-                    camera.Left = -size;
-                    camera.Right = size;
-                    camera.Bottom = -size * height / width;
-                    camera.Top = size * height / width;
+					camera.Left = -size / 2;
+					camera.Right = size / 2;
+					camera.Bottom = -size * height / width / 2;
+					camera.Top = size * height / width / 2;
                 }
                 //camera.Near = 0;
                 //camera.Far = size * 3 + 1;// double.MaxValue;
