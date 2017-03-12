@@ -21,6 +21,8 @@ namespace EMGraphics.Demo
 		private bool flat;
 		private bool renderFaces;
 		private bool renderLines;
+		private bool renderAllNormals;
+		private bool renderSelectedNormals;
 
 		public FormEMGridRenderer(Scene scene)
 		{
@@ -40,6 +42,8 @@ namespace EMGraphics.Demo
 			this.flat = this.rdoFlat.Checked;
 			this.renderFaces = this.chkRenderFaces.Checked;
 			this.renderLines = this.chkRenderLines.Checked;
+			this.renderAllNormals = this.chkRenderAllNormals.Checked;
+			this.renderSelectedNormals = this.chkRenderSelectedNormals.Checked;
 		}
 
 		private void btnReset_Click(object sender, EventArgs e)
@@ -54,6 +58,8 @@ namespace EMGraphics.Demo
 			this.rdoSmooth.Checked = !this.flat;
 			this.chkRenderFaces.Checked = this.renderFaces;
 			this.chkRenderLines.Checked = this.renderLines;
+			this.chkRenderAllNormals.Checked = this.renderAllNormals;
+			this.chkRenderSelectedNormals.Checked = this.renderSelectedNormals;
 		}
 
 		private void btnApply_Click(object sender, EventArgs e)
@@ -124,7 +130,8 @@ namespace EMGraphics.Demo
 				regular, highlight, regularLine, highlightLine,
 				this.rdoFlat.Checked,
 				this.chkRenderFaces.Checked, this.chkRenderLines.Checked,
-				this.chkRenderNormal.Checked);
+				this.chkRenderAllNormals.Checked,
+				this.chkRenderSelectedNormals.Checked);
 
 			UpdateProperties(this.scene.RootObject, properties);
 		}
@@ -150,7 +157,14 @@ namespace EMGraphics.Demo
 				var renderer = sceneObject.Renderer as NormalLineRenderer;
 				if (renderer != null)
 				{
-					sceneObject.RenderingEnabled = properties.rendernormal;
+					if (sceneObject.Name.Contains("Whole Normals"))
+					{
+						sceneObject.RenderingEnabled = properties.renderAllNormals;
+					}
+					else if(sceneObject.Name.Contains("Face Normal of Mesh"))
+					{
+						sceneObject.RenderingEnabled = properties.renderSelectedNormals;
+					}
 				}
 			}
 
@@ -188,13 +202,14 @@ namespace EMGraphics.Demo
 		public bool flatMode;
 		public bool renderFaces;
 		public bool renderLines;
-		public bool rendernormal;
+		public bool renderAllNormals;
+		public bool renderSelectedNormals;
 
 		public EMGridProperties(Color ambient, Color directionalLight,
 			Color regular, Color highlight,
 			Color regularLine, Color highlightLine,
 			bool flatMode, bool renderFaces, bool renderLines,
-			bool renderNormal)
+			bool renderAllNormals, bool renderSelectedNormals)
 		{
 			this.ambientColor = ambient;
 			this.directionalLightColor = directionalLight;
@@ -205,7 +220,8 @@ namespace EMGraphics.Demo
 			this.flatMode = flatMode;
 			this.renderFaces = renderFaces;
 			this.renderLines = renderLines;
-			this.rendernormal = renderNormal;
+			this.renderAllNormals = renderAllNormals;
+			this.renderSelectedNormals = renderSelectedNormals;
 		}
 	}
 }

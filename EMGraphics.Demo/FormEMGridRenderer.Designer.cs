@@ -50,7 +50,8 @@
 			this.chkRenderFaces = new System.Windows.Forms.CheckBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.chkRenderLines = new System.Windows.Forms.CheckBox();
-			this.chkRenderNormal = new System.Windows.Forms.CheckBox();
+			this.chkRenderAllNormals = new System.Windows.Forms.CheckBox();
+			this.chkRenderSelectedNormals = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -252,24 +253,33 @@
 			this.chkRenderLines.Text = "渲染线条(Lines)";
 			this.chkRenderLines.UseVisualStyleBackColor = true;
 			// 
-			// chkRenderNormal
+			// chkRenderAllNormals
 			// 
-			this.chkRenderNormal.AutoSize = true;
-			this.chkRenderNormal.Checked = true;
-			this.chkRenderNormal.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkRenderNormal.Location = new System.Drawing.Point(302, 343);
-			this.chkRenderNormal.Name = "chkRenderNormal";
-			this.chkRenderNormal.Size = new System.Drawing.Size(153, 19);
-			this.chkRenderNormal.TabIndex = 5;
-			this.chkRenderNormal.Text = "渲染法线(Normal)";
-			this.chkRenderNormal.UseVisualStyleBackColor = true;
+			this.chkRenderAllNormals.AutoSize = true;
+			this.chkRenderAllNormals.Location = new System.Drawing.Point(15, 368);
+			this.chkRenderAllNormals.Name = "chkRenderAllNormals";
+			this.chkRenderAllNormals.Size = new System.Drawing.Size(215, 19);
+			this.chkRenderAllNormals.TabIndex = 5;
+			this.chkRenderAllNormals.Text = "渲染全部法线(All Normal)";
+			this.chkRenderAllNormals.UseVisualStyleBackColor = true;
+			// 
+			// chkRenderSelectedNormals
+			// 
+			this.chkRenderSelectedNormals.AutoSize = true;
+			this.chkRenderSelectedNormals.Location = new System.Drawing.Point(236, 368);
+			this.chkRenderSelectedNormals.Name = "chkRenderSelectedNormals";
+			this.chkRenderSelectedNormals.Size = new System.Drawing.Size(270, 19);
+			this.chkRenderSelectedNormals.TabIndex = 5;
+			this.chkRenderSelectedNormals.Text = "渲染选中的法线(Selected Normal)";
+			this.chkRenderSelectedNormals.UseVisualStyleBackColor = true;
 			// 
 			// FormEMGridRenderer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(735, 467);
-			this.Controls.Add(this.chkRenderNormal);
+			this.Controls.Add(this.chkRenderSelectedNormals);
+			this.Controls.Add(this.chkRenderAllNormals);
 			this.Controls.Add(this.chkRenderLines);
 			this.Controls.Add(this.chkRenderFaces);
 			this.Controls.Add(this.rdoSmooth);
@@ -323,6 +333,7 @@
 		private System.Windows.Forms.CheckBox chkRenderFaces;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.CheckBox chkRenderLines;
-		private System.Windows.Forms.CheckBox chkRenderNormal;
+		private System.Windows.Forms.CheckBox chkRenderAllNormals;
+		private System.Windows.Forms.CheckBox chkRenderSelectedNormals;
 	}
 }

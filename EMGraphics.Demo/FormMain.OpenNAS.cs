@@ -37,12 +37,12 @@ namespace EMGraphics.Demo
 						dataSource.Triangles, center);
 					this.scene.RootObject.Children.Add(wholeObject);
 					this.wholeObject = wholeObject;
-					//SceneObject wholeNormal = GetWholeNormal(
-					//	dataSource.FaceNormalPositions,
-					//	dataSource.FaceNormalDirections,
-					//	dataSource.FaceNormalLengths, center);
-					//this.scene.RootObject.Children.Add(wholeNormal);
-					//this.wholeNormal = wholeNormal;
+					SceneObject wholeNormal = GetWholeNormal(
+						dataSource.FaceNormalPositions,
+						dataSource.FaceNormalDirections,
+						dataSource.FaceNormalLengths, center);
+					this.scene.RootObject.Children.Add(wholeNormal);
+					this.wholeNormal = wholeNormal;
 				}
 
 				// 分别加载nas模型里的各个face，这是为了实现拾取face功能
@@ -100,7 +100,9 @@ namespace EMGraphics.Demo
 			var model = new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, "Whole Face Normal");
 			var renderer = NormalLineRenderer.Create(model);
 			renderer.WorldPosition += center;
-			SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+			SceneObject obj = renderer.WrapToSceneObject("Whole Normals", generateBoundingBox: false);
+			obj.RenderingEnabled = false;
+			obj.PickingEnabled = false;
 			return obj;
 		}
 
