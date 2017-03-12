@@ -99,7 +99,7 @@ namespace EMGraphics.Demo
 		{
 			var model = new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, "Whole Face Normal");
 			var renderer = NormalLineRenderer.Create(model);
-			renderer.WorldPosition = center;
+			renderer.WorldPosition += center;
 			SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
 			return obj;
 		}
@@ -109,7 +109,7 @@ namespace EMGraphics.Demo
 		{
 			var grid = new EMGrid(positions, normals, triangles, "Whole Model");
 			var renderer = EMGridRenderer.Create(grid);
-			renderer.WorldPosition = center;
+			renderer.WorldPosition += center;
 			//renderer.Initialize();
 			SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: true);
 			return obj;
@@ -129,7 +129,7 @@ namespace EMGraphics.Demo
 			{
 				EMGrid grid = gridList[i];
 				EMGridRenderer renderer = EMGridRenderer.Create(grid);
-				renderer.WorldPosition = center;
+				renderer.WorldPosition += center;
 				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
@@ -140,7 +140,7 @@ namespace EMGraphics.Demo
 			{
 				NormalLineModel model = normalLineModelList[i];
 				NormalLineRenderer renderer = NormalLineRenderer.Create(model);
-				renderer.WorldPosition = center;
+				renderer.WorldPosition += center;
 				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Face Normal of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
