@@ -53,7 +53,7 @@ namespace EMGraphics
 		{
 			this.HeadColor = new MarkableStruct<Color>(Color.FromArgb(255, 100, 150, 150));
 			this.TailColor = new MarkableStruct<Color>(Color.Red);
-			this.StateList.Add(new LineWidthState(2));
+			this.StateList.Add(new LineWidthState(1));
 		}
 
         protected override void DoRender(RenderEventArgs arg)
