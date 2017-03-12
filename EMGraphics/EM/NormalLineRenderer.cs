@@ -56,7 +56,7 @@ namespace EMGraphics
 			this.StateList.Add(new LineWidthState(1));
 		}
 
-        protected override void DoRender(RenderEventArgs arg)
+		protected override void DoRender(RenderEventArgs arg)
         {
             mat4 projection = arg.Camera.GetProjectionMatrix();
             mat4 view = arg.Camera.GetViewMatrix();
@@ -75,5 +75,32 @@ namespace EMGraphics
 
             base.DoRender(arg);
         }
+
+		/// <summary>
+		/// 反转法线方向。
+		/// <para>Reverse normal's direction.</para>
+		/// </summary>
+		public void ReverseNormals()
+		{
+			VertexBuffer positionBuffer = this.PositionBuffer;
+
+			IntPtr pointer = positionBuffer.MapBuffer(MapBufferAccess.ReadWrite);
+			unsafe
+			{
+				vec3* array = (vec3*)pointer.ToPointer();
+				for (int i = 0; i < positionBuffer.Length/4; i++)
+				{
+					vec3 head = array[i * 4 + 0];
+					vec3 part = array[i * 4 + 1];
+					vec3 tail = array[i * 4 + 3];
+					vec3 newTail = head + head - tail;
+					vec3 newPart = head + head - part;
+					array[i * 4 + 1] = newPart;
+					array[i * 4 + 2] = newPart;
+					array[i * 4 + 3] = newTail;
+				}
+			}
+			positionBuffer.UnmapBuffer();
+		}
     }
 }
