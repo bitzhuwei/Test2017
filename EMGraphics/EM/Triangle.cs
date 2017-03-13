@@ -45,12 +45,15 @@ namespace EMGraphics
         /// </summary>
         public string FaceLabel { get; set; }
 
+		internal int LabelHash { get; private set; }
+
         public Triangle(int num1, int num2, int num3, string faceLabel)
         {
             this.Num1 = num1;
             this.Num2 = num2;
             this.Num3 = num3;
             this.FaceLabel = faceLabel;
+			this.LabelHash = faceLabel.GetHashCode();
         }
 
         internal int IndexOfTriangles { get; set; }
