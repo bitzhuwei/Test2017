@@ -11,7 +11,7 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class NormalLineRenderer : PickableRenderer
+    public partial class FaceNormalRenderer : Renderer
     {
         public MarkableStruct<Color> HeadColor { get; set; }
         private long headColorUpdatedTicks;
@@ -21,11 +21,13 @@ namespace EMGraphics
 
 		private static IShaderProgramProvider provider;
 
+		private Dictionary<string, int> labelDict;
+
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
-        public static NormalLineRenderer Create(NormalLineModel model)
+        public static FaceNormalRenderer Create(FaceNormal model)
         {
 			if (provider == null)
 			{
@@ -35,26 +37,77 @@ namespace EMGraphics
 				provider = new ShaderCodeArray(shaderCodes);
 			}
             var map = new AttributeMap();
-            map.Add("inPosition", NormalLineModel.strPosition);
-            var renderer = new NormalLineRenderer(model, provider, map, EMGrid.strPosition);
+            map.Add("inPosition", FaceNormal.strPosition);
+            var renderer = new FaceNormalRenderer(model, provider, map);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
             renderer.RotationAngleDegree = model.RotationAngleDegree;
             renderer.RotationAxis = model.RotationAxis;
             renderer.Scale = model.Scale;
-
+			
+			// this is for rendering part of whole normals.
+			renderer.labelDict = model.LabelDict;
+			var indexBuffers = new ZeroIndexBuffer[model.StartIndexes.Length];
+			for (int i = 0; i < indexBuffers.Length; i++)
+			{
+				indexBuffers[i] = new ZeroIndexBuffer(DrawMode.Lines,
+					model.StartIndexes[i], model.Counts[i]);
+			}
+			renderer.renderSingleIndexBuffers = indexBuffers;
+			
             return renderer;
         }
 
-		private NormalLineRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
-			AttributeMap attributeMap, string positionNameInIBufferable,
-			params GLState[] switches)
-			: base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
+		
+		private FaceNormalRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
+			AttributeMap attributeMap, params GLState[] switches)
+			: base(model, shaderProgramProvider, attributeMap, switches)
 		{
 			this.HeadColor = new MarkableStruct<Color>(Color.FromArgb(255, 100, 150, 150));
 			this.TailColor = new MarkableStruct<Color>(Color.Red);
-			this.StateList.Add(new LineWidthState(1));
+			//this.StateList.Add(new LineWidthState(1));
+			//this.RenderAll = false;
+			//this.RenderGroups = true;
 		}
+
+		private ZeroIndexBuffer[] renderSingleIndexBuffers;
+
+		/// <summary>
+		/// which indexes in renderSingleIndexBuffers are to be rendered?
+		/// </summary>
+		private List<int> visibleGroups = new List<int>();
+
+		public void SetVisible(string label, bool visible)
+		{
+			int index;
+			if(this.labelDict.TryGetValue(label, out index))
+			{
+				if(visible)
+				{
+					if(!this.visibleGroups.Contains(index))
+					{
+						this.visibleGroups.Add(index);
+					}
+				}
+				else
+				{
+					if(this.visibleGroups.Contains(index))
+					{
+						this.visibleGroups.Remove(index);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// Render all normals no matter what.
+		/// </summary>
+		public bool RenderAll { get; set; }
+
+		/// <summary>
+		/// Render normal groups whose indexes are in <see cref="visibleGroups"/>.
+		/// </summary>
+		public bool RenderGroups { get; set; }
 
 		protected override void DoRender(RenderEventArgs arg)
         {
@@ -73,34 +126,36 @@ namespace EMGraphics
                 this.tailColorUpdatedTicks = this.TailColor.UpdateTicks;
             }
 
-            base.DoRender(arg);
-        }
-
-		/// <summary>
-		/// 反转法线方向。
-		/// <para>Reverse normal's direction.</para>
-		/// </summary>
-		public void ReverseNormals()
-		{
-			VertexBuffer positionBuffer = this.PositionBuffer;
-
-			IntPtr pointer = positionBuffer.MapBuffer(MapBufferAccess.ReadWrite);
-			unsafe
+			if (this.RenderAll)
 			{
-				vec3* array = (vec3*)pointer.ToPointer();
-				for (int i = 0; i < positionBuffer.Length/4; i++)
+				base.DoRender(arg);
+			}
+			else if (this.RenderGroups)
+			{
+				if (this.visibleGroups.Count > 0)
 				{
-					vec3 head = array[i * 4 + 0];
-					vec3 part = array[i * 4 + 1];
-					vec3 tail = array[i * 4 + 3];
-					vec3 newTail = head + head - tail;
-					vec3 newPart = head + head - part;
-					array[i * 4 + 1] = newPart;
-					array[i * 4 + 2] = newPart;
-					array[i * 4 + 3] = newTail;
+					ShaderProgram program = this.Program;
+
+					// 绑定shader
+					program.Bind();
+					SetUniformValues(program);
+
+					GLState[] stateList = this.stateList.ToArray();
+					StatesOn(stateList);
+
+					foreach (var index in this.visibleGroups)
+					{
+						this.vertexArrayObject.Render(arg, program, 
+							this.renderSingleIndexBuffers[index]);
+					}
+
+					StatesOff(stateList);
+
+					// 解绑shader
+					program.Unbind();
 				}
 			}
-			positionBuffer.UnmapBuffer();
 		}
+
     }
 }

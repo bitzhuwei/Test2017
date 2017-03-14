@@ -23,7 +23,6 @@ namespace EMGraphics
 		#region parted faces
 
 		public IList<EMGrid> GridList { get; private set; }
-		public IList<NormalLineModel> NormalList { get; private set; }
 
 		#endregion parted faces
 
@@ -35,7 +34,7 @@ namespace EMGraphics
 		public NASDataSource(
 			vec3[] vertexPositions, vec3[] vertexNormals, Triangle[] triangles,
 			vec3[] faceNormalPositions, vec3[] faceNormalDirections, float[] faceNormalLengths,
-			IList<EMGrid> gridList, IList<NormalLineModel> normalList, BoundingBox box)
+			IList<EMGrid> gridList, BoundingBox box)
 		{
 			if (vertexPositions == null || vertexNormals == null || triangles == null)
 			{
@@ -45,7 +44,7 @@ namespace EMGraphics
 			{
 				throw new ArgumentNullException();
 			}
-			if (gridList == null || normalList == null || box == null)
+			if (gridList  == null || box == null)
 			{
 				throw new ArgumentNullException();
 			}
@@ -59,15 +58,13 @@ namespace EMGraphics
 			this.FaceNormalLengths = faceNormalLengths;
 
 			this.GridList = gridList;
-			this.NormalList = normalList;
 
 			this.Box = box;
 		}
 
 		public override string ToString()
 		{
-			return string.Format("{0} grid(s); {1} normal(s), {2}",
-				this.GridList.Count, this.NormalList.Count, this.Box);
+			return string.Format("{0} grid(s); {1}", this.GridList.Count, this.Box);
 		}
 	}
 }

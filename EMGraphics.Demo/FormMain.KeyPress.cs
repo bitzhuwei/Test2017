@@ -33,20 +33,6 @@ namespace EMGraphics.Demo
 			{
 				(new FormProperyGrid(this.scene)).Show();
 			}
-			else if (e.KeyChar == 'r')
-			{
-				// reverse normal line's direction.
-				var gridRenderer = this.CurrentPickedGeometry.FromRenderer as EMGridRenderer;
-				if (gridRenderer != null)
-				{
-					SceneObject targetObj = gridRenderer.BindingSceneObject.Parent.Children.Last().Content;
-					var target = targetObj.Renderer as NormalLineRenderer;
-					if (target != null)
-					{
-						target.ReverseNormals();
-					}
-				}
-			}
 		}
 
 	}

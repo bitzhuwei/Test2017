@@ -154,17 +154,11 @@ namespace EMGraphics.Demo
 				}
 			}
 			{
-				var renderer = sceneObject.Renderer as NormalLineRenderer;
+				var renderer = sceneObject.Renderer as FaceNormalRenderer;
 				if (renderer != null)
 				{
-					if (sceneObject.Name.Contains("Whole Normals"))
-					{
-						sceneObject.RenderingEnabled = properties.renderAllNormals;
-					}
-					else if(sceneObject.Name.Contains("Face Normal of Mesh"))
-					{
-						sceneObject.RenderingEnabled = properties.renderSelectedNormals;
-					}
+					renderer.RenderAll = properties.renderAllNormals;
+					renderer.RenderGroups = properties.renderSelectedNormals;
 				}
 			}
 

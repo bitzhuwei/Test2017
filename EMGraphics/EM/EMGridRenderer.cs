@@ -13,6 +13,11 @@ namespace EMGraphics
     /// </summary>
     public partial class EMGridRenderer : PickableRenderer, IHighlightable
     {
+		/// <summary>
+		/// 
+		/// </summary>
+		public string Label { get; private set; }
+
         private const string strEMRenderer = "EMRenderer";
         /// <summary>
         /// 是否渲染模型的各个三角形面
@@ -60,6 +65,8 @@ namespace EMGraphics
             renderer.RotationAngleDegree = model.RotationAngleDegree;
             renderer.RotationAxis = model.RotationAxis;
             renderer.Scale = model.Scale;
+
+			renderer.Label = model.Label;
 
             return renderer;
         }

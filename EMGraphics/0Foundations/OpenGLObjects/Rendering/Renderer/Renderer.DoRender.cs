@@ -28,8 +28,8 @@
             program.Unbind();
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void StatesOn(GLState[] stateList)
+		//[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void StatesOn(GLState[] stateList)
         {
             int count = stateList.Length;
             for (int i = 0; i < count; i++)
@@ -38,8 +38,8 @@
             }
         }
 
-        //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void StatesOff(GLState[] stateList)
+		//[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		protected void StatesOff(GLState[] stateList)
         {
             int count = stateList.Length;
             for (int i = count - 1; i >= 0; i--)
@@ -49,7 +49,7 @@
         }
 
         //[MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private void SetUniformValues(ShaderProgram program)
+        protected void SetUniformValues(ShaderProgram program)
         {
             UniformVariable[] array = this.uniformVariables.ToArray();
             foreach (UniformVariable item in array)

@@ -31,7 +31,6 @@ namespace EMGraphics.Demo
 				// 将整个nas模型作为一个单独的模型
 				// get nas model as a single model
 				{
-					//SceneObject wholeObject = GetWholeObject(file.VertexPositions, file.VertexNormals, file.Triangles, center, size);
 					SceneObject wholeObject = GetWholeObject(
 						dataSource.VertexPositions,dataSource.VertexNormals,
 						dataSource.Triangles, center);
@@ -40,7 +39,9 @@ namespace EMGraphics.Demo
 					SceneObject wholeNormal = GetWholeNormal(
 						dataSource.FaceNormalPositions,
 						dataSource.FaceNormalDirections,
-						dataSource.FaceNormalLengths, center);
+						dataSource.FaceNormalLengths,
+						dataSource.Triangles,
+						center);
 					this.scene.RootObject.Children.Add(wholeNormal);
 					this.wholeNormal = wholeNormal;
 				}
@@ -49,9 +50,7 @@ namespace EMGraphics.Demo
 				// get parted grids(faces) for fast picking 
 				{
 					IList<EMGrid> gridList = dataSource.GridList;
-					IList<NormalLineModel> normalLineModelList = dataSource.NormalList;
-					SceneObject notPickedGroup = GetPartedGrids(
-						gridList, normalLineModelList, center);
+					SceneObject notPickedGroup = GetPartedGrids(gridList, center);
 					notPickedGroup.RenderingEnabled = false;
 					notPickedGroup.PickingEnabled = false;
 					this.scene.RootObject.Children.Add(notPickedGroup);
@@ -66,8 +65,7 @@ namespace EMGraphics.Demo
 				// pick a mesh for the first time which runs very slow.
 				{
 					this.UpdatePickingState(SelectingType.Mesh);
-					List<Tuple<Point, PickedGeometry>> allPickedGeometrys = this.scene.Pick(
-						Point.Empty, PickingGeometryType.Triangle);
+					this.scene.Pick(Point.Empty, PickingGeometryType.Triangle);
 				}
 				{
 					this.UpdatePickingState(this.CurrentSelectingType);
@@ -95,13 +93,15 @@ namespace EMGraphics.Demo
 		private SceneObject GetWholeNormal(
 			vec3[] faceNormalPositions, 
 			vec3[] faceNormalDirections, 
-			float[] faceNormalLengths, vec3 center)
+			float[] faceNormalLengths, 
+			Triangle[] triangles, 
+			vec3 center)
 		{
-			var model = new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, "Whole Face Normal");
-			var renderer = NormalLineRenderer.Create(model);
+			var model = new FaceNormal(faceNormalPositions, faceNormalDirections, faceNormalLengths, triangles);
+			var renderer = FaceNormalRenderer.Create(model);
 			renderer.WorldPosition += center;
 			SceneObject obj = renderer.WrapToSceneObject("Whole Normals", generateBoundingBox: false);
-			obj.RenderingEnabled = false;
+			//obj.RenderingEnabled = false;
 			obj.PickingEnabled = false;
 			return obj;
 		}
@@ -117,16 +117,11 @@ namespace EMGraphics.Demo
 			return obj;
 		}
 
-		private static SceneObject GetPartedGrids(
-			IList<EMGrid> gridList, IList<NormalLineModel> normalLineModelList, vec3 center)
+		private static SceneObject GetPartedGrids(IList<EMGrid> gridList, vec3 center)
 		{
-			var partedGridObjects = new SceneObject[gridList.Count];
-			for (int i = 0; i < partedGridObjects.Length; i++)
-			{
-				var obj = new SceneObject();
-				obj.Name = string.Format("Mesh & Face Normal [{0}/{1}]", i + 1, partedGridObjects.Length);
-				partedGridObjects[i] = obj;
-			}
+			var notPickedGroup = new SceneObject();
+			notPickedGroup.Name = string.Format("Not Picked Group.");
+
 			for (int i = 0; i < gridList.Count; i++)
 			{
 				EMGrid grid = gridList[i];
@@ -135,26 +130,7 @@ namespace EMGraphics.Demo
 				//renderer.Initialize();
 				SceneObject obj = renderer.WrapToSceneObject(string.Format(
 					"Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
-				partedGridObjects[i].Children.Add(obj);
-			}
-			// generate and display faces' normal lines.
-			for (int i = 0; i < normalLineModelList.Count; i++)
-			{
-				NormalLineModel model = normalLineModelList[i];
-				NormalLineRenderer renderer = NormalLineRenderer.Create(model);
-				renderer.WorldPosition += center;
-				//renderer.Initialize();
-				SceneObject obj = renderer.WrapToSceneObject(string.Format(
-					"Face Normal of Mesh [{0}/{1}]", i + 1, normalLineModelList.Count), generateBoundingBox: false);
-				obj.RenderingEnabled = false;
-				obj.PickingEnabled = false;
-				partedGridObjects[i].Children.Add(obj);
-			}
-
-			var notPickedGroup = new SceneObject(); notPickedGroup.Name = string.Format("Not Picked Group.");
-			for (int i = 0; i < partedGridObjects.Length; i++)
-			{
-				notPickedGroup.Children.Add(partedGridObjects[i]);
+				notPickedGroup.Children.Add(obj);
 			}
 
 			return notPickedGroup;

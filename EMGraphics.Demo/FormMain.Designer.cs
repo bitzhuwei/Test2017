@@ -67,6 +67,9 @@
 			this.btnPickMesh = new System.Windows.Forms.ToolStripButton();
 			this.btnPickModel = new System.Windows.Forms.ToolStripButton();
 			this.btnEMGridRendererProperties = new System.Windows.Forms.ToolStripButton();
+			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+			this.reverseSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.reverseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
 			this.toolStrip1.SuspendLayout();
@@ -259,13 +262,13 @@
 			// 自定义CToolStripMenuItem
 			// 
 			this.自定义CToolStripMenuItem.Name = "自定义CToolStripMenuItem";
-			this.自定义CToolStripMenuItem.Size = new System.Drawing.Size(149, 26);
+			this.自定义CToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
 			this.自定义CToolStripMenuItem.Text = "自定义(&C)";
 			// 
 			// 选项OToolStripMenuItem
 			// 
 			this.选项OToolStripMenuItem.Name = "选项OToolStripMenuItem";
-			this.选项OToolStripMenuItem.Size = new System.Drawing.Size(149, 26);
+			this.选项OToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
 			this.选项OToolStripMenuItem.Text = "选项(&O)";
 			// 
 			// 帮助HToolStripMenuItem
@@ -339,7 +342,8 @@
             this.btnPickTriangle,
             this.btnPickMesh,
             this.btnPickModel,
-            this.btnEMGridRendererProperties});
+            this.btnEMGridRendererProperties,
+            this.toolStripDropDownButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 28);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(754, 27);
@@ -386,6 +390,32 @@
 			this.btnEMGridRendererProperties.Text = "Renderer";
 			this.btnEMGridRendererProperties.ToolTipText = "Renderer";
 			this.btnEMGridRendererProperties.Click += new System.EventHandler(this.btnEMGridRendererProperties_Click);
+			// 
+			// toolStripDropDownButton1
+			// 
+			this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.reverseSelectedToolStripMenuItem,
+            this.reverseAllToolStripMenuItem});
+			this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+			this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+			this.toolStripDropDownButton1.Size = new System.Drawing.Size(34, 24);
+			this.toolStripDropDownButton1.Text = "Reverse";
+			// 
+			// reverseSelectedToolStripMenuItem
+			// 
+			this.reverseSelectedToolStripMenuItem.Name = "reverseSelectedToolStripMenuItem";
+			this.reverseSelectedToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+			this.reverseSelectedToolStripMenuItem.Text = "Reverse Selected";
+			this.reverseSelectedToolStripMenuItem.Click += new System.EventHandler(this.reverseSelectedToolStripMenuItem_Click);
+			// 
+			// reverseAllToolStripMenuItem
+			// 
+			this.reverseAllToolStripMenuItem.Name = "reverseAllToolStripMenuItem";
+			this.reverseAllToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+			this.reverseAllToolStripMenuItem.Text = "Reverse All";
+			this.reverseAllToolStripMenuItem.Click += new System.EventHandler(this.reverseAllToolStripMenuItem_Click);
 			// 
 			// FormMain
 			// 
@@ -450,5 +480,8 @@
         private System.Windows.Forms.ToolStripButton btnPickMesh;
         private System.Windows.Forms.ToolStripButton btnPickModel;
 		private System.Windows.Forms.ToolStripButton btnEMGridRendererProperties;
+		private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+		private System.Windows.Forms.ToolStripMenuItem reverseSelectedToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem reverseAllToolStripMenuItem;
 	}
 }

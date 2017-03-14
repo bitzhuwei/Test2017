@@ -20,50 +20,10 @@ namespace EMGraphics
 
 			IList<EMGrid> gridList = FindGridList(file.VertexPositions, file.VertexNormals, gridGroups);
 
-			IList<NormalLineModel> normalLineModelList = FindNormaLineModelList(
-				file.FaceNormalPositions,
-				file.FaceNormalDirections,
-				file.FaceNormalLengths, 
-				gridGroups);
-
 			return new NASDataSource(
 				file.VertexPositions, file.VertexNormals, file.Triangles,
 				file.FaceNormalPositions, file.FaceNormalDirections, file.FaceNormalLengths,
-				gridList, normalLineModelList, file.Box);
-		}
-
-		private static List<NormalLineModel> FindNormaLineModelList(
-			vec3[] allFaceNormalPositions,
-			vec3[] allFaceNormalDirections,
-			float[] allFaceNormalLengths,
-			IEnumerable<IGrouping<string, Triangle>> gridGroups)
-		{
-			var list = new List<NormalLineModel>();
-
-			foreach (var group in gridGroups)
-			{
-				var dict = new Dictionary<int, int>();// index of all -> index of this grid
-				string label = group.Key;
-				int count = group.Count();
-
-				var faceNormalPositions = new vec3[count];
-				var faceNormalDirections = new vec3[count];
-				var faceNormalLengths = new float[count];
-
-				int i = 0;
-				foreach (var triangle in group)
-				{
-					int index = triangle.IndexOfTriangles;// triangles.IndexOf(triangle);
-					faceNormalPositions[i] = allFaceNormalPositions[index];
-					faceNormalDirections[i] = allFaceNormalDirections[index];
-					faceNormalLengths[i] = allFaceNormalLengths[index];
-					i++;
-				}
-
-				list.Add(new NormalLineModel(faceNormalPositions, faceNormalDirections, faceNormalLengths, label));
-			}
-
-			return list;
+				gridList, file.Box);
 		}
 
 		private static List<EMGrid> FindGridList(

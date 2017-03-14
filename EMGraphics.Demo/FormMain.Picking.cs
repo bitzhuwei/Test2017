@@ -220,10 +220,10 @@ namespace EMGraphics.Demo
 			this.CurrentPickedGeometry = geometry;
 		}
 
-        private void DeHighlight(PickedGeometry pickedGeometry)
+        private void DeHighlight(PickedGeometry geometry)
         {
             {
-                var renderer = pickedGeometry.FromRenderer as IHighlightable;
+                var renderer = geometry.FromRenderer as IHighlightable;
                 if (renderer != null)
                 {
                     renderer.HighlightIndex0 = -2;
@@ -233,26 +233,26 @@ namespace EMGraphics.Demo
             }
 
             {
-                var renderer = pickedGeometry.FromRenderer as RendererBase;
-                if (renderer != null)
-                {
-                    SceneObject obj = renderer.BindingSceneObject;// mesh xxx/yyy
-                    if (obj != null)
-                    {
-                        ITreeNode<SceneObject> parent = obj.Parent;// mesh & face normal xxx/yyy
-                        if (parent != null)
-                        {
-                            ITreeNode<SceneObject> target = parent.Parent;
-                            if (target == this.pickedGroup)
-                            {
-                                this.pickedGroup.Children.Remove(parent);
-                                this.notPickedGroup.Children.Add(parent);
-                            }
-                        }
-                    }
-                }
+                var renderer = geometry.FromRenderer as RendererBase;
+				if (renderer != null)
+				{
+					SceneObject obj = renderer.BindingSceneObject;// mesh [xxx/yyy]
+					if (obj != null)
+					{
+						this.pickedGroup.Children.Remove(obj);
+						this.notPickedGroup.Children.Add(obj);
+					}
+				}
             }
-        }
+			{
+				var renderer = geometry.FromRenderer as EMGridRenderer;
+				var wholeNormal = this.wholeNormal.Renderer as FaceNormalRenderer;
+				if (renderer != null && wholeNormal != null)
+				{
+					wholeNormal.SetVisible(renderer.Label, false);
+				}
+			}
+		}
 
         private void Highlight(PickedGeometry geometry)
         {
@@ -296,22 +296,22 @@ namespace EMGraphics.Demo
                 var renderer = geometry.FromRenderer as RendererBase;
                 if (renderer != null)
                 {
-                    SceneObject obj = renderer.BindingSceneObject;// mesh xxx/yyy
-                    if (obj != null)
+                    SceneObject obj = renderer.BindingSceneObject;// mesh [xxx/yyy]
+					if (obj != null)
                     {
-                        ITreeNode<SceneObject> parent = obj.Parent;// mesh & face normal xxx/yyy
-                        if (parent != null)
-                        {
-                            ITreeNode<SceneObject> target = parent.Parent;
-                            if (target == this.notPickedGroup)
-                            {
-                                this.notPickedGroup.Children.Remove(parent);
-                                this.pickedGroup.Children.Add(parent);
-                            }
-                        }
+						this.notPickedGroup.Children.Remove(obj);
+						this.pickedGroup.Children.Add(obj);
                     }
                 }
-            }
-        }
+			}
+			{
+				var renderer = geometry.FromRenderer as EMGridRenderer;
+				var wholeNormal = this.wholeNormal.Renderer as FaceNormalRenderer;
+				if (renderer != null && wholeNormal != null)
+				{
+					wholeNormal.SetVisible(renderer.Label, true);
+				}
+			}
+		}
     }
 }

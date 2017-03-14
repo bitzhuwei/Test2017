@@ -21,7 +21,7 @@ namespace EMGraphics
 		vec3[] VertexNormals { get; }
 
 		/// <summary>
-		/// whole model's triangles.
+		/// whole model's triangles. Make sure triangles with same labels are together.
 		/// </summary>
 		Triangle[] Triangles { get; }
 
@@ -48,11 +48,6 @@ namespace EMGraphics
 		/// list of faces.
 		/// </summary>
 		IList<EMGrid> GridList { get; }
-
-		/// <summary>
-		/// list of normals of faces.
-		/// </summary>
-		IList<NormalLineModel> NormalList { get; }
 
 		#endregion parted faces
 

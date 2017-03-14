@@ -374,6 +374,9 @@
     <Compile Include="Canvas\Win32API\WndProc.cs" />
     <Compile Include="EM\CenterAxisModel.cs" />
     <Compile Include="EM\CenterAxisRenderer.cs" />
+    <Compile Include="EM\FaceNormal.cs" />
+    <Compile Include="EM\FaceNormalRenderer.ReverseNormals.cs" />
+    <Compile Include="EM\FaceNormalRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\QuadStripColoredModel.cs" />
@@ -399,8 +402,6 @@
     <Compile Include="EM\IEMDataSource.cs" />
     <Compile Include="EM\IHighlightable.cs" />
     <Compile Include="EM\NASParser.cs" />
-    <Compile Include="EM\NormalLineModel.cs" />
-    <Compile Include="EM\NormalLineRenderer.cs" />
     <Compile Include="EM\NASFile.cs" />
     <Compile Include="FontTexture\FontBitmap.cs" />
     <Compile Include="FontTexture\FontBitmap.IDisposable.cs" />

@@ -10,7 +10,6 @@ namespace EMGraphics
     /// </summary>
     public class FaceNormal : IBufferable, IModelSpace
     {
-        public string Label { get; set; }
 
         /// <summary>
         /// 
@@ -19,7 +18,7 @@ namespace EMGraphics
         /// <param name="normalDirections">directions of every normal line.</param>
         /// <param name="normalLengths">lengths of every normal line.</param>
         /// <param name="label"></param>
-        public FaceNormal(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths, string label)
+        public FaceNormal(vec3[] normalPositions, vec3[] normalDirections, float[] normalLengths, Triangle[] triangles)
         {
             if (normalPositions == null || normalDirections == null || normalLengths == null)
             { throw new ArgumentNullException(); }
@@ -31,7 +30,6 @@ namespace EMGraphics
             this.vertexCount = normalPositions.Length * 4;
             BoundingBox box = normalPositions.Move2Center();
             this.normalPositions = normalPositions;
-            this.Label = label;
             this.ModelSize = box.MaxPosition - box.MinPosition;
             this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             this.normalDirections = normalDirections;
@@ -39,7 +37,38 @@ namespace EMGraphics
             this.RotationAngleDegree = 0;
             this.RotationAxis = new vec3(0, 1, 0);
             this.Scale = new vec3(1, 1, 1);
+			
+			Init(triangles);
         }
+		
+		private void Init(Triangle[] triangles)
+		{
+			var dict = new Dictionary<string, int>();
+			var startIndexes = new List<int>();
+			var counts = new List<int>();
+			startIndexes.Add(0);
+			dict.Add(triangles[0].FaceLabel, 0);
+			int labelHash = triangles[0].LabelHash;
+			for (int i = 1, t = 1; i < triangles.Length; i++)
+			{
+				if (triangles[i].LabelHash != labelHash)
+				{
+					counts.Add(i * 4 - startIndexes.Last());
+					startIndexes.Add(i * 4);
+					dict.Add(triangles[i].FaceLabel, t++);
+					labelHash = triangles[i].LabelHash;
+				}
+			}
+			counts.Add(triangles.Length * 4 - startIndexes.Last());
+			
+			this.LabelDict = dict;
+			this.StartIndexes = startIndexes.ToArray();
+			this.Counts = counts.ToArray();
+		}
+		
+		public Dictionary<string, int> LabelDict { get; set; }
+		public int[] StartIndexes { get; set; }
+		public int[] Counts { get; set; }
 
         public const string strPosition = "position";
         private VertexBuffer positionBuffer;
