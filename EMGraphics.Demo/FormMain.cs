@@ -52,14 +52,20 @@ namespace EMGraphics.Demo
 
 		private void reverseSelectedToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			var gridRenderer = this.CurrentPickedGeometry.FromRenderer as EMGridRenderer;
 			SceneObject obj = this.wholeNormal;
-			if (gridRenderer != null && obj != null)
+			if (obj != null)
 			{
 				var renderer = obj.Renderer as FaceNormalRenderer;
 				if (renderer != null)
 				{
-					renderer.ReverseNormals(gridRenderer.Label);
+					foreach (PickedGeometry geometry in this.CurrentPickedGeometrys)
+					{
+						var gridRenderer = geometry.FromRenderer as EMGridRenderer;
+						if (gridRenderer != null)
+						{
+							renderer.ReverseNormals(gridRenderer.Label);
+						}
+					}
 				}
 			}
 		}
@@ -77,5 +83,6 @@ namespace EMGraphics.Demo
 			}
 
 		}
+
 	}
 }

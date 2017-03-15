@@ -262,13 +262,13 @@
 			// 自定义CToolStripMenuItem
 			// 
 			this.自定义CToolStripMenuItem.Name = "自定义CToolStripMenuItem";
-			this.自定义CToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+			this.自定义CToolStripMenuItem.Size = new System.Drawing.Size(149, 26);
 			this.自定义CToolStripMenuItem.Text = "自定义(&C)";
 			// 
 			// 选项OToolStripMenuItem
 			// 
 			this.选项OToolStripMenuItem.Name = "选项OToolStripMenuItem";
-			this.选项OToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+			this.选项OToolStripMenuItem.Size = new System.Drawing.Size(149, 26);
 			this.选项OToolStripMenuItem.Text = "选项(&O)";
 			// 
 			// 帮助HToolStripMenuItem
@@ -334,6 +334,8 @@
 			this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
 			this.glCanvas1.Size = new System.Drawing.Size(754, 568);
 			this.glCanvas1.TabIndex = 2;
+			this.glCanvas1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glCanvas1_KeyDown);
+			this.glCanvas1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.glCanvas1_KeyUp);
 			// 
 			// toolStrip1
 			// 

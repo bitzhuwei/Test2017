@@ -92,21 +92,18 @@ namespace EMGraphics.Demo
         }
         private SelectingType currentSelectingType;
 
+		private List<PickedGeometry> currentPickedGeometrys = new List<PickedGeometry>();
         /// <summary>
         /// 当前选中的几何图形（三角形）及其上下文信息。
         /// </summary>
-        public PickedGeometry CurrentPickedGeometry { get; set; }
+        public List<PickedGeometry> CurrentPickedGeometrys { get { return this.currentPickedGeometrys; } }
 
         private void btnPickTriangle_Click(object sender, EventArgs e)
         {
             this.CurrentSelectingType = SelectingType.Triangle;
 
-            PickedGeometry current = this.CurrentPickedGeometry;
-            if (current != null)
-            {
-                DeHighlight(current);
-                this.CurrentPickedGeometry = null;
-            }
+            DeHighlight(this.CurrentPickedGeometrys);
+            this.CurrentPickedGeometrys.Clear();
 
             ResetPickedGroup();
 
@@ -119,12 +116,8 @@ namespace EMGraphics.Demo
         {
             this.CurrentSelectingType = SelectingType.Mesh;
 
-            PickedGeometry current = this.CurrentPickedGeometry;
-            if (current != null)
-            {
-                DeHighlight(current);
-                this.CurrentPickedGeometry = null;
-            }
+            DeHighlight(this.CurrentPickedGeometrys);
+            this.CurrentPickedGeometrys.Clear();
 
             ResetPickedGroup();
 
@@ -137,12 +130,8 @@ namespace EMGraphics.Demo
         {
             this.CurrentSelectingType = SelectingType.Model;
 
-            PickedGeometry current = this.CurrentPickedGeometry;
-            if (current != null)
-            {
-                DeHighlight(current);
-                this.CurrentPickedGeometry = null;
-            }
+            DeHighlight(this.CurrentPickedGeometrys);
+            this.CurrentPickedGeometrys.Clear();
 
             ResetPickedGroup();
 
@@ -171,6 +160,18 @@ namespace EMGraphics.Demo
         public Color HighlightColor { get; set; }
 
         private FormDisplayText frmDisplayPickedGeometry = new FormDisplayText("Picked Geometry");
+
+		private bool controlDown = false;
+
+		private void glCanvas1_KeyDown(object sender, KeyEventArgs e)
+		{
+			this.controlDown = e.Control;
+		}
+
+		private void glCanvas1_KeyUp(object sender, KeyEventArgs e)
+		{
+			this.controlDown = e.Control;
+		}
 
 		private Point leftMouseDownPosition;
 
@@ -205,23 +206,22 @@ namespace EMGraphics.Demo
 			if (allPickedGeometrys != null && allPickedGeometrys.Count > 0)
 			{ geometry = allPickedGeometrys[0].Item2; }
 
-			PickedGeometry current = this.CurrentPickedGeometry;
-			if (current != null)
+			if (!this.controlDown)// when CTRL key is down, we do multiple selection.
 			{
-				DeHighlight(current);
-				this.CurrentPickedGeometry = null;
+				DeHighlight(this.CurrentPickedGeometrys);
+				this.CurrentPickedGeometrys.Clear();
 			}
 
 			if (geometry != null)
 			{
 				Highlight(geometry);
+				this.CurrentPickedGeometrys.Add(geometry);
 			}
-
-			this.CurrentPickedGeometry = geometry;
 		}
 
-        private void DeHighlight(PickedGeometry geometry)
+        private void DeHighlight(List<PickedGeometry> geometrys)
         {
+			foreach (var geometry in geometrys)
             {
                 var renderer = geometry.FromRenderer as IHighlightable;
                 if (renderer != null)
@@ -232,6 +232,7 @@ namespace EMGraphics.Demo
                 }
             }
 
+			foreach (var geometry in geometrys)
             {
                 var renderer = geometry.FromRenderer as RendererBase;
 				if (renderer != null)
@@ -244,6 +245,8 @@ namespace EMGraphics.Demo
 					}
 				}
             }
+			
+			foreach (var geometry in geometrys)
 			{
 				var renderer = geometry.FromRenderer as EMGridRenderer;
 				var wholeNormal = this.wholeNormal.Renderer as FaceNormalRenderer;
@@ -254,6 +257,14 @@ namespace EMGraphics.Demo
 			}
 		}
 
+        private void Highlight(List<PickedGeometry> geometrys)
+		{
+			foreach (var geometry in geometrys)
+			{
+				Highlight(geometry);
+			}
+		}
+		
         private void Highlight(PickedGeometry geometry)
         {
             // print to window.
