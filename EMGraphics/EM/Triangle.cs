@@ -56,8 +56,6 @@ namespace EMGraphics
 			this.LabelHash = faceLabel.GetHashCode();
         }
 
-        internal int IndexOfTriangles { get; set; }
-
         public override string ToString()
         {
             return string.Format("{0}, {1}, {2}, label: {3}", this.Num1, this.Num2, this.Num3, this.FaceLabel);

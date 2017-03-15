@@ -187,10 +187,6 @@ namespace EMGraphics
 				//    }
 				//}
 
-				for (int i = 0; i < triangles.Count; i++)
-				{
-					triangles[i].IndexOfTriangles = i;
-				}
                 result = new NASFile(points.ToArray(), triangles.ToArray());
             }
 
