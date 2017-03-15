@@ -26,25 +26,13 @@ namespace EMGraphics
         public int Num3 { get; set; }
 
         /// <summary>
-        /// 网格平面的单位法向量
-        /// </summary>
-        public vec3 Normal { get; set; }
-
-        /// <summary>
-        /// 面元的重心坐标
-        /// </summary>
-        public vec3 GravityPoint { get; set; }
-
-        /// <summary>
-        /// 网格的面积
-        /// </summary>
-        public double Area { get; set; }
-
-        /// <summary>
         /// 网格的标签
         /// </summary>
         public string FaceLabel { get; set; }
 
+		/// <summary>
+		/// Hashcode of <see cref="FaceLabel"/>.
+		/// </summary>
 		internal int LabelHash { get; private set; }
 
         public Triangle(int num1, int num2, int num3, string faceLabel)
