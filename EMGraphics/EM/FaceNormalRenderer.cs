@@ -110,52 +110,48 @@ namespace EMGraphics
 		public bool RenderGroups { get; set; }
 
 		protected override void DoRender(RenderEventArgs arg)
-        {
-            mat4 projection = arg.Camera.GetProjectionMatrix();
-            mat4 view = arg.Camera.GetViewMatrix();
-            mat4 model = this.GetModelMatrix().Value;
-            this.SetUniform("mvpMatrix", projection * view * model);
-            if (this.HeadColor.UpdateTicks != this.headColorUpdatedTicks)
-            {
-                this.SetUniform("headColor", this.HeadColor.Value.ToVec3());
-                this.headColorUpdatedTicks = this.HeadColor.UpdateTicks;
-            }
-            if (this.TailColor.UpdateTicks != this.tailColorUpdatedTicks)
-            {
-                this.SetUniform("tailColor", this.TailColor.Value.ToVec3());
-                this.tailColorUpdatedTicks = this.TailColor.UpdateTicks;
-            }
+		{
+			mat4 projection = arg.Camera.GetProjectionMatrix();
+			mat4 view = arg.Camera.GetViewMatrix();
+			mat4 model = this.GetModelMatrix().Value;
+			this.SetUniform("mvpMatrix", projection * view * model);
+			if (this.HeadColor.UpdateTicks != this.headColorUpdatedTicks)
+			{
+				this.SetUniform("headColor", this.HeadColor.Value.ToVec3());
+				this.headColorUpdatedTicks = this.HeadColor.UpdateTicks;
+			}
+			if (this.TailColor.UpdateTicks != this.tailColorUpdatedTicks)
+			{
+				this.SetUniform("tailColor", this.TailColor.Value.ToVec3());
+				this.tailColorUpdatedTicks = this.TailColor.UpdateTicks;
+			}
 
 			if (this.RenderAll)
 			{
 				base.DoRender(arg);
 			}
-			else if (this.RenderGroups)
+			else if (this.RenderGroups && this.visibleGroups.Count > 0)
 			{
-				if (this.visibleGroups.Count > 0)
+				ShaderProgram program = this.Program;
+
+				// 绑定shader
+				program.Bind();
+				base.SetUniformValues(program);
+
+				GLState[] stateList = this.stateList.ToArray();
+				base.StatesOn(stateList);
+
+				foreach (var index in this.visibleGroups)
 				{
-					ShaderProgram program = this.Program;
-
-					// 绑定shader
-					program.Bind();
-					SetUniformValues(program);
-
-					GLState[] stateList = this.stateList.ToArray();
-					StatesOn(stateList);
-
-					foreach (var index in this.visibleGroups)
-					{
-						this.vertexArrayObject.Render(arg, program, 
-							this.renderSingleIndexBuffers[index]);
-					}
-
-					StatesOff(stateList);
-
-					// 解绑shader
-					program.Unbind();
+					this.vertexArrayObject.Render(arg, program,
+						this.renderSingleIndexBuffers[index]);
 				}
+
+				base.StatesOff(stateList);
+
+				// 解绑shader
+				program.Unbind();
 			}
 		}
-
     }
 }
