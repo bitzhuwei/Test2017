@@ -13,22 +13,22 @@ namespace EMGraphics
         /// <summary>
         /// 本面元的第一个点
         /// </summary>
-        public int Num1 { get; set; }
+        public int Num1 { get; private set; }
 
         /// <summary>
         /// 本面元的第二个点
         /// </summary>
-        public int Num2 { get; set; }
+        public int Num2 { get; private set; }
 
         /// <summary>
         /// 本面元的第三个点
         /// </summary>
-        public int Num3 { get; set; }
+        public int Num3 { get;private set; }
 
         /// <summary>
         /// 网格的标签
         /// </summary>
-        public string FaceLabel { get; set; }
+        public string FaceLabel { get; private set; }
 
 		/// <summary>
 		/// Hashcode of <see cref="FaceLabel"/>.
