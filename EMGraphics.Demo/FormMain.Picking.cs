@@ -159,8 +159,6 @@ namespace EMGraphics.Demo
 		/// </summary>
 		public Color HighlightColor { get; set; }
 
-		private FormDisplayText frmDisplayPickedGeometry = new FormDisplayText("Picked Geometry");
-
 		private Point leftMouseDownPosition;
 
 		void glCanvas1_MouseDown(object sender, MouseEventArgs e)
@@ -321,20 +319,11 @@ namespace EMGraphics.Demo
 
 		private void Highlight(PickedGeometry geometry)
 		{
-			// print to window.
-			if (this.frmDisplayPickedGeometry.IsDisposed)
-			{
-				this.frmDisplayPickedGeometry = new FormDisplayText("Picked Geometry");
-			}
-
-			this.frmDisplayPickedGeometry.SetText(geometry.ToString());
-			this.frmDisplayPickedGeometry.Show();
-
 			{
 				var renderer = geometry.FromRenderer as IHighlightable;
 				if (renderer != null)
 				{
-					// TODO: highlight this geometry.
+					// highlight this geometry.
 					switch (this.CurrentSelectingType)
 					{
 						case SelectingType.Triangle:
@@ -361,6 +350,7 @@ namespace EMGraphics.Demo
 				var renderer = geometry.FromRenderer as RendererBase;
 				if (renderer != null)
 				{
+					// cache renderer into picked group for better performance.
 					SceneObject obj = renderer.BindingSceneObject;// mesh [xxx/yyy]
 					if (obj != null)
 					{
@@ -370,6 +360,7 @@ namespace EMGraphics.Demo
 				}
 			}
 			{
+				// synchronize normal's visibility.
 				var renderer = geometry.FromRenderer as EMGridRenderer;
 				var wholeNormal = this.wholeNormal.Renderer as FaceNormalRenderer;
 				if (renderer != null && wholeNormal != null)
