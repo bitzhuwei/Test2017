@@ -334,6 +334,7 @@
 			this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
 			this.glCanvas1.Size = new System.Drawing.Size(754, 568);
 			this.glCanvas1.TabIndex = 2;
+			this.glCanvas1.DoubleClick += new System.EventHandler(this.glCanvas1_DoubleClick);
 			// 
 			// toolStrip1
 			// 
