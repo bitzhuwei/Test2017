@@ -23,34 +23,9 @@ namespace EMGraphics
         private UIColorPaletteBarRenderer colorPaletteBar;
 
         /// <summary>
-        /// renders a color palette bar with direct color(vec3).
-        /// Compare this with colorPaletteBar to check if there's difference.
-        /// </summary>
-        private UIColorPaletteColoredBarRenderer colorPaletteBar2;
-
-        /// <summary>
         /// current marker's count.
         /// </summary>
         private int currentMarkersCount;
-
-        /// <summary>
-        /// Shows color palette bar rendered with direct color(vec3).
-        /// </summary>
-        [Description("Shows color palette bar rendered with direct color(vec3).")]
-        public bool ShowColorBar
-        {
-            get
-            {
-                if (this.colorPaletteBar2 == null) { return false; }
-
-                return this.colorPaletteBar2.Enabled;
-            }
-            set
-            {
-                RendererBase renderer = this.colorPaletteBar2;
-                if (renderer != null) { renderer.Enabled = value; }
-            }
-        }
 
         /// <summary>
         /// </summary>
@@ -82,20 +57,6 @@ namespace EMGraphics
                 //this.StateList.Add(new ClearColorState(Color.Blue));
                 this.Children.Add(bar);
                 this.colorPaletteBar = bar;
-            }
-            // color bar using vec3 color(hidden as default state)
-            // just to compare with color bar using texture.
-            {
-                var bar = new UIColorPaletteColoredBarRenderer(
-                        maxMarkerCount, codedColors,
-                    System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
-                    new System.Windows.Forms.Padding(marginLeft, 1 + size.Height / 3, marginRight, 0),
-                    new System.Drawing.Size(size.Width - marginLeft - marginRight, size.Height / 3),
-                    zNear, zFar);
-                //this.StateList.Add(new ClearColorState(Color.Blue));
-                this.Children.Add(bar);
-                this.colorPaletteBar2 = bar;
-                bar.Enabled = false;
             }
             // labels that display values(float values)
             {
@@ -156,7 +117,6 @@ namespace EMGraphics
         public void UpdateBar(Bitmap bitmap)
         {
             this.colorPaletteBar.UpdateTexture(bitmap);
-            this.colorPaletteBar2.UpdateColorBar(bitmap);
         }
 
         //public int Update { get { return 0; } set { this.SetCodedColor(CodedColor.GetDefault()); } }

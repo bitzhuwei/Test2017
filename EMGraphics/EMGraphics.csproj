@@ -379,12 +379,9 @@
     <Compile Include="EM\FaceNormalRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\QuadStripColoredModel.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\QuadStripColoredRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\QuadStripModel.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\QuadStripRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteBarRenderer.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteColoredBarRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\UIColorPaletteRenderer.cs" />
     <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColorsHelper.cs" />
