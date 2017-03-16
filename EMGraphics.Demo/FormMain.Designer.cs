@@ -334,8 +334,6 @@
 			this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
 			this.glCanvas1.Size = new System.Drawing.Size(754, 568);
 			this.glCanvas1.TabIndex = 2;
-			this.glCanvas1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.glCanvas1_KeyDown);
-			this.glCanvas1.KeyUp += new System.Windows.Forms.KeyEventHandler(this.glCanvas1_KeyUp);
 			// 
 			// toolStrip1
 			// 
