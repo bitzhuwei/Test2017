@@ -11,29 +11,28 @@ namespace EMGraphics
         {
             var result = new CodedColor[5];
             result[0] = new CodedColor(
-                Color.FromArgb(255, 0, 22, 76).ToVec3(), 0.0f, 100.0f);
+                Color.FromArgb(255, 0, 22, 76), 0.0f, 100.0f);
             result[1] = new CodedColor(
-                Color.FromArgb(255, 0, 193, 136).ToVec3(), 0.25f, 200.0f);
+                Color.FromArgb(255, 0, 193, 136), 0.25f, 200.0f);
             result[2] = new CodedColor(
-                Color.FromArgb(255, 166, 255, 27).ToVec3(), 0.5f, 300.0f);
+                Color.FromArgb(255, 166, 255, 27), 0.5f, 300.0f);
             result[3] = new CodedColor(
-                Color.FromArgb(255, 255, 173, 0).ToVec3(), 0.75f, 400.0f);
+                Color.FromArgb(255, 255, 173, 0), 0.75f, 400.0f);
             result[4] = new CodedColor(
-                Color.FromArgb(255, 255, 8, 1).ToVec3(), 1.0f, 500.0f);
+                Color.FromArgb(255, 255, 8, 1), 1.0f, 500.0f);
 
             return result;
         }
 
-        public CodedColor(vec3 color, float coord, float value)
+        public CodedColor(Color color, float coord, float value)
         {
             this.DisplayColor = color; this.Coord = coord; this.Value = value;
         }
 
         /// <summary>
         /// Display color.
-        /// (x, y, z) equals Color.FromArgb(255, x * 255, y * 255, z * 255);
         /// </summary>
-        public vec3 DisplayColor { get; set; }
+        public Color DisplayColor { get; set; }
 
         private float coord;
 
@@ -58,7 +57,7 @@ namespace EMGraphics
 
         public override string ToString()
         {
-            return string.Format("{0}, {1}: {2}", DisplayColor, Coord, Value);
+            return string.Format("{0}, Coord: {1}, Value: {2}", DisplayColor, Coord, Value);
         }
     }
 }

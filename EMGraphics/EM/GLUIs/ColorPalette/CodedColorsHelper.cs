@@ -27,8 +27,8 @@ namespace EMGraphics
             {
                 int left = (int)(width * codedColors[i].Coord);
                 int right = (int)(width * codedColors[i + 1].Coord);
-                vec3 leftColor = codedColors[i].DisplayColor;
-                vec3 rightColor = codedColors[i + 1].DisplayColor;
+				vec3 leftColor = codedColors[i].DisplayColor.ToVec3();
+				vec3 rightColor = codedColors[i + 1].DisplayColor.ToVec3();
                 for (int col = left; col < right; col++)
                 {
                     vec3 color = (leftColor * ((right - col) * 1.0f / (right - left)) + rightColor * ((col - left) * 1.0f / (right - left)));
