@@ -34,8 +34,8 @@ namespace EMGraphics
         public static QuadStripRenderer Create(QuadStripModel model)
         {
             var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(File.ReadAllText(@"shaders\QuadStripTexture.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(File.ReadAllText(@"shaders\QuadStripTexture.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\QuadStripTexture.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\QuadStripTexture.frag"), ShaderType.FragmentShader);
 			var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
 			map.Add("in_Position", QuadStripModel.position);

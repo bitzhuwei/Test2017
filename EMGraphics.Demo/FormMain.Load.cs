@@ -33,6 +33,14 @@ namespace EMGraphics.Demo
                     new Padding(3, 3, 3, 3), new Size(128, 128));
                 this.scene.RootUI.Children.Add(uiAxis);
             }
+			{
+				var uiCodedColorBar = new UIColorPaletteRenderer(20, CodedColor.GetDefault(),
+					AnchorStyles.Left | AnchorStyles.Top,
+					new Padding(10, 10, 10, 10), new Size(100, 100), -100, 100);
+				uiCodedColorBar.SetCodedColor(0, 100, 10);
+				uiCodedColorBar.StateList.Add(new ClearColorState(Color.Blue));
+				this.scene.RootUI.Children.Add(uiCodedColorBar);
+			}
             //{
             //    var builder = new StringBuilder();
             //    builder.AppendLine("O: to select image.");

@@ -13,8 +13,8 @@ namespace EMGraphics
     public class UIColorPaletteRenderer : UIRenderer
     {
         private List<UIText> labelList = new List<UIText>();
-        private const int marginLeft = 50;
-        private const int marginRight = 50;
+        private const int marginBottom = 50;
+        private const int marginTop = 50;
         private int maxMarkerCount;
 
         /// <summary>
@@ -43,35 +43,35 @@ namespace EMGraphics
             this.maxMarkerCount = maxMarkerCount;
             this.currentMarkersCount = maxMarkerCount;
 
-            //// display this UI control's area.
-            //this.StateList.Add(new ClearColorState());
+			//// display this UI control's area.
+			//this.StateList.Add(new ClearColorState());
 
-            // color bar using texture.
-            {
-                var bar = new UIColorPaletteBarRenderer(
-                    codedColors,
-                System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
-                new System.Windows.Forms.Padding(marginLeft, 1, marginRight, 0),
-                new System.Drawing.Size(size.Width - marginLeft - marginRight, size.Height / 3),
-                zNear, zFar);
-                //this.StateList.Add(new ClearColorState(Color.Blue));
-                this.Children.Add(bar);
-                this.colorPaletteBar = bar;
-            }
+			// color bar using texture.
+			{
+				var bar = new UIColorPaletteBarRenderer(
+					codedColors,
+					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
+					new System.Windows.Forms.Padding(1, marginTop, 1, marginBottom),
+					new System.Drawing.Size(50, size.Height - marginBottom - marginTop), 
+					zNear, zFar);
+				//this.StateList.Add(new ClearColorState(Color.Blue));
+				this.Children.Add(bar);
+				this.colorPaletteBar = bar;
+			}
             // labels that display values(float values)
             {
                 int length = maxMarkerCount;
                 var font = new Font("Arial", 32);
                 for (int i = 0; i < length; i++)
                 {
-                    const int width = 100;
-                    float distance = marginLeft;
-                    distance += 2.0f * (float)i / (float)length * (float)(this.Size.Width - marginLeft - marginRight);
-                    distance -= width / 2;
+                    const int height = 50;
+                    float distance = marginBottom;
+                    distance += 2.0f * (float)i / (float)length * (float)(this.Size.Height - marginBottom - marginTop);
+                    distance -= height / 2;
                     var label = new UIText(
                         System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
                         new System.Windows.Forms.Padding((int)distance, 0, 0, 0),
-                        new System.Drawing.Size(width, size.Height / 2), zNear, zFar,
+                        new System.Drawing.Size(size.Width - 60, size.Height / 2), zNear, zFar,
                         font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
                     label.Initialize();
                     //label.StateList.Add(new ClearColorState(Color.Green));
@@ -106,9 +106,9 @@ namespace EMGraphics
             int count = currentMarkersCount - 1;
             var label = sender as UIText;
             int index = this.labelList.IndexOf(label);
-            float distance = marginLeft;
-            distance += (float)index / (float)count * (float)(this.Size.Width - marginLeft - marginRight);
-            distance -= label.Size.Width / 2;
+            float distance = marginBottom;
+            distance += (float)index / (float)count * (float)(this.Size.Height - marginBottom - marginTop);
+            distance -= label.Size.Height / 2;
             System.Windows.Forms.Padding padding = label.Margin;
             padding.Left = (int)distance;
             label.Margin = padding;
