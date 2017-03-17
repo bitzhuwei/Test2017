@@ -18,7 +18,7 @@ namespace EMGraphics
         ///
         /// </summary>
         [Category(strUIRenderer)]
-        [Description("OpenGL switches.")]
+        [Description("OpenGL states.")]
         public GLStateList StateList
         {
             get { return stateList; }

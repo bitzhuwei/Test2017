@@ -47,53 +47,53 @@ namespace EMGraphics
 			//this.StateList.Add(new ClearColorState());
 
 			// color bar using texture.
-			{
-				var bar = new UIColorPaletteBarRenderer(
-					codedColors,
-					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
-					new System.Windows.Forms.Padding(1, marginTop, 1, marginBottom),
-					new System.Drawing.Size(50, size.Height - marginBottom - marginTop), 
-					zNear, zFar);
-				//this.StateList.Add(new ClearColorState(Color.Blue));
-				this.Children.Add(bar);
-				this.colorPaletteBar = bar;
-			}
-            // labels that display values(float values)
-            {
-                int length = maxMarkerCount;
-                var font = new Font("Arial", 32);
-                for (int i = 0; i < length; i++)
-                {
-                    const int height = 50;
-                    float distance = marginBottom;
-                    distance += 2.0f * (float)i / (float)length * (float)(this.Size.Height - marginBottom - marginTop);
-                    distance -= height / 2;
-                    var label = new UIText(
-                        System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
-                        new System.Windows.Forms.Padding((int)distance, 0, 0, 0),
-                        new System.Drawing.Size(size.Width - 60, size.Height / 2), zNear, zFar,
-                        font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
-                    label.Initialize();
-                    //label.StateList.Add(new ClearColorState(Color.Green));
-                    label.Text = ((float)i).ToShortString();
-                    label.BeforeLayout += label_beforeLayout;
-                    this.Children.Add(label);
-                    this.labelList.Add(label);
-                }
-                this.currentMarkersCount = 2;
-            }
+			//{
+			//	var bar = new UIColorPaletteBarRenderer(
+			//		codedColors,
+			//		System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
+			//		new System.Windows.Forms.Padding(1, marginTop, 1, marginBottom),
+			//		new System.Drawing.Size(50, size.Height - marginBottom - marginTop), 
+			//		zNear, zFar);
+			//	//this.StateList.Add(new ClearColorState(Color.Blue));
+			//	this.Children.Add(bar);
+			//	this.colorPaletteBar = bar;
+			//}
+   //         // labels that display values(float values)
+   //         {
+   //             int length = maxMarkerCount;
+   //             var font = new Font("Arial", 32);
+   //             for (int i = 0; i < length; i++)
+   //             {
+   //                 const int height = 50;
+   //                 float distance = marginBottom;
+   //                 distance += 2.0f * (float)i / (float)length * (float)(this.Size.Height - marginBottom - marginTop);
+   //                 distance -= height / 2;
+   //                 var label = new UIText(
+   //                     System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
+   //                     new System.Windows.Forms.Padding((int)distance, 0, 0, 0),
+   //                     new System.Drawing.Size(size.Width - 60, size.Height / 2), zNear, zFar,
+   //                     font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
+   //                 label.Initialize();
+   //                 //label.StateList.Add(new ClearColorState(Color.Green));
+   //                 label.Text = ((float)i).ToShortString();
+   //                 label.BeforeLayout += label_beforeLayout;
+   //                 this.Children.Add(label);
+   //                 this.labelList.Add(label);
+   //             }
+   //             this.currentMarkersCount = 2;
+   //         }
         }
 
         protected override void DoInitialize()
         {
             base.DoInitialize();
 
-            foreach (ITreeNode<UIRenderer> item in this.Children)
-            {
-                item.Content.Initialize();
-            }
+            //foreach (ITreeNode<UIRenderer> item in this.Children)
+            //{
+            //    item.Content.Initialize();
+            //}
 
-            this.SetCodedColor(-100, 100, 200);
+            //this.SetCodedColor(-100, 100, 200);
         }
 
         /// <summary>
@@ -169,5 +169,17 @@ namespace EMGraphics
         /// sampler for color palette.
         /// </summary>
         public Texture Sampler { get { return this.colorPaletteBar.Sampler; } }
-    }
+
+		protected override void DoRender(RenderEventArgs arg)
+		{
+			mat4 projection = this.GetOrthoProjection();
+			mat4 view = glm.lookAt(new vec3(0, 0, 1), new vec3(0, 0, 0), new vec3(0, 1, 0));
+			float length = this.Size.Height;
+			mat4 model = glm.scale(mat4.identity(), new vec3(this.Size.Width - 1, this.Size.Height - 1, 1));// '-1' to make sure lines shows up.
+			var renderer = this.Renderer as Renderer;
+			renderer.SetUniform("mvp", projection * view * model);
+
+			base.DoRender(arg);
+		}
+	}
 }
