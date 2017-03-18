@@ -1,183 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
 
 namespace EMGraphics
 {
-    /// <summary>
-    /// color palette.
-    /// 在窗口固定位置显示的色标。
-    /// 本类型只圈定了一个矩形范围。
-    /// </summary>
-    public class UIColorPaletteRenderer : UIRenderer
-    {
-        private List<UIText> labelList = new List<UIText>();
-        private const int marginBottom = 50;
-        private const int marginTop = 50;
-        private int maxMarkerCount;
+	/// <summary>
+	/// opengl UI for UIColorPaletteRenderer
+	/// </summary>
+	public class UIColorPaletteRenderer : UIRenderer
+	{
+		/// <summary>
+		/// opengl UI for Axis
+		/// </summary>
+		/// <param name="anchor"></param>
+		/// <param name="margin"></param>
+		/// <param name="size"></param>
+		/// <param name="partCount">24 as default.</param>
+		public UIColorPaletteRenderer(
+			System.Windows.Forms.AnchorStyles anchor, System.Windows.Forms.Padding margin,
+			System.Drawing.Size size, int partCount = 24)
+			: base(anchor, margin, size, -Math.Max(size.Width, size.Height), Math.Max(size.Width, size.Height))
+		{
+			var shaderCodes = new ShaderCode[2];
+			shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Simple.vert"), ShaderType.VertexShader);
+			shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Simple.frag"), ShaderType.FragmentShader);
+			var provider = new ShaderCodeArray(shaderCodes);
+			var map = new AttributeMap();
+			map.Add("in_Position", Axis.strPosition);
+			map.Add("in_Color", Axis.strColor);
+			var axis = new Axis(partCount, 0.5f);
+			var renderer = new Renderer(axis, provider, map);
+			renderer.ModelSize = axis.ModelSize;
 
-        /// <summary>
-        /// renders a color palette bar with 1-D texture and its coordiante(float).
-        /// </summary>
-        private UIColorPaletteBarRenderer colorPaletteBar;
+			this.Renderer = renderer;
+		}
 
-        /// <summary>
-        /// current marker's count.
-        /// </summary>
-        private int currentMarkersCount;
-
-        /// <summary>
-        /// </summary>
-        /// <param name="anchor"></param>
-        /// <param name="margin"></param>
-        /// <param name="size"></param>
-        /// <param name="zNear"></param>
-        /// <param name="zFar"></param>
-        public UIColorPaletteRenderer(int maxMarkerCount,
-            CodedColor[] codedColors,
-            System.Windows.Forms.AnchorStyles anchor, System.Windows.Forms.Padding margin,
-            System.Drawing.Size size, int zNear, int zFar)
-            : base(anchor, margin, size, zNear, zFar)
-        {
-            this.maxMarkerCount = maxMarkerCount;
-            this.currentMarkersCount = maxMarkerCount;
-
-			//// display this UI control's area.
-			//this.StateList.Add(new ClearColorState());
-
-			// color bar using texture.
-			//{
-			//	var bar = new UIColorPaletteBarRenderer(
-			//		codedColors,
-			//		System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
-			//		new System.Windows.Forms.Padding(1, marginTop, 1, marginBottom),
-			//		new System.Drawing.Size(50, size.Height - marginBottom - marginTop), 
-			//		zNear, zFar);
-			//	//this.StateList.Add(new ClearColorState(Color.Blue));
-			//	this.Children.Add(bar);
-			//	this.colorPaletteBar = bar;
-			//}
-   //         // labels that display values(float values)
-   //         {
-   //             int length = maxMarkerCount;
-   //             var font = new Font("Arial", 32);
-   //             for (int i = 0; i < length; i++)
-   //             {
-   //                 const int height = 50;
-   //                 float distance = marginBottom;
-   //                 distance += 2.0f * (float)i / (float)length * (float)(this.Size.Height - marginBottom - marginTop);
-   //                 distance -= height / 2;
-   //                 var label = new UIText(
-   //                     System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
-   //                     new System.Windows.Forms.Padding((int)distance, 0, 0, 0),
-   //                     new System.Drawing.Size(size.Width - 60, size.Height / 2), zNear, zFar,
-   //                     font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
-   //                 label.Initialize();
-   //                 //label.StateList.Add(new ClearColorState(Color.Green));
-   //                 label.Text = ((float)i).ToShortString();
-   //                 label.BeforeLayout += label_beforeLayout;
-   //                 this.Children.Add(label);
-   //                 this.labelList.Add(label);
-   //             }
-   //             this.currentMarkersCount = 2;
-   //         }
-        }
-
-        protected override void DoInitialize()
-        {
-            base.DoInitialize();
-
-            //foreach (ITreeNode<UIRenderer> item in this.Children)
-            //{
-            //    item.Content.Initialize();
-            //}
-
-            //this.SetCodedColor(-100, 100, 200);
-        }
-
-        /// <summary>
-        /// adjust label's margin in order to get perfect position after Layout().
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void label_beforeLayout(object sender, CancelEventArgs e)
-        {
-            int count = currentMarkersCount - 1;
-            var label = sender as UIText;
-            int index = this.labelList.IndexOf(label);
-            float distance = marginBottom;
-            distance += (float)index / (float)count * (float)(this.Size.Height - marginBottom - marginTop);
-            distance -= label.Size.Height / 2;
-            System.Windows.Forms.Padding padding = label.Margin;
-            padding.Left = (int)distance;
-            label.Margin = padding;
-        }
-
-        public void UpdateBar(Bitmap bitmap)
-        {
-            this.colorPaletteBar.UpdateTexture(bitmap);
-        }
-
-        //public int Update { get { return 0; } set { this.SetCodedColor(CodedColor.GetDefault()); } }
-        public int Update { get { return 0; } set { this.SetCodedColor(0, 100, 11); } }
-
-        //public void SetCodedColor(CodedColor[] codedColors)
-        //{
-        //    {
-        //        Bitmap bitmap = codedColors.GetBitmap(bitmapWidth);
-        //        this.colorPaletteBar.UpdateTexture(bitmap);
-        //        //this.colorPaletteBar2.UpdateTexture(bitmap);
-        //        bitmap.Dispose();
-        //    }
-        //    {
-        //        this.colorPaletteBar.UpdateCodedColor(codedColors);
-        //        this.colorPaletteBar2.UpdateCodedColor(codedColors);
-        //        //this.markers.UpdateCodedColors(codedColors);
-        //    }
-        //}
-
-        public const int bitmapWidth = 1024;
-
-        public void SetCodedColor(double axisMin, double axisMax, double step)
-        {
-            // update labels.
-            {
-                int labelCount = (int)((axisMax - axisMin) / step) + 1;
-                // valid labels.
-                for (int i = 0; i < labelCount - 1; i++)
-                {
-                    this.labelList[i].Enabled = true;
-                    this.labelList[i].Text = string.Format("{0}", axisMin + step * i);
-                }
-                // last valid label.
-                {
-                    int i = labelCount - 1;
-                    this.labelList[i].Enabled = true;
-                    this.labelList[i].Text = string.Format("{0}", axisMax);
-                }
-                // invalid labels.
-                for (int i = labelCount; i < this.maxMarkerCount; i++)
-                {
-                    this.labelList[i].Enabled = false;
-                }
-                this.currentMarkersCount = labelCount;
-            }
-        }
-
-        /// <summary>
-        /// sampler for color palette.
-        /// </summary>
-        public Texture Sampler { get { return this.colorPaletteBar.Sampler; } }
-
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="arg"></param>
 		protected override void DoRender(RenderEventArgs arg)
 		{
+			ICamera camera = arg.Camera;
 			mat4 projection = this.GetOrthoProjection();
-			mat4 view = glm.lookAt(new vec3(0, 0, 1), new vec3(0, 0, 0), new vec3(0, 1, 0));
-			float length = this.Size.Height;
-			mat4 model = glm.scale(mat4.identity(), new vec3(this.Size.Width - 1, this.Size.Height - 1, 1));// '-1' to make sure lines shows up.
+			vec3 position = (camera.Position - camera.Target).normalize();
+			mat4 view = glm.lookAt(position, new vec3(0, 0, 0), camera.UpVector);
+			float length = Math.Max(this.Size.Width, this.Size.Height);
 			var renderer = this.Renderer as Renderer;
-			renderer.SetUniform("mvp", projection * view * model);
+			vec3 rendererSize = renderer.ModelSize;
+			vec3 scale = new vec3(length / rendererSize.x, length / rendererSize.y, length / rendererSize.z);
+			mat4 model = glm.scale(mat4.identity(), scale);
+			renderer.SetUniform("projectionMatrix", projection);
+			renderer.SetUniform("viewMatrix", view);
+			renderer.SetUniform("modelMatrix", model);
 
 			base.DoRender(arg);
 		}
