@@ -12,20 +12,6 @@ namespace EMGraphics
 	/// </summary>
 	public class UIColorPaletteRenderer : UIRenderer
 	{
-		private List<UIText> labelList = new List<UIText>();
-		private const int marginLeft = 50;
-		private const int marginRight = 50;
-		private int maxMarkerCount;
-
-		/// <summary>
-		/// renders a color palette bar with 1-D texture and its coordiante(float).
-		/// </summary>
-		private UIColorPaletteBarRenderer colorPaletteBar;
-
-		/// <summary>
-		/// current marker's count.
-		/// </summary>
-		private int currentMarkersCount;
 
 		/// <summary>
 		/// </summary>
@@ -40,135 +26,8 @@ namespace EMGraphics
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
 		{
-			this.maxMarkerCount = maxMarkerCount;
-			this.currentMarkersCount = maxMarkerCount;
-
-			//// display this UI control's area.
-			//this.StateList.Add(new ClearColorState());
-
-			// color bar using texture.
-			{
-				var bar = new UIColorPaletteBarRenderer(
-					codedColors,
-				System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right,
-				new System.Windows.Forms.Padding(marginLeft, 1, marginRight, 0),
-				new System.Drawing.Size(size.Width - marginLeft - marginRight, size.Height / 3),
-				zNear, zFar);
-				//this.StateList.Add(new ClearColorState(Color.Blue));
-				this.Children.Add(bar);
-				this.colorPaletteBar = bar;
-			}
-			// labels that display values(float values)
-			{
-				int length = maxMarkerCount;
-				var font = new Font("Arial", 32);
-				for (int i = 0; i < length; i++)
-				{
-					const int width = 100;
-					float distance = marginLeft;
-					distance += 2.0f * (float)i / (float)length * (float)(this.Size.Width - marginLeft - marginRight);
-					distance -= width / 2;
-					var label = new UIText(
-						System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
-						new System.Windows.Forms.Padding((int)distance, 0, 0, 0),
-						new System.Drawing.Size(width, size.Height / 2), zNear, zFar,
-						font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
-					label.TextColor = textColor;
-					label.Initialize();
-					//label.StateList.Add(new ClearColorState(Color.Green));
-					label.Text = ((float)i).ToShortString();
-					label.BeforeLayout += label_beforeLayout;
-					this.Children.Add(label);
-					this.labelList.Add(label);
-				}
-				this.currentMarkersCount = 2;
-			}
 		}
 
-		protected override void DoInitialize()
-		{
-			base.DoInitialize();
 
-			foreach (ITreeNode<UIRenderer> item in this.Children)
-			{
-				item.Content.Initialize();
-			}
-
-			this.SetCodedColor(-100, 100, 200);
-		}
-
-		/// <summary>
-		/// adjust label's margin in order to get perfect position after Layout().
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void label_beforeLayout(object sender, CancelEventArgs e)
-		{
-			int count = currentMarkersCount - 1;
-			var label = sender as UIText;
-			int index = this.labelList.IndexOf(label);
-			float distance = marginLeft;
-			distance += (float)index / (float)count * (float)(this.Size.Width - marginLeft - marginRight);
-			distance -= label.Size.Width / 2;
-			System.Windows.Forms.Padding padding = label.Margin;
-			padding.Left = (int)distance;
-			label.Margin = padding;
-		}
-
-		public void UpdateBar(Bitmap bitmap)
-		{
-			this.colorPaletteBar.UpdateTexture(bitmap);
-		}
-
-		//public int Update { get { return 0; } set { this.SetCodedColor(CodedColor.GetDefault()); } }
-		public int Update { get { return 0; } set { this.SetCodedColor(0, 100, 11); } }
-
-		//public void SetCodedColor(CodedColor[] codedColors)
-		//{
-		//    {
-		//        Bitmap bitmap = codedColors.GetBitmap(bitmapWidth);
-		//        this.colorPaletteBar.UpdateTexture(bitmap);
-		//        //this.colorPaletteBar2.UpdateTexture(bitmap);
-		//        bitmap.Dispose();
-		//    }
-		//    {
-		//        this.colorPaletteBar.UpdateCodedColor(codedColors);
-		//        this.colorPaletteBar2.UpdateCodedColor(codedColors);
-		//        //this.markers.UpdateCodedColors(codedColors);
-		//    }
-		//}
-
-		public const int bitmapWidth = 1024;
-
-		public void SetCodedColor(double axisMin, double axisMax, double step)
-		{
-			// update labels.
-			{
-				int labelCount = (int)((axisMax - axisMin) / step) + 1;
-				// valid labels.
-				for (int i = 0; i < labelCount - 1; i++)
-				{
-					this.labelList[i].Enabled = true;
-					this.labelList[i].Text = string.Format("{0}", axisMin + step * i);
-				}
-				// last valid label.
-				{
-					int i = labelCount - 1;
-					this.labelList[i].Enabled = true;
-					this.labelList[i].Text = string.Format("{0}", axisMax);
-				}
-				// invalid labels.
-				for (int i = labelCount; i < this.maxMarkerCount; i++)
-				{
-					this.labelList[i].Enabled = false;
-				}
-				this.currentMarkersCount = labelCount;
-			}
-		}
-
-		/// <summary>
-		/// sampler for color palette.
-		/// </summary>
-		public Texture Sampler { get { return this.colorPaletteBar.Sampler; } }
 	}
 }
