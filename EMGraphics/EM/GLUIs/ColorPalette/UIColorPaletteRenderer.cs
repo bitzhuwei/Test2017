@@ -35,7 +35,7 @@ namespace EMGraphics
 		/// <param name="zNear"></param>
 		/// <param name="zFar"></param>
 		public UIColorPaletteRenderer(int maxMarkerCount,
-			CodedColor[] codedColors,
+			CodedColor[] codedColors, Color textColor,
 			System.Windows.Forms.AnchorStyles anchor, System.Windows.Forms.Padding margin,
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
@@ -73,6 +73,7 @@ namespace EMGraphics
 						new System.Windows.Forms.Padding((int)distance, 0, 0, 0),
 						new System.Drawing.Size(width, size.Height / 2), zNear, zFar,
 						font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
+					label.TextColor = textColor;
 					label.Initialize();
 					//label.StateList.Add(new ClearColorState(Color.Green));
 					label.Text = ((float)i).ToShortString();
