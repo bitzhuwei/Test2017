@@ -64,53 +64,55 @@ namespace EMGraphics
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="arg"></param>
-        protected override void DoRender(RenderEventArgs arg)
-        {
-            RendererBase renderer = this.Renderer;
-            if (renderer != null)
-            {
-                if (this.locationUpdated)
-                {
-                    this.viewportState.X = this.Location.X;
-                    this.viewportState.Y = this.Location.Y;
-                    this.scissorTestState.X = this.Location.X;
-                    this.scissorTestState.Y = this.Location.Y;
-                    this.locationUpdated = false;
-                }
-                if (this.sizeUpdated)
-                {
-                    this.viewportState.Width = this.Size.Width;
-                    this.viewportState.Height = this.Size.Height;
-                    this.scissorTestState.Width = this.Size.Width;
-                    this.scissorTestState.Height = this.Size.Height;
-                    this.sizeUpdated = false;
-                }
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="arg"></param>
+		protected override void DoRender(RenderEventArgs arg)
+		{
+			if (this.locationUpdated)
+			{
+				this.viewportState.X = this.Location.X;
+				this.viewportState.Y = this.Location.Y;
+				this.scissorTestState.X = this.Location.X;
+				this.scissorTestState.Y = this.Location.Y;
+				this.locationUpdated = false;
+			}
+			if (this.sizeUpdated)
+			{
+				this.viewportState.Width = this.Size.Width;
+				this.viewportState.Height = this.Size.Height;
+				this.scissorTestState.Width = this.Size.Width;
+				this.scissorTestState.Height = this.Size.Height;
+				this.sizeUpdated = false;
+			}
 
-                this.viewportState.On();
-                this.scissorTestState.On();
-                int count = this.stateList.Count;
-                for (int i = 0; i < count; i++) { this.stateList[i].On(); }
+			this.viewportState.On();
+			this.scissorTestState.On();
+			int count = this.stateList.Count;
+			for (int i = 0; i < count; i++) { this.stateList[i].On(); }
 
-                // 把所有在此之前渲染的内容都推到最远。
-                // Push all rendered stuff to farest position.
-                OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
+			// 把所有在此之前渲染的内容都推到最远。
+			// Push all rendered stuff to farest position.
+			OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
 
-                renderer.Render(arg);
+			RendererBase renderer = this.Renderer;
+			if (renderer != null)
+			{
 
-                for (int i = count - 1; i >= 0; i--) { this.stateList[i].Off(); }
-                this.scissorTestState.Off();
-                this.viewportState.Off();
-            }
-        }
+				renderer.Render(arg);
+			}
 
-        /// <summary>
-        ///
-        /// </summary>
-        protected override void DisposeUnmanagedResources()
+			for (int i = count - 1; i >= 0; i--) { this.stateList[i].Off(); }
+			this.scissorTestState.Off();
+			this.viewportState.Off();
+
+		}
+
+		/// <summary>
+		///
+		/// </summary>
+		protected override void DisposeUnmanagedResources()
         {
             RendererBase renderer = this.Renderer;
             if (renderer != null)
