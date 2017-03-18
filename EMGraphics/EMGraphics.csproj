@@ -659,6 +659,8 @@
     <EmbeddedResource Include="EM\shaders\NormalLine.vert" />
     <EmbeddedResource Include="EM\shaders\QuadStripTexture.frag" />
     <EmbeddedResource Include="EM\shaders\QuadStripTexture.vert" />
+    <EmbeddedResource Include="EM\shaders\Background.frag" />
+    <EmbeddedResource Include="EM\shaders\Background.vert" />
     <None Include="FontTexture\readme.md" />
     <None Include="Manipulaters\readme.md" />
     <None Include="PropertyGrid\TypeConverters\readme.md" />

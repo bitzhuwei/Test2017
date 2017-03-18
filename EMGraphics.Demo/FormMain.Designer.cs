@@ -85,7 +85,7 @@
             this.帮助HToolStripMenuItem});
 			this.menuStrip1.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip1.Name = "menuStrip1";
-			this.menuStrip1.Size = new System.Drawing.Size(754, 28);
+			this.menuStrip1.Size = new System.Drawing.Size(797, 28);
 			this.menuStrip1.TabIndex = 0;
 			this.menuStrip1.Text = "menuStrip1";
 			// 
@@ -315,9 +315,9 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-			this.statusStrip1.Location = new System.Drawing.Point(0, 596);
+			this.statusStrip1.Location = new System.Drawing.Point(0, 666);
 			this.statusStrip1.Name = "statusStrip1";
-			this.statusStrip1.Size = new System.Drawing.Size(754, 22);
+			this.statusStrip1.Size = new System.Drawing.Size(797, 22);
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
@@ -334,7 +334,7 @@
 			this.glCanvas1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.glCanvas1.Name = "glCanvas1";
 			this.glCanvas1.RenderTrigger = EMGraphics.RenderTrigger.TimerBased;
-			this.glCanvas1.Size = new System.Drawing.Size(754, 537);
+			this.glCanvas1.Size = new System.Drawing.Size(797, 607);
 			this.glCanvas1.TabIndex = 2;
 			this.glCanvas1.DoubleClick += new System.EventHandler(this.glCanvas1_DoubleClick);
 			// 
@@ -349,7 +349,7 @@
             this.toolStripDropDownButton1});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 28);
 			this.toolStrip1.Name = "toolStrip1";
-			this.toolStrip1.Size = new System.Drawing.Size(754, 27);
+			this.toolStrip1.Size = new System.Drawing.Size(797, 27);
 			this.toolStrip1.TabIndex = 3;
 			this.toolStrip1.Text = "toolStrip1";
 			// 
@@ -424,7 +424,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(754, 618);
+			this.ClientSize = new System.Drawing.Size(797, 688);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.glCanvas1);
 			this.Controls.Add(this.statusStrip1);

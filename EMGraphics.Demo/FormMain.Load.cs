@@ -36,8 +36,8 @@ namespace EMGraphics.Demo
 			{
 				var uiCodedColorBar = new UIColorPaletteRenderer(100,
 					CodedColor.GetDefault(), Color.Black,
-					AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right,
-					new Padding(10, 10, 10, 10), new Size(1000, 60), -100, 100);
+					AnchorStyles.Left | AnchorStyles.Top,
+					new Padding(10, 10, 10, 10), new Size(120, 300), -100, 100);
 				//uiCodedColorBar.StateList.Add(new ClearColorState(Color.Orange));
 				this.scene.RootUI.Children.Add(uiCodedColorBar);
 			}

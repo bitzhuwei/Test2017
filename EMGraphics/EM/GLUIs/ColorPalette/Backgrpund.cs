@@ -23,10 +23,10 @@ namespace EMGraphics
 	{
 		private static readonly vec3[] positions = new vec3[]
 		{
-			new vec3(-1,  1, 0),
-			new vec3( 1,  1, 0),
-			new vec3( 1, -1, 0),
-			new vec3(-1, -1, 0),
+			new vec3(-1,  1, 0) * 0.5f,
+			new vec3( 1,  1, 0) * 0.5f,
+			new vec3( 1, -1, 0) * 0.5f,
+			new vec3(-1, -1, 0) * 0.5f,
 		};
 
 		private IndexBuffer indexBuffer;
