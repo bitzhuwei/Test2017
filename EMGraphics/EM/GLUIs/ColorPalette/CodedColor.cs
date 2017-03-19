@@ -11,7 +11,7 @@ namespace EMGraphics
         {
             var result = new CodedColor[5];
             result[0] = new CodedColor(
-                Color.FromArgb(255, 0, 22, 76), 0.0f, 100.0f);
+                Color.FromArgb(255, 0, 22, 255), 0.0f, 100.0f);
             result[1] = new CodedColor(
                 Color.FromArgb(255, 0, 193, 136), 0.25f, 200.0f);
             result[2] = new CodedColor(
