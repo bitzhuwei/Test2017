@@ -13,6 +13,7 @@ namespace EMGraphics
 	/// </summary>
 	public partial class UIColorPalette : UIRenderer
 	{
+		private int maxMarkerCount;
 
 		/// <summary>
 		/// </summary>
@@ -27,6 +28,10 @@ namespace EMGraphics
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
 		{
+			{
+				this.maxMarkerCount = maxMarkerCount;
+			}
+
 			{
 				// background gradient color.
 				var shaderCodes = new ShaderCode[2];
@@ -58,6 +63,9 @@ namespace EMGraphics
 					AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
 					new Padding(5, 20, 5, 5), new Size(30, 100), -100, 100);
 				this.Children.Add(coloredBar);
+			}
+			{
+				InitLabels(maxMarkerCount, size);
 			}
 		}
 
