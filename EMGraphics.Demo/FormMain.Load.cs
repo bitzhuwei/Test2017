@@ -34,10 +34,10 @@ namespace EMGraphics.Demo
 				this.scene.RootUI.Children.Add(uiAxis);
 			}
 			{
-				var uiCodedColorBar = new UIColorPaletteRenderer(100,
+				var uiCodedColorBar = new UIColorPalette(100,
 					CodedColor.GetDefault(), Color.Black,
 					AnchorStyles.Left | AnchorStyles.Top,
-					new Padding(10, 10, 10, 10), new Size(120, 300), -100, 100);
+					new Padding(10, 10, 10, 10), new Size(150, 300), -100, 100);
 				//uiCodedColorBar.StateList.Add(new ClearColorState(Color.Orange));
 				this.scene.RootUI.Children.Add(uiCodedColorBar);
 			}

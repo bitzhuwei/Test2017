@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace EMGraphics
 {
@@ -10,7 +11,7 @@ namespace EMGraphics
 	/// 在窗口固定位置显示的色标。
 	/// 本类型只圈定了一个矩形范围。
 	/// </summary>
-	public class UIColorPaletteRenderer : UIRenderer
+	public class UIColorPalette : UIRenderer
 	{
 
 		/// <summary>
@@ -20,9 +21,9 @@ namespace EMGraphics
 		/// <param name="size"></param>
 		/// <param name="zNear"></param>
 		/// <param name="zFar"></param>
-		public UIColorPaletteRenderer(int maxMarkerCount,
+		public UIColorPalette(int maxMarkerCount,
 			CodedColor[] codedColors, Color textColor,
-			System.Windows.Forms.AnchorStyles anchor, System.Windows.Forms.Padding margin,
+			AnchorStyles anchor, Padding margin,
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
 		{
@@ -31,7 +32,7 @@ namespace EMGraphics
 				shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\Background.vert"), ShaderType.VertexShader);
 				shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\Background.frag"), ShaderType.FragmentShader);
 				var provider = new ShaderCodeArray(shaderCodes);
-				var model = new Backgrpund(Color.Blue, Color.White);
+				var model = new Backgrpund(Color.LightBlue, Color.White);
 				var map = new AttributeMap();
 				map.Add("in_Position", Backgrpund.strPosition);
 				map.Add("in_Color", Backgrpund.strColor);
@@ -40,6 +41,13 @@ namespace EMGraphics
 				renderer.Scale = model.Scale;
 				renderer.ModelSize = model.ModelSize;
 				this.Renderer = renderer;
+			}
+			{
+				var headLine = new UIText(AnchorStyles.Left | AnchorStyles.Top,
+					new Padding(3, 3, 3, 3), new Size(140, 15), -100, 100);
+				headLine.Text = "Surface current[mA/m]";
+				headLine.TextColor = Color.Black;
+				this.Children.Add(headLine);
 			}
 		}
 
