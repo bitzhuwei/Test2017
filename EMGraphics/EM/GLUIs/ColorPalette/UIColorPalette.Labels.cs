@@ -18,6 +18,7 @@ namespace EMGraphics
 		{
 			int length = maxMarkerCount;
 			var font = new Font("Arial", 32);
+			FontTexture texture = font.GetFontBitmap("0123456789.eE+-").GetFontTexture();
 			for (int i = 0; i < length; i++)
 			{
 				const int width = 100;
@@ -28,7 +29,7 @@ namespace EMGraphics
 					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
 					new System.Windows.Forms.Padding(50, 0, 0, 0),
 					new System.Drawing.Size(width, 15), zNear, zFar,
-					font.GetFontBitmap("0123456789.eE+-").GetFontTexture(), 100);
+					texture, 100);
 				label.Initialize();
 				label.StateList.Add(new ClearColorState(Color.Green));
 				label.Text = ((float)i).ToShortString();
