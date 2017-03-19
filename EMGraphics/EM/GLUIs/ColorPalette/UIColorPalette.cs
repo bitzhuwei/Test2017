@@ -53,7 +53,11 @@ namespace EMGraphics
 			}
 			{
 				// color palette.
-
+				var coloredBar = new UIColoredBar(
+					CodedColor.GetDefault(),// demo
+					AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
+					new Padding(5, 20, 5, 5), new Size(30, 100), -100, 100);
+				this.Children.Add(coloredBar);
 			}
 		}
 
