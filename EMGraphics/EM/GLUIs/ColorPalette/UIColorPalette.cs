@@ -11,7 +11,7 @@ namespace EMGraphics
 	/// 在窗口固定位置显示的色标。
 	/// 本类型只圈定了一个矩形范围。
 	/// </summary>
-	public class UIColorPalette : UIRenderer
+	public partial class UIColorPalette : UIRenderer
 	{
 
 		/// <summary>
