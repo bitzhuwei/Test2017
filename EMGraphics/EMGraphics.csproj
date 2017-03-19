@@ -380,7 +380,6 @@
     <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\QuadStrip.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\QuadStripRenderer.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\UIColoredBar.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\Backgrpund.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\UIColorPalette.cs" />
@@ -657,8 +656,8 @@
     <EmbeddedResource Include="EM\shaders\EMGrid.vert" />
     <EmbeddedResource Include="EM\shaders\NormalLine.frag" />
     <EmbeddedResource Include="EM\shaders\NormalLine.vert" />
-    <EmbeddedResource Include="EM\shaders\QuadStripTexture.frag" />
-    <EmbeddedResource Include="EM\shaders\QuadStripTexture.vert" />
+    <EmbeddedResource Include="EM\shaders\QuadStrip.frag" />
+    <EmbeddedResource Include="EM\shaders\QuadStrip.vert" />
     <EmbeddedResource Include="EM\shaders\Background.frag" />
     <EmbeddedResource Include="EM\shaders\Background.vert" />
     <None Include="FontTexture\readme.md" />

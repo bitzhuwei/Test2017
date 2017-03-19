@@ -32,8 +32,8 @@ namespace EMGraphics
 
 			var model = new QuadStrip(1);
 			var shaderCodes = new ShaderCode[2];
-			shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\QuadStripTexture.vert"), ShaderType.VertexShader);
-			shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\QuadStripTexture.frag"), ShaderType.FragmentShader);
+			shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\QuadStrip.vert"), ShaderType.VertexShader);
+			shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\QuadStrip.frag"), ShaderType.FragmentShader);
 			var provider = new ShaderCodeArray(shaderCodes);
 			var map = new AttributeMap();
 			map.Add("in_Position", QuadStrip.position);
