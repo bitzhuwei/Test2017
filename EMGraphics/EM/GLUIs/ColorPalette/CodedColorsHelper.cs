@@ -14,14 +14,15 @@ namespace EMGraphics
         /// <returns></returns>
         public static Bitmap GetBitmap(this CodedColor[] codedColors, int width)
         {
+			const int bitmapHeight = 1;
             var format = System.Drawing.Imaging.PixelFormat.Format32bppRgb;
             var lockMode = System.Drawing.Imaging.ImageLockMode.WriteOnly;
-            var bitmap = new Bitmap(width, 1, format);
+            var bitmap = new Bitmap(width, bitmapHeight, format);
             var bitmapRect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             BitmapData bmpData = bitmap.LockBits(bitmapRect, lockMode, format);
 
-            int length = Math.Abs(bmpData.Stride) * bitmap.Height;
-            byte[] bitmapBytes = new byte[length];
+            int byteLength = Math.Abs(bmpData.Stride) * bitmapHeight;
+            byte[] bitmapBytes = new byte[byteLength];
 
             for (int i = 0; i < codedColors.Length - 1; i++)
             {
@@ -41,7 +42,7 @@ namespace EMGraphics
                 }
             }
 
-            System.Runtime.InteropServices.Marshal.Copy(bitmapBytes, 0, bmpData.Scan0, length);
+            System.Runtime.InteropServices.Marshal.Copy(bitmapBytes, 0, bmpData.Scan0, byteLength);
 
             bitmap.UnlockBits(bmpData);
 
