@@ -28,6 +28,7 @@ namespace EMGraphics
 			: base(anchor, margin, size, zNear, zFar)
 		{
 			{
+				// background gradient color.
 				var shaderCodes = new ShaderCode[2];
 				shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\Background.vert"), ShaderType.VertexShader);
 				shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\Background.frag"), ShaderType.FragmentShader);
@@ -43,16 +44,23 @@ namespace EMGraphics
 				this.Renderer = renderer;
 			}
 			{
+				// this writes 'Surface current[mA/m]".
 				var headLine = new UIText(AnchorStyles.Left | AnchorStyles.Top,
 					new Padding(3, 3, 3, 3), new Size(140, 15), -100, 100);
 				headLine.Text = "Surface current[mA/m]";
 				headLine.TextColor = Color.Black;
 				this.Children.Add(headLine);
 			}
+			{
+				// color palette.
+
+			}
 		}
 
 		protected override void DoRender(RenderEventArgs arg)
 		{
+			// this displays background gradient color only.
+			// other components are rendered in this component's chilcren part.
 			ICamera camera = arg.Camera;
 			mat4 projection = this.GetOrthoProjection();
 			//vec3 position = (camera.Position - camera.Target).normalize();
