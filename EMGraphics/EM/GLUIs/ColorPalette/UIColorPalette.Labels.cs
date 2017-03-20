@@ -9,8 +9,8 @@ namespace EMGraphics
 	public partial class UIColorPalette 
 	{
 
-		private float marginBottom = 50;
-		private float marginTop = 50;
+		private int marginBottom = 20;
+		private int marginTop = 30;
 		private int currentMarkersCount;
 		private List<UIText> labelList = new List<UIText>();
 
@@ -23,7 +23,7 @@ namespace EMGraphics
 			{
 				const int width = 100;
 				float distance = marginBottom;
-				distance += 2.0f * (float)i / (float)length * (float)(this.Size.Width - marginBottom - marginTop);
+				distance += 2.0f * (float)i / (float)length * (float)(size.Width - marginBottom - marginTop);
 				distance -= width / 2;
 				var label = new UIText(
 					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
@@ -62,7 +62,7 @@ namespace EMGraphics
 				item.Content.Initialize();
 			}
 
-			this.SetCodedColor(-100, 100, 200);
+			this.SetCodedColor(-100, 100, 90);
 		}
 		public const int bitmapWidth = 1024;
 

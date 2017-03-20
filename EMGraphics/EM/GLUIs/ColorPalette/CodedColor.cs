@@ -24,9 +24,15 @@ namespace EMGraphics
             return result;
         }
 
-        public CodedColor(Color color, float coord, float value)
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="color"></param>
+		/// <param name="coord">range in [0.0, 1.0]</param>
+		/// <param name="propertyValue"></param>
+        public CodedColor(Color color, float coord, float propertyValue)
         {
-            this.DisplayColor = color; this.Coord = coord; this.Value = value;
+            this.DisplayColor = color; this.Coord = coord; this.PropertyValue = propertyValue;
         }
 
         /// <summary>
@@ -53,11 +59,11 @@ namespace EMGraphics
         /// <summary>
         /// Display value.
         /// </summary>
-        public float Value { get; set; }
+        public float PropertyValue { get; set; }
 
         public override string ToString()
         {
-            return string.Format("{0}, Coord: {1}, Value: {2}", DisplayColor, Coord, Value);
+            return string.Format("{0}, Coord: {1}, Value: {2}", DisplayColor, Coord, PropertyValue);
         }
     }
 }

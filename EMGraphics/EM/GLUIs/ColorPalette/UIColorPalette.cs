@@ -28,6 +28,7 @@ namespace EMGraphics
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
 		{
+			this.StateList.Add(new ClearColorState(Color.Orange));
 			{
 				this.maxMarkerCount = maxMarkerCount;
 			}
@@ -61,7 +62,7 @@ namespace EMGraphics
 				var coloredBar = new UIColoredBar(
 					CodedColor.GetDefault(),// demo
 					AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
-					new Padding(5, 20, 5, 5), new Size(30, 100), -100, 100);
+					new Padding(5, marginTop, 5, marginBottom), new Size(30, 100), -100, 100);
 				this.Children.Add(coloredBar);
 			}
 			{
