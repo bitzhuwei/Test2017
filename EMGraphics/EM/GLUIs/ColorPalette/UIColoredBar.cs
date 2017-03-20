@@ -12,7 +12,7 @@ namespace EMGraphics
         /// </summary>
         public Texture Sampler { get; private set; }
 
-        private CodedColor[] codedColors;
+        private CodedColorArray codedColors;
 
 		/// <summary>
 		/// 彩色的色标带。
@@ -23,7 +23,7 @@ namespace EMGraphics
 		/// <param name="zNear"></param>
 		/// <param name="zFar"></param>
 		public UIColoredBar(
-			CodedColor[] codedColors,
+			CodedColorArray codedColors,
 			System.Windows.Forms.AnchorStyles anchor, System.Windows.Forms.Padding margin,
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)

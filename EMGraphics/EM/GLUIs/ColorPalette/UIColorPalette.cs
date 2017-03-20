@@ -23,7 +23,7 @@ namespace EMGraphics
 		/// <param name="zNear"></param>
 		/// <param name="zFar"></param>
 		public UIColorPalette(int maxMarkerCount,
-			CodedColor[] codedColors, Color textColor,
+			CodedColorArray codedColors, Color textColor,
 			AnchorStyles anchor, Padding margin,
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
@@ -60,7 +60,7 @@ namespace EMGraphics
 			{
 				// color palette.
 				var coloredBar = new UIColoredBar(
-					CodedColor.GetDefault(),// demo
+					codedColors,
 					AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
 					new Padding(5, marginTop, 5, marginBottom), new Size(30, 100), -100, 100);
 				this.Children.Add(coloredBar);

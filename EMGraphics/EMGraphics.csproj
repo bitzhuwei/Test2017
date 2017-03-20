@@ -377,6 +377,7 @@
     <Compile Include="EM\FaceNormal.cs" />
     <Compile Include="EM\FaceNormalRenderer.ReverseNormals.cs" />
     <Compile Include="EM\FaceNormalRenderer.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\CodedColorArray.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\QuadStrip.cs" />
