@@ -11,7 +11,8 @@ namespace EMGraphics
 	/// </summary>
 	public class CodedColorArray : IEnumerable<CodedColor>
 	{
-		private CodedColor[] array;
+
+		public CodedColor[] Items { get; private set; }
 
 		public static CodedColorArray GetDefault()
 		{
@@ -32,7 +33,7 @@ namespace EMGraphics
 
 		public IEnumerator<CodedColor> GetEnumerator()
 		{
-			foreach (CodedColor item in this.array)
+			foreach (CodedColor item in this.Items)
 			{
 				yield return item;
 			}
@@ -47,7 +48,7 @@ namespace EMGraphics
 		{
 			if (array == null) { throw new ArgumentNullException(); }
 
-			this.array = array;
+			this.Items = array;
 		}
 
 		/// <summary>
@@ -58,7 +59,7 @@ namespace EMGraphics
 		/// <returns></returns>
 		public Bitmap GetBitmap(int width)
 		{
-			CodedColor[] codedColors = this.array;
+			CodedColor[] codedColors = this.Items;
 
 			const int bitmapHeight = 1;
 			var format = System.Drawing.Imaging.PixelFormat.Format32bppRgb;

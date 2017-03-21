@@ -11,86 +11,52 @@ namespace EMGraphics
 
 		private int marginBottom = 20;
 		private int marginTop = 30;
-		private int currentMarkersCount;
 		private List<UIText> labelList = new List<UIText>();
 
-		private void InitLabels(int maxMarkerCount, Size size)
+		private void InitLabels(CodedColorArray codedColors, int maxMarkerCount, Size size)
 		{
+			int validCount = codedColors.Items.Length;
 			int length = maxMarkerCount;
 			var font = new Font("Arial", 32);
 			FontTexture texture = font.GetFontBitmap("0123456789.eE+-").GetFontTexture();
 			for (int i = 0; i < length; i++)
 			{
-				const int width = 100;
-				float distance = marginBottom;
-				distance += 2.0f * (float)i / (float)length * (float)(size.Width - marginBottom - marginTop);
-				distance -= width / 2;
 				var label = new UIText(
 					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
 					new System.Windows.Forms.Padding(50, 0, 0, 0),
-					new System.Drawing.Size(width, 15), zNear, zFar,
+					new System.Drawing.Size(100, 15), zNear, zFar,
 					texture, 100);
+				label.TextColor = Color.Black;
 				label.Initialize();
-				label.StateList.Add(new ClearColorState(Color.Green));
-				label.Text = ((float)i).ToShortString();
+				//label.StateList.Add(new ClearColorState(Color.Green));
+				//label.Text = string.Format("{0}th label.", i);
 				label.BeforeLayout += label_beforeLayout;
+				label.Enabled = false;
 				this.Children.Add(label);
 				this.labelList.Add(label);
 			}
-			this.currentMarkersCount = 2;
+			for (int i = 0; i < validCount; i++)
+			{
+				UIText label = this.labelList[i];
+				CodedColor cc = codedColors.Items[i];
+				label.Text = string.Format("{0:E}", cc.PropertyValue);
+				label.Enabled = true;
+			}
 		}
 
 		private void label_beforeLayout(object sender, CancelEventArgs e)
 		{
-			int count = currentMarkersCount - 1;
+			int count = this.codedColors.Items.Length;
 			var label = sender as UIText;
 			int index = this.labelList.IndexOf(label);
+			if (count < index + 1) { return; }
+			
 			float distance = marginBottom;
-			distance += (float)index / (float)count * (float)(this.Size.Height - marginBottom-marginTop);
+			distance += (float)index / (float)(count - 1) * (float)(this.Size.Height - marginBottom - marginTop);
 			distance -= label.Size.Height / 2;
 			System.Windows.Forms.Padding padding = label.Margin;
 			padding.Bottom = (int)distance;
 			label.Margin = padding;
 		}
-
-		protected override void DoInitialize()
-		{
-			base.DoInitialize();
-
-			foreach (ITreeNode<UIRenderer> item in this.Children)
-			{
-				item.Content.Initialize();
-			}
-
-			this.SetCodedColor(-100, 100, 90);
-		}
-		public const int bitmapWidth = 1024;
-
-		public void SetCodedColor(double axisMin, double axisMax, double step)
-		{
-			// update labels.
-			{
-				int labelCount = (int)((axisMax - axisMin) / step) + 1;
-				// valid labels.
-				for (int i = 0; i < labelCount - 1; i++)
-				{
-					this.labelList[i].Enabled = true;
-					this.labelList[i].Text = string.Format("{0}", axisMin + step * i);
-				}
-				// last valid label.
-				{
-					int i = labelCount - 1;
-					this.labelList[i].Enabled = true;
-					this.labelList[i].Text = string.Format("{0}", axisMax);
-				}
-				// invalid labels.
-				for (int i = labelCount; i < this.maxMarkerCount; i++)
-				{
-					this.labelList[i].Enabled = false;
-				}
-				this.currentMarkersCount = labelCount;
-			}
-		}
-
 	}
 }

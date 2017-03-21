@@ -10,19 +10,7 @@ namespace EMGraphics
 	//   |
 	// (0, 0)-----------> x
 	//
-	// 0------------------1
-	// |                  |
-	// |                  |
-	// |                  |
-	// 2------------------3
-	// |                  |
-	// |                  |
-	// |                  |
-	// 4------------------5
-	// |                  |
-	// |                  |
-	// |                  |
-	// 6------------------7
+	// 10----------------11
 	// |                  |
 	// |                  |
 	// |                  |
@@ -30,7 +18,19 @@ namespace EMGraphics
 	// |                  |
 	// |                  |
 	// |                  |
-	// 10----------------11
+	// 6------------------7
+	// |                  |
+	// |                  |
+	// |                  |
+	// 4------------------5
+	// |                  |
+	// |                  |
+	// |                  |
+	// 2------------------3
+	// |                  |
+	// |                  |
+	// |                  |
+	// 0------------------1
 	// 
 	// side length is 1.
 	//
@@ -39,6 +39,9 @@ namespace EMGraphics
 	/// </summary>
 	internal class QuadStrip : IBufferable
 	{
+		private CodedColorArray codedColorArray;
+		private int maxMarkerCount;
+
 		/// <summary>
 		///
 		/// </summary>
@@ -58,13 +61,22 @@ namespace EMGraphics
 		private VertexBuffer positionBuffer;
 		//private float[] texCoords;
 		private VertexBuffer texCoordBuffer;
-		//private vec3[] colors;
-		private VertexBuffer colorBuffer;
 
-		public QuadStrip(int quadCount, Bitmap bitmap = null)
+		public QuadStrip(CodedColorArray codedColorArray, int maxMarkerCount)
 		{
-			this.quadCount = quadCount;
-			this.bitmap = bitmap;
+			if (codedColorArray == null) 
+			{
+				throw new ArgumentNullException();
+			}
+			
+			this.codedColorArray = codedColorArray;
+
+			if (maxMarkerCount < codedColorArray.Items.Length)
+			{
+				throw new ArgumentException();
+			}
+
+			this.maxMarkerCount = maxMarkerCount;
 		}
 
 		/// <summary>
@@ -79,69 +91,36 @@ namespace EMGraphics
 			{
 				if (this.positionBuffer == null)
 				{
-					int length = (this.quadCount + 1) * 2;
-					VertexBuffer buffer = VertexBuffer.Create(typeof(vec3), length, VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
-					unsafe
+					CodedColor[] items = this.codedColorArray.Items;
+					var positions = new vec3[this.maxMarkerCount * 2];
+					for (int i = 0; i < items.Length; i++)
 					{
-						IntPtr pointer = buffer.MapBuffer(MapBufferAccess.WriteOnly);
-						var array = (vec3*)pointer;
-						for (int i = 0; i < (this.quadCount + 1); i++)
-						{
-							array[i * 2 + 0] = new vec3(0.5f, -0.5f + (float)i / (float)(this.quadCount), 0);
-							array[i * 2 + 1] = new vec3(-0.5f, -0.5f + (float)i / (float)(this.quadCount), 0);
-						}
-						buffer.UnmapBuffer();
+						positions[i * 2 + 0] = new vec3(-0.5f, (float)i / (float)(items.Length - 1) - 0.5f, 0);
+						positions[i * 2 + 1] = new vec3(+0.5f, (float)i / (float)(items.Length - 1) - 0.5f, 0);
 					}
 
-					this.positionBuffer = buffer;
+					this.positionBuffer = positions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
 				}
+
 				return this.positionBuffer;
 			}
 			else if (bufferName == texCoord)
 			{
 				if (this.texCoordBuffer == null)
 				{
-					int length = (this.quadCount + 1) * 2;
-					VertexBuffer buffer = VertexBuffer.Create(typeof(float), length, VBOConfig.Float, varNameInShader, BufferUsage.StaticDraw);
-					unsafe
+					CodedColor[] items = this.codedColorArray.Items;
+					var texCoords = new float[this.maxMarkerCount * 2];
+					for (int i = 0; i < items.Length; i++)
 					{
-						IntPtr pointer = buffer.MapBuffer(MapBufferAccess.WriteOnly);
-						//Random random = new Random();
-						var array = (float*)pointer;
-						for (int i = 0; i < (this.quadCount + 1); i++)
-						{
-							//array[i * 2 + 0] = (float)random.NextDouble();
-							array[i * 2 + 0] = (float)i / (float)this.quadCount;
-							array[i * 2 + 1] = array[i * 2 + 0];
-						}
-						buffer.UnmapBuffer();
+						float value = (float)i / (float)(items.Length - 1);
+						texCoords[i * 2 + 0] = value;
+						texCoords[i * 2 + 1] = value;
 					}
 
-					this.texCoordBuffer = buffer;
+					this.texCoordBuffer = texCoords.GenVertexBuffer(VBOConfig.Float, varNameInShader, BufferUsage.StaticDraw);
 				}
+
 				return this.texCoordBuffer;
-			}
-			else if (bufferName == color)
-			{
-				if (this.colorBuffer == null)
-				{
-					var buffer = VertexBuffer.Create(typeof(vec3), (this.quadCount + 1) * 2, VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
-					unsafe
-					{
-						var array = (vec3*)buffer.MapBuffer(MapBufferAccess.WriteOnly);
-						for (int i = 0; i < (this.quadCount + 1); i++)
-						{
-							int x = this.bitmap.Width * i / this.quadCount;
-							if (x == this.bitmap.Width) { x = this.bitmap.Width - 1; }
-							vec3 value = this.bitmap.GetPixel(x, 0).ToVec3();
-							array[i * 2 + 0] = value;
-							array[i * 2 + 1] = value;
-						}
-						buffer.UnmapBuffer();
-					}
-					this.colorBuffer = buffer;
-				}
-				return this.colorBuffer;
 			}
 			else
 			{
@@ -157,7 +136,8 @@ namespace EMGraphics
 		{
 			if (indexBuffer == null)
 			{
-				ZeroIndexBuffer buffer = ZeroIndexBuffer.Create(DrawMode.QuadStrip, 0, (this.quadCount + 1) * 2);
+				int vertexCount = this.codedColorArray.Items.Length * 2;
+				ZeroIndexBuffer buffer = ZeroIndexBuffer.Create(DrawMode.QuadStrip, 0, vertexCount);
 				this.indexBuffer = buffer;
 			}
 
@@ -165,13 +145,12 @@ namespace EMGraphics
 		}
 
 		private IndexBuffer indexBuffer = null;
+
 		/// <summary>
 		/// Uses <see cref="ZeroIndexBuffer"/> or <see cref="OneIndexBuffer"/>.
 		/// </summary>
 		/// <returns></returns>
 		public bool UsesZeroIndexBuffer() { return true; }
 
-		internal int quadCount;
-		private Bitmap bitmap;
 	}
 }

@@ -381,7 +381,7 @@
     <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\QuadStrip.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\UIColoredBar.cs" />
+    <Compile Include="EM\GLUIs\ColorPalette\UIQuadStrip.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\UIColorPalette.Labels.cs" />
     <Compile Include="EM\GLUIs\ColorPalette\UIColorPalette.cs" />
     <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColor.cs" />

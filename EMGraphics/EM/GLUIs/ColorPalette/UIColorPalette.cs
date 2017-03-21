@@ -14,6 +14,7 @@ namespace EMGraphics
 	public partial class UIColorPalette : UIRenderer
 	{
 		private int maxMarkerCount;
+		private CodedColorArray codedColors;
 
 		/// <summary>
 		/// </summary>
@@ -28,9 +29,11 @@ namespace EMGraphics
 			System.Drawing.Size size, int zNear, int zFar)
 			: base(anchor, margin, size, zNear, zFar)
 		{
-			this.StateList.Add(new ClearColorState(Color.Orange));
+			//this.StateList.Add(new ClearColorState(Color.Orange));
+
 			{
 				this.maxMarkerCount = maxMarkerCount;
+				this.codedColors = codedColors;
 			}
 
 			//{
@@ -59,14 +62,14 @@ namespace EMGraphics
 			}
 			{
 				// color palette.
-				var coloredBar = new UIColoredBar(
-					codedColors,
+				var coloredBar = new UIQuadStrip(
+					codedColors, maxMarkerCount,
 					AnchorStyles.Left | AnchorStyles.Bottom | AnchorStyles.Top,
 					new Padding(5, marginTop, 5, marginBottom), new Size(30, 100), -100, 100);
 				this.Children.Add(coloredBar);
 			}
 			{
-				InitLabels(maxMarkerCount, size);
+				InitLabels(codedColors, maxMarkerCount, size);
 			}
 		}
 
