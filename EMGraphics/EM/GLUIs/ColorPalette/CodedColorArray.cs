@@ -24,9 +24,9 @@ namespace EMGraphics
 			array[2] = new CodedColor(
 				Color.FromArgb(255, 166, 255, 27), 0.5f, 300.0f);
 			array[3] = new CodedColor(
-				Color.FromArgb(255, 255, 173, 0), 0.75f, 400.0f);
+				Color.FromArgb(255, 255, 255, 0), 0.75f, 400.0f);
 			array[4] = new CodedColor(
-				Color.FromArgb(255, 255, 8, 1), 1.0f, 500.0f);
+				Color.FromArgb(255, 255, 0, 0), 1.0f, 500.0f);
 
 			return new CodedColorArray(array);
 		}
@@ -114,8 +114,8 @@ namespace EMGraphics
 					{
 						Color leftColor = this.Items[i - 1].DisplayColor;
 						Color rightColor = this.Items[i].DisplayColor;
-						float percent = (propertyValue - this.Items[0].PropertyValue)
-							/ (this.Items[this.Items.Length - 1].PropertyValue - this.Items[0].PropertyValue);
+						float percent = (propertyValue - this.Items[i - 1].PropertyValue)
+							/ (this.Items[i].PropertyValue - this.Items[i - 1].PropertyValue);
 						float r = leftColor.R * percent + rightColor.R * (1 - percent);
 						float g = leftColor.G * percent + rightColor.G * (1 - percent);
 						float b = leftColor.B * percent + rightColor.B * (1 - percent);
