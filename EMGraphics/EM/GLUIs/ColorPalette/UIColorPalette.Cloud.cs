@@ -31,7 +31,7 @@ namespace EMGraphics
 
 			int width = rainbow.Width;
 			var codedColors = new CodedColor[parts];
-			float step = (maxValue - minValue) / parts;
+			float step = (maxValue - minValue) / (parts - 1);
 			for (int i = 0; i < parts; i++)
 			{
 				int x = (int)(width * ((float)i / (float)(parts - 1)));
