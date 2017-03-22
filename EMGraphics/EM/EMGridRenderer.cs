@@ -59,6 +59,7 @@ namespace EMGraphics
             var map = new AttributeMap();
             map.Add("inPosition", EMGrid.strPosition);
 			map.Add("inNormal", EMGrid.strNormal);
+			map.Add("inCloudColor", EMGrid.strCloudColor);
 			var renderer = new EMGridRenderer(model, provider, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;

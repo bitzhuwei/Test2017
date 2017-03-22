@@ -2,7 +2,7 @@
 
 in vec3 inPosition;
 in vec3 inNormal;
-in vec3 cloudColor;
+in vec3 inCloudColor;
 
 out VS_GS_VERTEX
 {
@@ -36,6 +36,6 @@ void main(void)
 	}
 
 	vertex_out.smoothNormal = inNormal;
-	vertex_out.cloudColor = cloudColor;
+	vertex_out.cloudColor = inCloudColor;
 }
 

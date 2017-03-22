@@ -54,35 +54,46 @@ namespace EMGraphics
             get { return vertexNormals; }
         }
 
+        public const string strCloudColor = "cloudColor";
+        private VertexBuffer cloudColorBuffer;
+
         //public const string strIndex = "index";
         private IndexBuffer indexBuffer = null;
         private Triangle[] triangles;
 
         private int vertexCount;
 
-        public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
-        {
-            if (bufferName == strPosition)
-            {
-                if (this.positionBuffer == null)
-                {
-                    this.positionBuffer = this.vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
-                }
-                return this.positionBuffer;
-            }
-            else if (bufferName == strNormal)
-            {
-                if (this.normalBuffer == null)
-                {
-                    this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
-                }
-                return this.normalBuffer;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
-        }
+		public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
+		{
+			if (bufferName == strPosition)
+			{
+				if (this.positionBuffer == null)
+				{
+					this.positionBuffer = this.vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+				}
+				return this.positionBuffer;
+			}
+			else if (bufferName == strNormal)
+			{
+				if (this.normalBuffer == null)
+				{
+					this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+				}
+				return this.normalBuffer;
+			}
+			else if (bufferName == strCloudColor)
+			{
+				if (this.cloudColorBuffer == null)
+				{
+					this.cloudColorBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.DynamicDraw);
+				}
+				return this.cloudColorBuffer;
+			}
+			else
+			{
+				throw new NotImplementedException();
+			}
+		}
 
         public IndexBuffer GetIndexBuffer()
         {
