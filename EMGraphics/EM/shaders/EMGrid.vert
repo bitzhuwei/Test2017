@@ -2,11 +2,13 @@
 
 in vec3 inPosition;
 in vec3 inNormal;
+in vec3 cloudColor;
 
 out VS_GS_VERTEX
 {
 	float isHighlight;
 	vec3 smoothNormal;
+	vec3 cloudColor;
 } vertex_out;
 
 uniform int highlightIndex0;
@@ -34,5 +36,6 @@ void main(void)
 	}
 
 	vertex_out.smoothNormal = inNormal;
+	vertex_out.cloudColor = cloudColor;
 }
 
