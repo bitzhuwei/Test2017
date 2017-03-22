@@ -60,7 +60,7 @@
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.关于AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
+			this.openNASFile = new System.Windows.Forms.OpenFileDialog();
 			this.glCanvas1 = new EMGraphics.GLCanvas();
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.btnPickTriangle = new System.Windows.Forms.ToolStripButton();
@@ -70,6 +70,8 @@
 			this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
 			this.reverseSelectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.reverseAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.btnCloud = new System.Windows.Forms.ToolStripButton();
+			this.openCoudFile = new System.Windows.Forms.OpenFileDialog();
 			this.menuStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.glCanvas1)).BeginInit();
 			this.toolStrip1.SuspendLayout();
@@ -321,9 +323,9 @@
 			this.statusStrip1.TabIndex = 1;
 			this.statusStrip1.Text = "statusStrip1";
 			// 
-			// openFileDlg
+			// openNASFile
 			// 
-			this.openFileDlg.Filter = "*.nas|*.nas";
+			this.openNASFile.Filter = "*.nas|*.nas";
 			// 
 			// glCanvas1
 			// 
@@ -346,7 +348,8 @@
             this.btnPickMesh,
             this.btnPickModel,
             this.btnEMGridRendererProperties,
-            this.toolStripDropDownButton1});
+            this.toolStripDropDownButton1,
+            this.btnCloud});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 28);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(797, 27);
@@ -420,6 +423,19 @@
 			this.reverseAllToolStripMenuItem.Text = "Reverse All";
 			this.reverseAllToolStripMenuItem.Click += new System.EventHandler(this.reverseAllToolStripMenuItem_Click);
 			// 
+			// btnCloud
+			// 
+			this.btnCloud.Image = ((System.Drawing.Image)(resources.GetObject("btnCloud.Image")));
+			this.btnCloud.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.btnCloud.Name = "btnCloud";
+			this.btnCloud.Size = new System.Drawing.Size(76, 24);
+			this.btnCloud.Text = "Cloud";
+			this.btnCloud.Click += new System.EventHandler(this.btnCloud_Click);
+			// 
+			// openCoudFile
+			// 
+			this.openCoudFile.Filter = "*.txt|*.txt";
+			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -477,7 +493,7 @@
         private System.Windows.Forms.ToolStripMenuItem 关于AToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private EMGraphics.GLCanvas glCanvas1;
-        private System.Windows.Forms.OpenFileDialog openFileDlg;
+        private System.Windows.Forms.OpenFileDialog openNASFile;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton btnPickTriangle;
         private System.Windows.Forms.ToolStripButton btnPickMesh;
@@ -486,5 +502,7 @@
 		private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
 		private System.Windows.Forms.ToolStripMenuItem reverseSelectedToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem reverseAllToolStripMenuItem;
+		private System.Windows.Forms.ToolStripButton btnCloud;
+		private System.Windows.Forms.OpenFileDialog openCoudFile;
 	}
 }

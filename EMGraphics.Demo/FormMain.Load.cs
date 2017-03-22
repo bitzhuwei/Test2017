@@ -12,6 +12,8 @@ namespace EMGraphics.Demo
 {
 	public partial class FormMain
 	{
+		private UIColorPalette uiColorPalette;
+
 		void FormMain_Load(object sender, EventArgs e)
 		{
 			{
@@ -34,11 +36,12 @@ namespace EMGraphics.Demo
 				this.scene.RootUI.Children.Add(uiAxis);
 			}
 			{
-				var uiCodedColorBar = new UIColorPalette(100,
+				var uiColorPalette = new UIColorPalette(100,
 					CodedColorArray.GetDefault(), Color.Black,
 					AnchorStyles.Left | AnchorStyles.Top,
 					new Padding(10, 10, 10, 10), new Size(160, 300), -100, 100);
-				this.scene.RootUI.Children.Add(uiCodedColorBar);
+				this.uiColorPalette = uiColorPalette;
+				this.scene.RootUI.Children.Add(uiColorPalette);
 			}
 			//{
 			//    var builder = new StringBuilder();

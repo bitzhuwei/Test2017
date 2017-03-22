@@ -19,11 +19,11 @@ namespace EMGraphics.Demo
 
 		private void 打开OToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			if (openFileDlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+			if (this.openNASFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
 			{
 				this.scene.RootObject.Children.Clear();
 
-				NASFile file = NASFile.Load(openFileDlg.FileName);
+				NASFile file = NASFile.Load(this.openNASFile.FileName);
 				IEMDataSource dataSource = file.Parse();
 				BoundingBox box = dataSource.Box;
 				vec3 center = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;

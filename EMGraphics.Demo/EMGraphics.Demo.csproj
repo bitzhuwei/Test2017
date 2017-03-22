@@ -57,6 +57,9 @@
     <Compile Include="FormEMGridRenderer.Designer.cs">
       <DependentUpon>FormEMGridRenderer.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain.OpenCloud.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormMain.DouleClick.cs">
       <SubType>Form</SubType>
     </Compile>

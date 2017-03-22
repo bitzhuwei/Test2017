@@ -7,7 +7,7 @@ using System.Text;
 namespace EMGraphics
 {
     /// <summary>
-    /// information(vertex positions, triangles etc) laoded from a *.nas file.
+    /// information(vertex positions, triangles etc) loaded from a *.nas file.
     /// </summary>
     public class NASFile
     {
