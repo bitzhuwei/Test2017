@@ -16,9 +16,10 @@ namespace EMGraphics
 		/// <summary>
 		/// 
 		/// </summary>
+        [Category(strEMRenderer)]
 		public string Label { get; private set; }
 
-        private const string strEMRenderer = "EMRenderer";
+		private const string strEMRenderer = "EMRenderer";
         /// <summary>
         /// 是否渲染模型的各个三角形面
         /// </summary>
@@ -114,12 +115,19 @@ namespace EMGraphics
         /// <summary>
         /// 
         /// </summary>
+        [Category(strEMRenderer)]
         public LineWidthState LineWidth { get { return this.lineWidthState; } }
 
         /// <summary>
         /// 
         /// </summary>
+        [Category(strEMRenderer)]
         public Color HighlightLineColor { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+        [Category(strEMRenderer)]
         public Color RegularLineColor { get; set; }
 
         protected override void DoRender(RenderEventArgs arg)
@@ -183,19 +191,23 @@ namespace EMGraphics
         /// <summary>
         /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
         /// </summary>
+        [Browsable(false)]
         public int HighlightIndex0 { get; set; }
         /// <summary>
         /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
         /// </summary>
+        [Browsable(false)]
         public int HighlightIndex1 { get; set; }
         /// <summary>
         /// -2：全部不高亮。-1：全部高亮。0或正整数：高亮指定的图元（此项目中的图元即三角形）。
         /// </summary>
+        [Browsable(false)]
         public int HighlightIndex2 { get; set; }
 
         /// <summary>
         /// 用什么颜色表示高亮？
         /// </summary>
+        [Category(strEMRenderer)]
         public Color HighlightColor { get; set; }
 
         #endregion IHighlightable
@@ -203,11 +215,13 @@ namespace EMGraphics
         /// <summary>
         /// 非高亮时的底色。
         /// </summary>
+        [Category(strEMRenderer)]
         public Color RegularColor { get; set; }
 
         /// <summary>
         /// true for flat mode; false for smooth mode.
         /// </summary>
+        [Category(strEMRenderer)]
         public bool FlatMode { get; set; }
 	}
 }
