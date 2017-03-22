@@ -37,7 +37,7 @@ namespace EMGraphics.Demo
 						return;
 					}
 
-					renderer.UpdateCloud(cloudFile.MaxValue, cloudFile.MinValue, cloudFile.PropertyValues);
+					renderer.UpdateCloud(cloudFile.PropertyValues, this.uiColorPalette.ColorPalette);
 				}
 			}
 		}

@@ -46,7 +46,7 @@ namespace EMGraphics
 
 		private void label_beforeLayout(object sender, CancelEventArgs e)
 		{
-			int count = this.codedColors.Items.Length;
+			int count = this.ColorPalette.Items.Length;
 			var label = sender as UIText;
 			int index = this.labelList.IndexOf(label);
 			if (count < index + 1) { return; }

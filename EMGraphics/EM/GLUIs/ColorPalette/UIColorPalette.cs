@@ -14,7 +14,8 @@ namespace EMGraphics
 	public partial class UIColorPalette : UIRenderer
 	{
 		private int maxMarkerCount;
-		private CodedColorArray codedColors;
+
+		public CodedColorArray ColorPalette { get; set; }
 
 		/// <summary>
 		/// </summary>
@@ -33,7 +34,7 @@ namespace EMGraphics
 
 			{
 				this.maxMarkerCount = maxMarkerCount;
-				this.codedColors = codedColors;
+				this.ColorPalette = codedColors;
 			}
 
 			//{
@@ -72,6 +73,7 @@ namespace EMGraphics
 				InitLabels(codedColors, maxMarkerCount, size);
 			}
 		}
+
 
 		//protected override void DoRender(RenderEventArgs arg)
 		//{

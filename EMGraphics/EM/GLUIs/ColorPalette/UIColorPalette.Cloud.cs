@@ -12,7 +12,16 @@ namespace EMGraphics
 
 		public void UpdateCloud(float maxValue, float minValue, int parts)
 		{
-			if(maxValue<= minValue) { throw new ArgumentException("max value <= min value!"); }
+			CodedColor[] codedColors = this.GetCodedColors(maxValue, minValue, parts);
+
+			UpdateLabels(codedColors);
+
+			this.ColorPalette = new CodedColorArray(codedColors);
+		}
+
+		private CodedColor[] GetCodedColors(float maxValue, float minValue, int parts)
+		{
+			if (maxValue <= minValue) { throw new ArgumentException("max value <= min value!"); }
 			if (parts <= 0) { throw new ArgumentException("parts <= 0"); }
 
 			if (rainbow == null)
@@ -26,13 +35,12 @@ namespace EMGraphics
 			for (int i = 0; i < parts; i++)
 			{
 				int x = (int)(width * ((float)i / (float)(parts - 1)));
-				if(x>=width) { x = width - 1; }
+				if (x >= width) { x = width - 1; }
 				Color color = rainbow.GetPixel(x, 0);
-				codedColors[i] = new CodedColor(color, i * step, step + minValue);
+				codedColors[i] = new CodedColor(color, (float)i / (float)(parts - 1), i * step + minValue);
 			}
 
-			var array = new CodedColorArray(codedColors);
-			UpdateLabels(codedColors);
+			return codedColors;
 		}
 
 		private void UpdateLabels(CodedColor[] codedColors)

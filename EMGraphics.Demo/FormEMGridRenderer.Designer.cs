@@ -52,6 +52,7 @@
 			this.chkRenderLines = new System.Windows.Forms.CheckBox();
 			this.chkRenderAllNormals = new System.Windows.Forms.CheckBox();
 			this.chkRenderSelectedNormals = new System.Windows.Forms.CheckBox();
+			this.chkRenderCloud = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// label1
@@ -273,12 +274,23 @@
 			this.chkRenderSelectedNormals.Text = "渲染选中的法线(Selected Normal)";
 			this.chkRenderSelectedNormals.UseVisualStyleBackColor = true;
 			// 
+			// chkRenderCloud
+			// 
+			this.chkRenderCloud.AutoSize = true;
+			this.chkRenderCloud.Location = new System.Drawing.Point(15, 393);
+			this.chkRenderCloud.Name = "chkRenderCloud";
+			this.chkRenderCloud.Size = new System.Drawing.Size(89, 19);
+			this.chkRenderCloud.TabIndex = 5;
+			this.chkRenderCloud.Text = "渲染云图";
+			this.chkRenderCloud.UseVisualStyleBackColor = true;
+			// 
 			// FormEMGridRenderer
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(735, 467);
 			this.Controls.Add(this.chkRenderSelectedNormals);
+			this.Controls.Add(this.chkRenderCloud);
 			this.Controls.Add(this.chkRenderAllNormals);
 			this.Controls.Add(this.chkRenderLines);
 			this.Controls.Add(this.chkRenderFaces);
@@ -335,5 +347,6 @@
 		private System.Windows.Forms.CheckBox chkRenderLines;
 		private System.Windows.Forms.CheckBox chkRenderAllNormals;
 		private System.Windows.Forms.CheckBox chkRenderSelectedNormals;
+		private System.Windows.Forms.CheckBox chkRenderCloud;
 	}
 }

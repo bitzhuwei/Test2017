@@ -23,6 +23,7 @@ namespace EMGraphics.Demo
 		private bool renderLines;
 		private bool renderAllNormals;
 		private bool renderSelectedNormals;
+		private bool renderCloud;
 
 		public FormEMGridRenderer(Scene scene)
 		{
@@ -44,6 +45,7 @@ namespace EMGraphics.Demo
 			this.renderLines = this.chkRenderLines.Checked;
 			this.renderAllNormals = this.chkRenderAllNormals.Checked;
 			this.renderSelectedNormals = this.chkRenderSelectedNormals.Checked;
+			this.renderCloud = this.chkRenderCloud.Checked;
 		}
 
 		private void btnReset_Click(object sender, EventArgs e)
@@ -60,6 +62,7 @@ namespace EMGraphics.Demo
 			this.chkRenderLines.Checked = this.renderLines;
 			this.chkRenderAllNormals.Checked = this.renderAllNormals;
 			this.chkRenderSelectedNormals.Checked = this.renderSelectedNormals;
+			this.chkRenderCloud.Checked = this.renderCloud;
 		}
 
 		private void btnApply_Click(object sender, EventArgs e)
@@ -131,7 +134,8 @@ namespace EMGraphics.Demo
 				this.rdoFlat.Checked,
 				this.chkRenderFaces.Checked, this.chkRenderLines.Checked,
 				this.chkRenderAllNormals.Checked,
-				this.chkRenderSelectedNormals.Checked);
+				this.chkRenderSelectedNormals.Checked,
+				this.chkRenderCloud.Checked);
 
 			UpdateProperties(this.scene.RootObject, properties);
 		}
@@ -151,6 +155,7 @@ namespace EMGraphics.Demo
 					renderer.FlatMode = properties.flatMode;
 					renderer.RenderFaces = properties.renderFaces;
 					renderer.RenderLines = properties.renderLines;
+					renderer.RenderCloud = properties.renderCloud;
 				}
 			}
 			{
@@ -198,12 +203,14 @@ namespace EMGraphics.Demo
 		public bool renderLines;
 		public bool renderAllNormals;
 		public bool renderSelectedNormals;
+		public bool renderCloud;
 
 		public EMGridProperties(Color ambient, Color directionalLight,
 			Color regular, Color highlight,
 			Color regularLine, Color highlightLine,
 			bool flatMode, bool renderFaces, bool renderLines,
-			bool renderAllNormals, bool renderSelectedNormals)
+			bool renderAllNormals, bool renderSelectedNormals,
+			bool renderCloud)
 		{
 			this.ambientColor = ambient;
 			this.directionalLightColor = directionalLight;
@@ -216,6 +223,7 @@ namespace EMGraphics.Demo
 			this.renderLines = renderLines;
 			this.renderAllNormals = renderAllNormals;
 			this.renderSelectedNormals = renderSelectedNormals;
+			this.renderCloud = renderCloud;
 		}
 	}
 }

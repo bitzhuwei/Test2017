@@ -32,6 +32,12 @@ namespace EMGraphics
         [Category(strEMRenderer)]
         public bool RenderLines { get; set; }
 
+		/// <summary>
+		/// 是否渲染云图
+		/// </summary>
+        [Category(strEMRenderer)]
+        public bool RenderCloud { get; set; }
+
         [Category(strEMRenderer)]
         public Color AmbientLightColor { get; set; }
 
@@ -161,6 +167,7 @@ namespace EMGraphics
                 this.SetUniform("regularColor", this.RegularColor.ToVec3());
                 this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
                 this.SetUniform("flatMode", this.FlatMode);
+				this.SetUniform("renderCloud", this.RenderCloud);
 
                 base.DoRender(arg);
 

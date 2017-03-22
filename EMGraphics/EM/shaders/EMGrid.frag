@@ -15,7 +15,7 @@ uniform vec3 highlightColor;
 uniform vec3 regularColor;
 uniform vec3 highlightLineColor;
 uniform vec3 regularLineColor;
-uniform bool enableCloudColor = false;
+uniform bool renderCloud = false;
 
 out vec4 outColor;
 
@@ -34,7 +34,7 @@ void main(void)
 	}
 	else 
 	{
-		if (enableCloudColor)
+		if (renderCloud)
 		{
 			outColor = vec4(fragment_in.cloudColor, 1.0);
 		}

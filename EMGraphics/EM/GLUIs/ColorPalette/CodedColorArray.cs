@@ -95,5 +95,37 @@ namespace EMGraphics
 
 			return bitmap;
 		}
+
+		public Color Map2Color(float propertyValue)
+		{
+			if (propertyValue <= this.Items[0].PropertyValue)
+			{
+				return this.Items[0].DisplayColor;
+			}
+			else if (this.Items[this.Items.Length - 1].PropertyValue <= propertyValue)
+			{
+				return this.Items[this.Items.Length - 1].DisplayColor;
+			}
+			else
+			{
+				for (int i = 1; i < this.Items.Length - 1; i++)
+				{
+					if (propertyValue <= this.Items[i].PropertyValue)
+					{
+						Color leftColor = this.Items[i].DisplayColor;
+						Color rightColor = this.Items[i + 1].DisplayColor;
+						float percent = (propertyValue - this.Items[0].PropertyValue)
+							/ (this.Items[this.Items.Length - 1].PropertyValue - this.Items[0].PropertyValue);
+						float r = leftColor.R * percent + rightColor.R * (1 - percent);
+						float g = leftColor.G * percent + rightColor.G * (1 - percent);
+						float b = leftColor.B * percent + rightColor.B * (1 - percent);
+						Color result = Color.FromArgb((int)r, (int)g, (int)b);
+						return result;
+					}
+				}
+			}
+
+			return Color.Aqua;// this is when something wrong happens.
+		}
 	}
 }
