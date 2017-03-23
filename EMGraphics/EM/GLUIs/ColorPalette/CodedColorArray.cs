@@ -155,11 +155,11 @@ namespace EMGraphics
 		//}
 		public Color Map2Color(float propertyValue)
 		{
-			if (propertyValue <= this.Items[0].PropertyValue)
+			if (propertyValue < this.Items[0].PropertyValue)
 			{
 				return this.Items[0].DisplayColor;
 			}
-			else if (this.Items[this.Items.Length - 1].PropertyValue <= propertyValue)
+			else if (this.Items[this.Items.Length - 1].PropertyValue < propertyValue)
 			{
 				return this.Items[this.Items.Length - 1].DisplayColor;
 			}
