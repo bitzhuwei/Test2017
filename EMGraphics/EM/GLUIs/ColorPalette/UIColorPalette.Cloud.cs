@@ -26,7 +26,8 @@ namespace EMGraphics
 
 			if (rainbow == null)
 			{
-				rainbow = ManifestResourceLoader.LoadBitmap(@"EM\GLUIs\ColorPalette\rainbow.bmp");
+				CodedColorArray array = CodedColorArray.GetDefault();
+				rainbow = array.GetBitmap(1024);
 			}
 
 			int width = rainbow.Width;
