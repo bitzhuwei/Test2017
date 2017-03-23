@@ -16,17 +16,48 @@ namespace EMGraphics
 
 		public static CodedColorArray GetDefault()
 		{
-			var array = new CodedColor[5];
+			var array = new CodedColor[17];
+			var values = new int[] { 0, 63, 127, 191, 255 };
 			array[0] = new CodedColor(
-				Color.FromArgb(255, 0, 22, 255), 0.0f, 100.0f);
+				Color.FromArgb(255, 0, 0, 255), 0.0f, 0.0f);
 			array[1] = new CodedColor(
-				Color.FromArgb(255, 0, 193, 136), 0.25f, 200.0f);
+				Color.FromArgb(255, 0, 63, 255), 0.0f, 0.0f);
 			array[2] = new CodedColor(
-				Color.FromArgb(255, 166, 255, 27), 0.5f, 300.0f);
+				Color.FromArgb(255, 0, 127, 255), 0.0f, 0.0f);
 			array[3] = new CodedColor(
-				Color.FromArgb(255, 255, 255, 0), 0.75f, 400.0f);
+				Color.FromArgb(255, 0, 191, 255), 0.0f, 0.0f);
 			array[4] = new CodedColor(
-				Color.FromArgb(255, 255, 0, 0), 1.0f, 500.0f);
+				Color.FromArgb(255, 0, 255, 255), 0.0f, 0.0f);
+			array[5] = new CodedColor(
+				Color.FromArgb(255, 0, 255, 191), 0.0f, 0.0f);
+			array[6] = new CodedColor(
+				Color.FromArgb(255, 0, 255, 127), 0.0f, 0.0f);
+			array[7] = new CodedColor(
+				Color.FromArgb(255, 0, 255, 63), 0.0f, 0.0f);
+			array[8] = new CodedColor(
+				Color.FromArgb(255, 0, 255, 0), 0.0f, 0.0f);
+			array[9] = new CodedColor(
+				Color.FromArgb(255, 63, 255, 0), 0.0f, 0.0f);
+			array[10] = new CodedColor(
+				Color.FromArgb(255, 127, 255, 0), 0.0f, 0.0f);
+			array[11] = new CodedColor(
+				Color.FromArgb(255, 191, 255, 0), 0.0f, 0.0f);
+			array[12] = new CodedColor(
+				Color.FromArgb(255, 255, 255, 0), 0.0f, 0.0f);
+			array[13] = new CodedColor(
+				Color.FromArgb(255, 255, 191, 0), 0.0f, 0.0f);
+			array[14] = new CodedColor(
+				Color.FromArgb(255, 255, 127, 0), 0.0f, 0.0f);
+			array[15] = new CodedColor(
+				Color.FromArgb(255, 255, 63, 0), 0.0f, 0.0f);
+			array[16] = new CodedColor(
+				Color.FromArgb(255, 255, 0, 0), 0.0f, 0.0f);
+
+			for (int i = 0; i < array.Length; i++)
+			{
+				array[i].Coord = (float)i / (float)(array.Length - 1);
+				array[i].PropertyValue = i;
+			}
 
 			return new CodedColorArray(array);
 		}
@@ -96,6 +127,32 @@ namespace EMGraphics
 			return bitmap;
 		}
 
+		//public Color Map2Color(float propertyValue)
+		//{
+		//	float min = this.Items[0].PropertyValue;
+		//	float max = this.Items[this.Items.Length - 1].PropertyValue;
+		//	float mid = (min + max) / 2;
+		//	if (propertyValue <= mid)
+		//	{
+		//		Color red = Color.Red;
+		//		Color green = Color.Green;
+		//		float percent = (propertyValue - min) / (mid - min);
+		//		float r = red.R * percent + green.R * (1 - percent);
+		//		float g = red.G * percent + green.G * (1 - percent);
+		//		float b = red.B * percent + green.B * (1 - percent);
+		//		return Color.FromArgb(255, (int)r, (int)g, (int)b);
+		//	}
+		//	else
+		//	{
+		//		Color green = Color.Green;
+		//		Color blue = Color.Blue;
+		//		float percent = (propertyValue - mid) / (max - mid);
+		//		float r = green.R * percent + blue.R * (1 - percent);
+		//		float g = green.G * percent + blue.G * (1 - percent);
+		//		float b = green.B * percent + blue.B * (1 - percent);
+		//		return Color.FromArgb(255, (int)r, (int)g, (int)b);
+		//	}
+		//}
 		public Color Map2Color(float propertyValue)
 		{
 			if (propertyValue <= this.Items[0].PropertyValue)
