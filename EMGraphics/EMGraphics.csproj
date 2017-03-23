@@ -374,7 +374,7 @@
     <Compile Include="Canvas\Win32API\WndProc.cs" />
     <Compile Include="EM\CenterAxisModel.cs" />
     <Compile Include="EM\CenterAxisRenderer.cs" />
-    <Compile Include="EM\EMGridRenderer.UpdateCloud.cs" />
+    <Compile Include="EM\EMGridCloudRenderer.cs" />
     <Compile Include="EM\FaceNormal.cs" />
     <Compile Include="EM\FaceNormalRenderer.ReverseNormals.cs" />
     <Compile Include="EM\FaceNormalRenderer.cs" />
@@ -664,6 +664,8 @@
     <EmbeddedResource Include="EM\shaders\QuadStrip.vert" />
     <EmbeddedResource Include="EM\shaders\Background.frag" />
     <EmbeddedResource Include="EM\shaders\Background.vert" />
+    <EmbeddedResource Include="EM\shaders\EMGrid.Cloud.frag" />
+    <EmbeddedResource Include="EM\shaders\EMGrid.Cloud.vert" />
     <None Include="FontTexture\readme.md" />
     <None Include="Manipulaters\readme.md" />
     <None Include="PropertyGrid\TypeConverters\readme.md" />

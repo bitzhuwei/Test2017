@@ -35,10 +35,10 @@ namespace EMGraphics
 		/// <summary>
 		/// 是否渲染云图
 		/// </summary>
-        [Category(strEMRenderer)]
-        public bool RenderCloud { get; set; }
+		[Category(strEMRenderer)]
+		public bool RenderCloud { get; set; }
 
-        [Category(strEMRenderer)]
+		[Category(strEMRenderer)]
         public Color AmbientLightColor { get; set; }
 
         //[Category(strEMRenderer)]
@@ -66,7 +66,6 @@ namespace EMGraphics
             var map = new AttributeMap();
             map.Add("inPosition", EMGrid.strPosition);
 			map.Add("inNormal", EMGrid.strNormal);
-			map.Add("inCloudColor", EMGrid.strCloudColor);
 			var renderer = new EMGridRenderer(model, provider, map, EMGrid.strPosition);
             renderer.ModelSize = model.ModelSize;
             renderer.WorldPosition = model.WorldPosition;
@@ -76,10 +75,13 @@ namespace EMGraphics
 
 			renderer.Label = model.Label;
 
-            return renderer;
+			renderer.cloudRenderer = EMGridCloudRenderer.Create(model, renderer);
+
+			return renderer;
         }
 
-        private EMGridRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
+
+		private EMGridRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
             AttributeMap attributeMap, string positionNameInIBufferable,
             params GLState[] switches)
             : base(model, shaderProgramProvider, attributeMap, positionNameInIBufferable, switches)
@@ -117,11 +119,12 @@ namespace EMGraphics
 		//}
 
         private LineWidthState lineWidthState = new LineWidthState(0.5f);
+		private EMGridCloudRenderer cloudRenderer;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        [Category(strEMRenderer)]
+		/// <summary>
+		/// 
+		/// </summary>
+		[Category(strEMRenderer)]
         public LineWidthState LineWidth { get { return this.lineWidthState; } }
 
         /// <summary>
@@ -136,61 +139,80 @@ namespace EMGraphics
         [Category(strEMRenderer)]
         public Color RegularLineColor { get; set; }
 
-        protected override void DoRender(RenderEventArgs arg)
+
+		public unsafe void UpdateCloud(IList<float> propertyValues, CodedColorArray colorPalette)
+		{
+			this.cloudRenderer.UpdateCloudColor(propertyValues, colorPalette);
+		}
+
+		protected override void DoInitialize()
+		{
+			base.DoInitialize();
+
+			this.cloudRenderer.Initialize();
+		}
+
+		protected override void DoRender(RenderEventArgs arg)
         {
-            bool renderFaces = this.RenderFaces;
-            bool renderLines = this.RenderLines;
+			if (this.RenderCloud)
+			{
+				this.cloudRenderer.Render(arg);
+			}
+			else
+			{
+				bool renderFaces = this.RenderFaces;
+				bool renderLines = this.RenderLines;
 
-            if (renderFaces || renderLines)
-            {
-                mat4 projection = arg.Camera.GetProjectionMatrix();
-                mat4 view = arg.Camera.GetViewMatrix();
-                mat4 model = this.GetModelMatrix().Value;
-                this.SetUniform("mvpMatrix", projection * view * model);
-                this.SetUniform("normalMatrix", glm.transpose(glm.inverse(model)).to_mat3());
-            }
+				if (renderFaces || renderLines)
+				{
+					mat4 projection = arg.Camera.GetProjectionMatrix();
+					mat4 view = arg.Camera.GetViewMatrix();
+					mat4 model = this.GetModelMatrix().Value;
+					this.SetUniform("mvpMatrix", projection * view * model);
+					this.SetUniform("normalMatrix", glm.transpose(glm.inverse(model)).to_mat3());
+				}
 
-            if (renderFaces)
-            {
-                this.polygonFaceState.On();
-                this.fillOffsetState.On();
+				if (renderFaces)
+				{
+					this.polygonFaceState.On();
+					this.fillOffsetState.On();
 
-                this.SetUniform("useLineColor", false);
-                this.SetUniform("ambientLight", this.AmbientLightColor.ToVec3());
-                this.SetUniform("directionalLightColor", this.DirectionalLightColor.ToVec3());
-                vec3 lightDirection = (arg.Camera.Target - arg.Camera.Position).normalize();
-                this.SetUniform("directionalLightDirection", lightDirection);
-                // highlight options:
-                this.SetUniform("highlightIndex0", this.HighlightIndex0);
-                this.SetUniform("highlightIndex1", this.HighlightIndex1);
-                this.SetUniform("highlightIndex2", this.HighlightIndex2);
-                this.SetUniform("regularColor", this.RegularColor.ToVec3());
-                this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
-                this.SetUniform("flatMode", this.FlatMode);
-				this.SetUniform("renderCloud", this.RenderCloud);
+					this.SetUniform("useLineColor", false);
+					this.SetUniform("ambientLight", this.AmbientLightColor.ToVec3());
+					this.SetUniform("directionalLightColor", this.DirectionalLightColor.ToVec3());
+					vec3 lightDirection = (arg.Camera.Target - arg.Camera.Position).normalize();
+					this.SetUniform("directionalLightDirection", lightDirection);
+					// highlight options:
+					this.SetUniform("highlightIndex0", this.HighlightIndex0);
+					this.SetUniform("highlightIndex1", this.HighlightIndex1);
+					this.SetUniform("highlightIndex2", this.HighlightIndex2);
+					this.SetUniform("regularColor", this.RegularColor.ToVec3());
+					this.SetUniform("highlightColor", this.HighlightColor.ToVec3());
+					this.SetUniform("flatMode", this.FlatMode);
+					//this.SetUniform("renderCloud", this.RenderCloud);
 
-                base.DoRender(arg);
+					base.DoRender(arg);
 
-                this.fillOffsetState.Off();
-                this.polygonFaceState.Off();
-            }
+					this.fillOffsetState.Off();
+					this.polygonFaceState.Off();
+				}
 
-            if (renderLines)
-            {
-                this.SetUniform("useLineColor", true);
-                this.SetUniform("regularLineColor", this.RegularLineColor.ToVec3());
-                this.SetUniform("highlightLineColor", this.HighlightLineColor.ToVec3());
-                this.lineWidthState.On();
-                //this.lineOffsetState.On();
-                this.polygonLineState.On();
+				if (renderLines)
+				{
+					this.SetUniform("useLineColor", true);
+					this.SetUniform("regularLineColor", this.RegularLineColor.ToVec3());
+					this.SetUniform("highlightLineColor", this.HighlightLineColor.ToVec3());
+					this.lineWidthState.On();
+					//this.lineOffsetState.On();
+					this.polygonLineState.On();
 
-                base.DoRender(arg);
+					base.DoRender(arg);
 
-                this.polygonLineState.Off();
-                //this.lineOffsetState.Off();
-                this.lineWidthState.Off();
-            }
-
+					this.polygonLineState.Off();
+					//this.lineOffsetState.Off();
+					this.lineWidthState.Off();
+				}
+			}
         }
 
         #region IHighlightable

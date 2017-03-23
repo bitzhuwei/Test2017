@@ -7,14 +7,12 @@ in VS_GS_VERTEX
 {
 	float isHighlight;
 	vec3 smoothNormal;
-	vec3 cloudColor;
 } vertex_in[];
 
 out GS_FS_VERTEX
 {
 	float isHighlight;
     vec3 normal;
-	vec3 cloudColor;
 } vertex_out;
 
 uniform mat4 mvpMatrix;
@@ -44,7 +42,6 @@ void main(void)
 			gl_Position = mvpMatrix * gl_in[i].gl_Position;
 			vertex_out.isHighlight = highlight ? 1 : -1;
 			vertex_out.normal = normalLine;
-			vertex_out.cloudColor = vertex_in[i].cloudColor;
 			EmitVertex();
 		}
 		EndPrimitive();
@@ -56,7 +53,6 @@ void main(void)
 			gl_Position = mvpMatrix * gl_in[i].gl_Position;
 			vertex_out.isHighlight = highlight ? 1 : -1;
 			vertex_out.normal = normalize(normalMatrix * vertex_in[i].smoothNormal);
-			vertex_out.cloudColor = vertex_in[i].cloudColor;
 			EmitVertex();
 		}
 		EndPrimitive();	
