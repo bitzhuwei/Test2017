@@ -173,9 +173,9 @@ namespace EMGraphics
 						Color rightColor = this.Items[i].DisplayColor;
 						float percent = (propertyValue - this.Items[i - 1].PropertyValue)
 							/ (this.Items[i].PropertyValue - this.Items[i - 1].PropertyValue);
-						float r = leftColor.R * percent + rightColor.R * (1 - percent);
-						float g = leftColor.G * percent + rightColor.G * (1 - percent);
-						float b = leftColor.B * percent + rightColor.B * (1 - percent);
+						float r = leftColor.R * (1 - percent) + rightColor.R * percent;
+						float g = leftColor.G * (1 - percent) + rightColor.G * percent;
+						float b = leftColor.B * (1 - percent) + rightColor.B * percent;
 						Color result = Color.FromArgb((int)r, (int)g, (int)b);
 						return result;
 					}
