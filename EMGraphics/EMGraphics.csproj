@@ -378,26 +378,14 @@
     <Compile Include="EM\FaceNormal.cs" />
     <Compile Include="EM\FaceNormalRenderer.ReverseNormals.cs" />
     <Compile Include="EM\FaceNormalRenderer.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\CodedColorArray.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\CodedColor.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\CodedColorsHelper.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\QuadStrip.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\UIColorPalette.Cloud.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\UIQuadStrip.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\UIColorPalette.Labels.cs" />
-    <Compile Include="EM\GLUIs\ColorPalette\UIColorPalette.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColor.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\CodedColorsHelper.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\LinesModel.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\LinesRenderer.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripColoredModel.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripColoredRenderer.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripModel.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\QuadStripRenderer.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteBarRenderer.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteColoredBarRenderer.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteMarkersRenderer.cs" />
-    <Compile Include="EM\GLUIs\Old.UIColorPalette\UIColorPaletteRenderer.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\CodedColorArray.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\CodedColor.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\CodedColorsHelper.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\QuadStrip.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPalette.Cloud.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\UIQuadStrip.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPalette.Labels.cs" />
+    <Compile Include="EM\GLUIs\UIColorPalette\UIColorPalette.cs" />
     <Compile Include="EM\NASDataSource.cs" />
     <Compile Include="EM\IEMDataSource.cs" />
     <Compile Include="EM\IHighlightable.cs" />
@@ -703,6 +691,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="0Foundations\OpenGLAPI\Enumerations\DrawMode.png" />
+    <Content Include="EM\GLUIs\UIColorPalette\this-is-color-palette.bmp" />
     <Content Include="FontTexture\FontBitmapHelper.1_PrepareInitialGlyphDictcs.cs.png" />
     <Content Include="FontTexture\FontBitmapHelper.2_PrepareFinalBitmapSize.cs.png" />
     <Content Include="FontTexture\FontBitmapHelper.3_PrintBitmap.cs.png" />
