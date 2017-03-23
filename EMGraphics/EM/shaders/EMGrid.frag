@@ -36,16 +36,14 @@ void main(void)
 	{
 		if (renderCloud)
 		{
-			float diffuse = max(0.0, dot(fragment_in.normal, -directionalLightDirection));
-			vec3 scatteredLight = ambientLight + directionalLightColor * diffuse;
 			vec3 rgb;
 			if (fragment_in.isHighlight > 0.0)
 			{
-				rgb = min(highlightColor * scatteredLight, vec3(1.0));
+				rgb = min(highlightColor, vec3(1.0));
 			}
 			else
 			{
-				rgb = min(fragment_in.cloudColor * scatteredLight, vec3(1.0));
+				rgb = min(fragment_in.cloudColor, vec3(1.0));
 			}
 
 			outColor = vec4(rgb, 1.0);
