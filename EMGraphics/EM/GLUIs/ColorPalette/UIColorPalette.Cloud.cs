@@ -8,40 +8,29 @@ namespace EMGraphics
 {
 	public partial class UIColorPalette 
 	{
-		private static Bitmap rainbow;
 
-		public void UpdateCloud(float maxValue, float minValue, int parts)
+		public void UpdateCloud(float maxValue, float minValue)
 		{
-			CodedColor[] codedColors = this.GetCodedColors(maxValue, minValue, parts);
+			CodedColorArray array = this.GetCodedColors(maxValue, minValue);
 
-			UpdateLabels(codedColors);
+			UpdateLabels(array.Items);
 
-			this.ColorPalette = new CodedColorArray(codedColors);
+			this.ColorPalette = array;
 		}
 
-		private CodedColor[] GetCodedColors(float maxValue, float minValue, int parts)
+		private CodedColorArray GetCodedColors(float maxValue, float minValue)
 		{
 			if (maxValue <= minValue) { throw new ArgumentException("max value <= min value!"); }
-			if (parts <= 0) { throw new ArgumentException("parts <= 0"); }
 
-			if (rainbow == null)
+			CodedColorArray array = CodedColorArray.GetDefault();
+
+			float step = (maxValue - minValue) / (array.Items.Length - 1);
+			for (int i = 0; i < array.Items.Length; i++)
 			{
-				CodedColorArray array = CodedColorArray.GetDefault();
-				rainbow = array.GetBitmap(1024);
+				array.Items[i].PropertyValue = minValue + i * step;
 			}
 
-			int width = rainbow.Width;
-			var codedColors = new CodedColor[parts];
-			float step = (maxValue - minValue) / (parts - 1);
-			for (int i = 0; i < parts; i++)
-			{
-				int x = (int)(width * ((float)i / (float)(parts - 1)));
-				if (x >= width) { x = width - 1; }
-				Color color = rainbow.GetPixel(x, 0);
-				codedColors[i] = new CodedColor(color, (float)i / (float)(parts - 1), i * step + minValue);
-			}
-
-			return codedColors;
+			return array;
 		}
 
 		private void UpdateLabels(CodedColor[] codedColors)

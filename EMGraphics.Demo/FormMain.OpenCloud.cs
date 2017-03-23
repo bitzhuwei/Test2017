@@ -26,7 +26,7 @@ namespace EMGraphics.Demo
 				CloudFile cloudFile = CloudFile.Load(this.openCoudFile.FileName);
 				// update color palette.
 				{
-					this.uiColorPalette.UpdateCloud(cloudFile.MaxValue, cloudFile.MinValue, 5);
+					this.uiColorPalette.UpdateCloud(cloudFile.MaxValue, cloudFile.MinValue);
 				}
 				// update renderer's cloud.
 				{
