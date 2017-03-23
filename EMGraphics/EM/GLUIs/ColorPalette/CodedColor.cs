@@ -7,23 +7,6 @@ namespace EMGraphics
     /// </summary>
     public class CodedColor
     {
-        public static CodedColor[] GetDefault()
-        {
-            var result = new CodedColor[5];
-            result[0] = new CodedColor(
-                Color.FromArgb(255, 0, 22, 255), 0.0f, 100.0f);
-            result[1] = new CodedColor(
-                Color.FromArgb(255, 0, 193, 136), 0.25f, 200.0f);
-            result[2] = new CodedColor(
-                Color.FromArgb(255, 166, 255, 27), 0.5f, 300.0f);
-            result[3] = new CodedColor(
-                Color.FromArgb(255, 255, 173, 0), 0.75f, 400.0f);
-            result[4] = new CodedColor(
-                Color.FromArgb(255, 255, 8, 1), 1.0f, 500.0f);
-
-            return result;
-        }
-
 		/// <summary>
 		/// 
 		/// </summary>
