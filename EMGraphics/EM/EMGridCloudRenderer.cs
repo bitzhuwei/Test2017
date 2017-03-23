@@ -102,7 +102,6 @@ namespace EMGraphics
 				mat4 view = arg.Camera.GetViewMatrix();
 				mat4 model = this.gridRenderer.GetModelMatrix().Value;// this.GetModelMatrix().Value;
 				this.SetUniform("mvpMatrix", projection * view * model);
-				this.SetUniform("normalMatrix", glm.transpose(glm.inverse(model)).to_mat3());
 			}
 
 			if (renderFaces)

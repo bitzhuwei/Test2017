@@ -1,11 +1,9 @@
 #version 150 core
 
 in vec3 inPosition;
-in vec3 inNormal;
 in vec3 inCloudColor;
 
 out float isHighlight;
-out vec3 normal;
 out vec3 cloudColor;
 
 uniform mat4 mvpMatrix;
@@ -33,7 +31,6 @@ void main(void)
 		isHighlight = -1.0;
 	}
 
-	normal = inNormal;
 	cloudColor = inCloudColor;
 }
 
