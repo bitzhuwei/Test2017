@@ -27,8 +27,8 @@ namespace EMGraphics
 		public UIColorPalette(int maxMarkerCount,
 			CodedColorArray codedColors, Color textColor,
 			AnchorStyles anchor, Padding margin,
-			System.Drawing.Size size, int zNear, int zFar)
-			: base(anchor, margin, size, zNear, zFar)
+			System.Drawing.Size size, string format = null, IFormatProvider formatProvider = null)
+			: base(anchor, margin, size, -100, 100)
 		{
 			//this.StateList.Add(new ClearColorState(Color.Orange));
 
@@ -70,7 +70,7 @@ namespace EMGraphics
 				this.Children.Add(coloredBar);
 			}
 			{
-				InitLabels(codedColors, maxMarkerCount, size);
+				InitLabels(codedColors, maxMarkerCount, size, format, formatProvider);
 			}
 		}
 

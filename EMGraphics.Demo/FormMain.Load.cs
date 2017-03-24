@@ -39,7 +39,7 @@ namespace EMGraphics.Demo
 				var uiColorPalette = new UIColorPalette(100,
 					CodedColorArray.GetDefault(), Color.Black,
 					AnchorStyles.Left | AnchorStyles.Top,
-					new Padding(10, 10, 10, 10), new Size(160, 300), -100, 100);
+					new Padding(10, 10, 10, 10), new Size(160, 300));
 				this.uiColorPalette = uiColorPalette;
 				this.scene.RootUI.Children.Add(uiColorPalette);
 			}

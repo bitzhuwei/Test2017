@@ -13,12 +13,14 @@ namespace EMGraphics
 		private int marginTop = 30;
 		private List<UIText> labelList = new List<UIText>();
 
-		private void InitLabels(CodedColorArray codedColors, int maxMarkerCount, Size size)
+		private void InitLabels(CodedColorArray codedColors, int maxMarkerCount, Size size,
+			string format = null, IFormatProvider formatProvider = null)
 		{
 			int validCount = codedColors.Items.Length;
 			int length = maxMarkerCount;
 			var font = new Font("Arial", 32);
 			FontTexture texture = font.GetFontBitmap("0123456789.eE+-").GetFontTexture();
+
 			for (int i = 0; i < length; i++)
 			{
 				var label = new UIText(
@@ -35,11 +37,21 @@ namespace EMGraphics
 				this.Children.Add(label);
 				this.labelList.Add(label);
 			}
+
 			for (int i = 0; i < validCount; i++)
 			{
 				UIText label = this.labelList[i];
 				CodedColor cc = codedColors.Items[i];
-				label.Text = string.Format("{0:E}", cc.PropertyValue);
+
+				if (format != null && formatProvider != null)
+				{ label.Text = cc.PropertyValue.ToString(format, formatProvider); }
+				else if (format != null)
+				{ label.Text = cc.PropertyValue.ToString(format); }
+				else if (formatProvider != null)
+				{ label.Text = cc.PropertyValue.ToString(formatProvider); }
+				else
+				{ label.Text = cc.PropertyValue.ToString("E"); }
+
 				label.Enabled = true;
 			}
 		}
