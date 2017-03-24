@@ -14,8 +14,23 @@
             mat4 view = glm.lookAt(new vec3(0, 0, 1), new vec3(0, 0, 0), new vec3(0, 1, 0));
             //float length = Math.Max(glText.Size.Width, glText.Size.Height) / 2;
             float length = this.Size.Height;// / 2;
-            mat4 model = glm.scale(mat4.identity(), new vec3(length, length, length));
-            //model = mat4.identity();
+			mat4 model = mat4.identity();
+			switch (this.Alignment)
+			{
+				case TextAlignment.Center:
+					model = glm.scale(mat4.identity(), new vec3(length, length, length));
+					break;
+				case TextAlignment.Left:
+					model = glm.translate(model, new vec3(-this.Size.Width / 2, 0, 0));
+					model = glm.scale(model, new vec3(length, length, length));
+					break;
+				case TextAlignment.Right:
+					model = glm.translate(model, new vec3(this.Size.Width / 2, 0, 0));
+					model = glm.scale(model, new vec3(length, length, length));
+					break;
+				default:
+					break;
+			}
             var renderer = this.Renderer as Renderer;
             renderer.SetUniform("mvp", projection * view * model);
             if (this.textColorRecord.IsMarked())

@@ -29,6 +29,7 @@ namespace EMGraphics
 					new System.Drawing.Size(70, 15), -100, 100,
 					texture, 100);
 				label.TextColor = Color.Black;
+				label.Alignment = TextAlignment.Left;
 				label.Initialize();
 				//label.StateList.Add(new ClearColorState(Color.Green));
 				//label.Text = string.Format("{0}th label.", i);

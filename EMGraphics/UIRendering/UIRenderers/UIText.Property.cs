@@ -29,6 +29,16 @@ namespace EMGraphics
             }
         }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		[Description("Text alignment.")]
+		public TextAlignment Alignment
+		{
+			get { return this.textModel.Alignment; }
+			set { this.textModel.Alignment = value; }
+		}
+
         private BlendState blendState = new BlendState(BlendingSourceFactor.SourceAlpha, BlendingDestinationFactor.OneMinusSourceAlpha);
 
         /// <summary>

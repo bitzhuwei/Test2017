@@ -14,6 +14,11 @@ namespace EMGraphics
         /// </summary>
         public string Text { get { return content; } }
 
+		/// <summary>
+		/// 
+		/// </summary>
+		public TextAlignment Alignment { get; set; }
+
         /// <summary>
         ///
         /// </summary>
@@ -102,35 +107,131 @@ namespace EMGraphics
                     new vec2(currentWidth + info.width, currentHeight + fontTexture.GlyphHeight));
                 currentWidth += info.width + fontTexture.GlyphHeight / 10;
             }
-            // move to center
-            for (int i = 0; i < content.Length; i++)
-            {
-                TextModel.GlyphPosition position = array[i];
 
-                position.leftUp.x -= currentWidth / 2.0f;
-                //position.leftUp.x /= currentWidth / factor;
-                position.leftDown.x -= currentWidth / 2.0f;
-                //position.leftDown.x /= currentWidth / factor;
-                position.rightUp.x -= currentWidth / 2.0f;
-                //position.rightUp.x /= currentWidth / factor;
-                position.rightDown.x -= currentWidth / 2.0f;
-                //position.rightDown.x /= currentWidth / factor;
-                position.leftUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
-                position.leftDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
-                position.rightUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
-                position.rightDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
-
-                position.leftUp.x /= (currentHeight + fontTexture.GlyphHeight);
-                position.leftDown.x /= (currentHeight + fontTexture.GlyphHeight);
-                position.rightUp.x /= (currentHeight + fontTexture.GlyphHeight);
-                position.rightDown.x /= (currentHeight + fontTexture.GlyphHeight);
-                position.leftUp.y /= (currentHeight + fontTexture.GlyphHeight);
-                position.leftDown.y /= (currentHeight + fontTexture.GlyphHeight);
-                position.rightUp.y /= (currentHeight + fontTexture.GlyphHeight);
-                position.rightDown.y /= (currentHeight + fontTexture.GlyphHeight);
-                array[i] = position;
-            }
+			switch (this.Alignment)
+			{
+				case TextAlignment.Center:
+					Move2Center(content, array, currentWidth, currentHeight, fontTexture);
+					break;
+				case TextAlignment.Left:
+					Move2Left(content, array, currentWidth, currentHeight, fontTexture);
+					break;
+				case TextAlignment.Right:
+					Move2Right(content, array, currentWidth, currentHeight, fontTexture);
+					break;
+				default:
+					break;
+			}
+			
             this.positionBuffer.UnmapBuffer();
         }
-    }
+
+		private unsafe void Move2Right(string content, GlyphPosition* array, float currentWidth, int currentHeight, IFontTexture fontTexture)
+		{
+			// move to right
+			for (int i = 0; i < content.Length; i++)
+			{
+				TextModel.GlyphPosition position = array[i];
+
+				position.leftUp.x -= currentWidth;
+				//position.leftUp.x /= currentWidth / factor;
+				position.leftDown.x -= currentWidth;
+				//position.leftDown.x /= currentWidth / factor;
+				position.rightUp.x -= currentWidth ;
+				//position.rightUp.x /= currentWidth / factor;
+				position.rightDown.x -= currentWidth ;
+				//position.rightDown.x /= currentWidth / factor;
+				position.leftUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.leftDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.rightUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.rightDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+
+				position.leftUp.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftDown.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightUp.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightDown.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftUp.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftDown.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightUp.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightDown.y /= (currentHeight + fontTexture.GlyphHeight);
+				array[i] = position;
+			}
+		}
+
+		private unsafe void Move2Left(string content, GlyphPosition* array, float currentWidth, int currentHeight, IFontTexture fontTexture)
+		{
+			// move to left
+			for (int i = 0; i < content.Length; i++)
+			{
+				TextModel.GlyphPosition position = array[i];
+
+				position.leftUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.leftDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.rightUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.rightDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+
+				position.leftUp.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftDown.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightUp.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightDown.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftUp.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftDown.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightUp.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightDown.y /= (currentHeight + fontTexture.GlyphHeight);
+				array[i] = position;
+			}
+		}
+
+		private unsafe void Move2Center(string content, GlyphPosition* array, float currentWidth, float currentHeight, IFontTexture fontTexture)
+		{
+			// move to center
+			for (int i = 0; i < content.Length; i++)
+			{
+				TextModel.GlyphPosition position = array[i];
+
+				position.leftUp.x -= currentWidth / 2.0f;
+				//position.leftUp.x /= currentWidth / factor;
+				position.leftDown.x -= currentWidth / 2.0f;
+				//position.leftDown.x /= currentWidth / factor;
+				position.rightUp.x -= currentWidth / 2.0f;
+				//position.rightUp.x /= currentWidth / factor;
+				position.rightDown.x -= currentWidth / 2.0f;
+				//position.rightDown.x /= currentWidth / factor;
+				position.leftUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.leftDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.rightUp.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+				position.rightDown.y -= (currentHeight + fontTexture.GlyphHeight) / 2.0f;
+
+				position.leftUp.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftDown.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightUp.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightDown.x /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftUp.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.leftDown.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightUp.y /= (currentHeight + fontTexture.GlyphHeight);
+				position.rightDown.y /= (currentHeight + fontTexture.GlyphHeight);
+				array[i] = position;
+			}
+		}
+	}
+
+	public enum TextAlignment
+	{
+		/// <summary>
+		/// 
+		/// </summary>
+		Center,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Left,
+
+		/// <summary>
+		/// 
+		/// </summary>
+		Right,
+
+	}
+
 }
