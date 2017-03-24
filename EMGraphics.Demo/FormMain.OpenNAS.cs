@@ -39,7 +39,6 @@ namespace EMGraphics.Demo
 						(box.MaxPosition - box.MinPosition) * 1.1f);
 					renderer.BoundingBoxColor = Color.FromArgb(255, 211, 211, 211);
 					renderer.Scale = new vec3(1, 1, 0);
-					//renderer.WorldPosition -= center;
 					SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
 					this.scene.RootObject.Children.Add(boxObj);
 					this.wholeObject = wholeObject;

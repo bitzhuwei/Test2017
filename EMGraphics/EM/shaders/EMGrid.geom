@@ -39,12 +39,16 @@ void main(void)
 		vec3 v23 = vertexes[2] - vertexes[1];
 		vec3 normalLine = normalize(normalMatrix * cross(v12, v23));
 		
+		vec3 color = 
+			vertex_in[0].cloudColor / 3.0
+			+ vertex_in[1].cloudColor / 3.0
+			+ vertex_in[2].cloudColor / 3.0;
 		for (int i = 0; i < 3; i++)
 		{
 			gl_Position = mvpMatrix * gl_in[i].gl_Position;
 			vertex_out.isHighlight = highlight ? 1 : -1;
 			vertex_out.normal = normalLine;
-			vertex_out.cloudColor = vertex_in[i].cloudColor;
+			vertex_out.cloudColor = color;
 			EmitVertex();
 		}
 		EndPrimitive();
