@@ -8,13 +8,13 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public class CenterAxisModel : IBufferable, IModelSpace
+    public class CenterAxis : IBufferable, IModelSpace
     {
         /// <summary>
         /// lengths of x/y/z axis.
         /// </summary>
         /// <param name="lengths"></param>
-        public CenterAxisModel(float length)
+        public CenterAxis(float length)
         {
             this.ModelSize = new vec3(length, length, length);
         }

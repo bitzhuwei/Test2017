@@ -25,8 +25,8 @@ namespace EMGraphics
 			{
 				var label = new UIText(
 					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
-					new System.Windows.Forms.Padding(50, 0, 0, 0),
-					new System.Drawing.Size(100, 15), -100, 100,
+					new System.Windows.Forms.Padding(40, 0, 0, 0),
+					new System.Drawing.Size(70, 15), -100, 100,
 					texture, 100);
 				label.TextColor = Color.Black;
 				label.Initialize();

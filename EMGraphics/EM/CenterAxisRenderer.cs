@@ -16,15 +16,15 @@ namespace EMGraphics
         /// 
         /// </summary>
         /// <returns></returns>
-        public static CenterAxisRenderer Create(CenterAxisModel model)
+        public static CenterAxisRenderer Create(CenterAxis model)
         {
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\CenterAxis.vert"), ShaderType.VertexShader);
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\CenterAxis.frag"), ShaderType.FragmentShader);
 			var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
-            map.Add("inPosition", CenterAxisModel.strPosition);
-            map.Add("inColor", CenterAxisModel.strColor);
+            map.Add("inPosition", CenterAxis.strPosition);
+            map.Add("inColor", CenterAxis.strColor);
             var renderer = new CenterAxisRenderer(model, provider, map);
 			renderer.ModelSize = model.ModelSize;
 

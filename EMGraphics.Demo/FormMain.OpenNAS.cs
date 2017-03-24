@@ -77,7 +77,7 @@ namespace EMGraphics.Demo
 					float max = size.x;
 					if (max < size.y) { max = size.y; }
 					if (max < size.z) { max = size.z; }
-					var model = new CenterAxisModel(max);
+					var model = new CenterAxis(max);
 					CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
 					SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
 					this.scene.RootObject.Children.Add(obj);
