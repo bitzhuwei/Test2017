@@ -50,7 +50,7 @@ namespace EMGraphics
 				else if (formatProvider != null)
 				{ label.Text = cc.PropertyValue.ToString(formatProvider); }
 				else
-				{ label.Text = cc.PropertyValue.ToString("+0.00E00;-0.00E00"); }
+				{ label.Text = cc.PropertyValue.ToString("+0.00E+00;+0.00E-00;-0.00E+00;-0.00E-00"); }
 
 				label.Enabled = true;
 			}
