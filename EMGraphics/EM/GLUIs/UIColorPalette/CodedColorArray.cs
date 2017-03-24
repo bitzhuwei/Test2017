@@ -56,7 +56,7 @@ namespace EMGraphics
 			for (int i = 0; i < array.Length; i++)
 			{
 				array[i].Coord = (float)i / (float)(array.Length - 1);
-				array[i].PropertyValue = i;
+				array[i].PropertyValue = (float)(i - array.Length / 2) / (float)(array.Length - 1);
 			}
 
 			return new CodedColorArray(array);

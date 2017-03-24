@@ -26,7 +26,7 @@ namespace EMGraphics
 				var label = new UIText(
 					System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Bottom,
 					new System.Windows.Forms.Padding(50, 0, 0, 0),
-					new System.Drawing.Size(100, 15), zNear, zFar,
+					new System.Drawing.Size(100, 15), -100, 100,
 					texture, 100);
 				label.TextColor = Color.Black;
 				label.Initialize();
@@ -50,7 +50,7 @@ namespace EMGraphics
 				else if (formatProvider != null)
 				{ label.Text = cc.PropertyValue.ToString(formatProvider); }
 				else
-				{ label.Text = cc.PropertyValue.ToString("E"); }
+				{ label.Text = cc.PropertyValue.ToString("+0.00E00;-0.00E00"); }
 
 				label.Enabled = true;
 			}
