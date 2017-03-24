@@ -50,12 +50,12 @@ namespace EMGraphics
                 if (this.colorBuffer == null)
                 {
                     vec3[] vertexColors = new vec3[6];
-                    vertexColors[0] = new vec3(1.0f, 0, 0);
-                    vertexColors[1] = new vec3(1.0f, 0, 0);
+                    vertexColors[0] = new vec3(0, 0, 1.0f);
+                    vertexColors[1] = new vec3(0, 0, 1.0f);
                     vertexColors[2] = new vec3(0, 1.0f, 0);
                     vertexColors[3] = new vec3(0, 1.0f, 0);
-                    vertexColors[4] = new vec3(0, 0, 1.0f);
-                    vertexColors[5] = new vec3(0, 0, 1.0f);
+                    vertexColors[4] = new vec3(1.0f, 0, 0);
+                    vertexColors[5] = new vec3(1.0f, 0, 0);
                     this.colorBuffer = vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
                 return this.colorBuffer;
