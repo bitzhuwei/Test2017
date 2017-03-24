@@ -13,7 +13,7 @@ namespace EMGraphics
         /// <summary>
         /// lengths of x/y/z axis.
         /// </summary>
-        /// <param name="lengths"></param>
+        /// <param name="length"></param>
         public CenterAxis(float length)
         {
             this.ModelSize = new vec3(length, length, length);
