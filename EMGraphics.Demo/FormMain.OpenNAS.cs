@@ -32,9 +32,16 @@ namespace EMGraphics.Demo
 				// get nas model as a single model
 				{
 					SceneObject wholeObject = GetWholeObject(
-						dataSource.VertexPositions,dataSource.VertexNormals,
+						dataSource.VertexPositions, dataSource.VertexNormals,
 						dataSource.Triangles, center);
 					this.scene.RootObject.Children.Add(wholeObject);
+					BoundingBoxRenderer renderer = BoundingBoxRenderer.Create(
+						(box.MaxPosition - box.MinPosition) * 1.1f);
+					renderer.BoundingBoxColor = Color.FromArgb(255, 211, 211, 211);
+					renderer.Scale = new vec3(1, 1, 0);
+					//renderer.WorldPosition -= center;
+					SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
+					this.scene.RootObject.Children.Add(boxObj);
 					this.wholeObject = wholeObject;
 					SceneObject wholeNormal = GetWholeNormal(
 						dataSource.FaceNormalPositions,
@@ -113,7 +120,7 @@ namespace EMGraphics.Demo
 			var renderer = EMGridRenderer.Create(grid);
 			renderer.WorldPosition += center;
 			//renderer.Initialize();
-			SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: true);
+			SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: false);
 			return obj;
 		}
 
