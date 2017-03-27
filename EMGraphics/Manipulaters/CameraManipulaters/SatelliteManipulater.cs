@@ -26,6 +26,8 @@ namespace EMGraphics
         private vec3 right;
         private vec3 up;
 
+		public bool MouseWheelEnabled { get; set; }
+
         /// <summary>
         ///
         /// </summary>
@@ -38,6 +40,8 @@ namespace EMGraphics
             this.mouseMoveEvent = new MouseEventHandler(((IMouseHandler)this).canvas_MouseMove);
             this.mouseUpEvent = new MouseEventHandler(((IMouseHandler)this).canvas_MouseUp);
             this.mouseWheelEvent = new MouseEventHandler(((IMouseHandler)this).canvas_MouseWheel);
+
+			this.MouseWheelEnabled = true;
         }
 
         /// <summary>
@@ -148,6 +152,8 @@ namespace EMGraphics
 
         void IMouseHandler.canvas_MouseWheel(object sender, MouseEventArgs e)
         {
+			if (!this.MouseWheelEnabled) { return; }
+
             this.camera.MouseWheel(e.Delta);
 
             if (this.canvas.RenderTrigger == RenderTrigger.Manual)

@@ -21,6 +21,7 @@ namespace EMGraphics.Demo
 					new vec3(5, 4, 3) * 0.5f, new vec3(0, 0, 0), new vec3(0, 0, 1),
 					CameraType.Ortho, this.glCanvas1.Width, this.glCanvas1.Height);
 				var rotator = new SatelliteManipulater(System.Windows.Forms.MouseButtons.Left);
+				rotator.MouseWheelEnabled = false;// disable mouse wheel scaling effect.
 				rotator.Bind(camera, this.glCanvas1);
 				var screenTranslate = new ScreenTranslateManipulater(System.Windows.Forms.MouseButtons.Middle);
 				screenTranslate.Bind(camera, this.glCanvas1);

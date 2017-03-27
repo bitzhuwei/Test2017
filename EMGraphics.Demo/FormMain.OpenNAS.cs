@@ -13,6 +13,7 @@ namespace EMGraphics.Demo
 	public partial class FormMain
 	{
 		private SceneObject wholeObject;
+		private SceneObject boxObject;
 		private SceneObject wholeNormal;
 		private SceneObject notPickedGroup;
 		private SceneObject pickedGroup;
@@ -37,10 +38,12 @@ namespace EMGraphics.Demo
 					this.scene.RootObject.Children.Add(wholeObject);
 					BoundingBoxRenderer renderer = BoundingBoxRenderer.Create(
 						(box.MaxPosition - box.MinPosition) * 1.1f);
+					//renderer.WorldPosition = center;
 					renderer.BoundingBoxColor = Color.FromArgb(255, 211, 211, 211);
 					renderer.Scale = new vec3(1, 1, 0);
 					SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
 					this.scene.RootObject.Children.Add(boxObj);
+					this.boxObject = boxObj;
 					this.wholeObject = wholeObject;
 					SceneObject wholeNormal = GetWholeNormal(
 						dataSource.FaceNormalPositions,
@@ -117,7 +120,7 @@ namespace EMGraphics.Demo
 		{
 			var grid = new EMGrid(positions, normals, triangles, "Whole Model");
 			var renderer = EMGridRenderer.Create(grid);
-			renderer.WorldPosition += center;
+			renderer.WorldPosition = center;
 			//renderer.Initialize();
 			SceneObject obj = renderer.WrapToSceneObject("Whole Model", generateBoundingBox: false);
 			return obj;
