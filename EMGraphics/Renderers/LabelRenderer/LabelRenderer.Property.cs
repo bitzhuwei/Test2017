@@ -1,7 +1,11 @@
-﻿namespace EMGraphics
+﻿using System.Drawing;
+namespace EMGraphics
 {
     public partial class LabelRenderer
     {
+
+        public bool KeepFront { get; set; }
+
         #region Text
 
         private IFontTexture fontTexture;
@@ -26,11 +30,26 @@
             }
         }
 
+        private UpdatingRecord textColorRecord = new UpdatingRecord();
+        private Color textColor = Color.White;
+        /// <summary>
+        /// Text's color.
+        /// </summary>
+        public Color TextColor
+        {
+            get { return textColor; }
+            set
+            {
+                this.textColor = value;
+                this.textColorRecord.Mark();
+            }
+        }
+
         #endregion Text
 
         #region discard
 
-        private GLState blendState;
+        //private GLState blendState;
         private bool discardTransparency = true;
         private UpdatingRecord discardTransparencyRecord = new UpdatingRecord();
 

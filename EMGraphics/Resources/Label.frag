@@ -3,7 +3,7 @@
 in vec2 passUV;
 
 uniform sampler2D fontTexture;
-uniform vec3 textColor = vec3(1, 1, 1);
+uniform vec3 textColor = vec3(1, 0, 0);
 uniform bool discardTransparency = true;
 
 out vec4 color;
@@ -18,5 +18,5 @@ void main(void)
 		if (textureColor.r < 0.1f) { discard; }
 	}
 
-    color = vec4(textColor, textureColor.r);
+    color = vec4(textColor, 1.0f);
 }

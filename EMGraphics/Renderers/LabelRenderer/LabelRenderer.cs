@@ -23,15 +23,13 @@
                 @"Resources\Label.vert"), ShaderType.VertexShader);
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(
                 @"Resources\Label.frag"), ShaderType.FragmentShader);
-			var provider = new ShaderCodeArray(shaderCodes);
+            var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
             map.Add("in_Position", TextModel.strPosition);
             map.Add("in_UV", TextModel.strUV);
 
-            var blendState = new BlendState(BlendingSourceFactor.SourceAlpha, BlendingDestinationFactor.One);
+            var renderer = new LabelRenderer(model, provider, map);
 
-            var renderer = new LabelRenderer(model, provider, map, blendState);
-            renderer.blendState = blendState;
             renderer.fontTexture = fontTexture;
             renderer.LabelHeight = labelHeight;
 
