@@ -51,65 +51,68 @@ namespace EMGraphics.Demo
             //    builder.AppendLine("2: Canvas' property grid.");
             //    MessageBox.Show(builder.ToString());
             //}
-            {
-                var box = new BoundingBox(new vec3(-0.5f, -0.5f, -0.5f), new vec3(0.5f, 0.5f, 0.5f));
-                vec3 size = box.MaxPosition - box.MinPosition;
-                float max = size.x;
-                if (max < size.y) { max = size.y; }
-                if (max < size.z) { max = size.z; }
-                {
-                    BoundingBoxRenderer renderer = BoundingBoxRenderer.Create(
-                        (box.MaxPosition - box.MinPosition) * 0.9f);
-                    //renderer.WorldPosition = center;
-                    renderer.BoundingBoxColor = Color.FromArgb(255, 211, 211, 211);
-                    renderer.Scale = new vec3(1, 1, 0);
-                    SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    this.scene.RootObject.Children.Add(boxObj);
-                }
-                // center axis 
-                // NOTE: this renderer must be the last one!
-                {
-                    var model = new CenterAxis(max);
-                    CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    this.scene.RootObject.Children.Add(obj);
-                }
-
-                const float deltaDistance = 0.05f;
-                {
-                    var renderer = LabelRenderer.Create(1, 32);
-                    renderer.Text = "X";
-                    renderer.TextColor = Color.Blue;
-                    renderer.KeepFront = true;
-                    renderer.WorldPosition = new vec3(max / 2.0f + deltaDistance, 0, 0);
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    this.scene.RootObject.Children.Add(obj);
-                }
-                {
-                    var renderer = LabelRenderer.Create(1, 32);
-                    renderer.Text = "Y";
-                    renderer.TextColor = Color.Green;
-                    renderer.KeepFront = true;
-                    renderer.WorldPosition = new vec3(0, max / 2.0f + deltaDistance, 0);
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    this.scene.RootObject.Children.Add(obj);
-                }
-                {
-                    var renderer = LabelRenderer.Create(1, 32);
-                    renderer.Text = "Z";
-                    renderer.TextColor = Color.Red;
-                    renderer.KeepFront = true;
-                    renderer.WorldPosition = new vec3(0, 0, max / 2.0f + deltaDistance);
-                    SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
-                    this.scene.RootObject.Children.Add(obj);
-                }
-
-                this.camera.ZoomCamera(new BoundingBox(new vec3(-1, -1, -1), new vec3(1, 1, 1)));
-            }
+            InitialCenterAxis();
 
             {
-                this.btnPickTriangle_Click(this.btnPickTriangle, e);
+                //this.btnPickTriangle_Click(this.btnPickTriangle, e);
             }
+        }
+
+        private void InitialCenterAxis()
+        {
+            var box = new BoundingBox(new vec3(-0.5f, -0.5f, -0.5f), new vec3(0.5f, 0.5f, 0.5f));
+            vec3 size = box.MaxPosition - box.MinPosition;
+            float max = size.x;
+            if (max < size.y) { max = size.y; }
+            if (max < size.z) { max = size.z; }
+            {
+                BoundingBoxRenderer renderer = BoundingBoxRenderer.Create(
+                    (box.MaxPosition - box.MinPosition) * 0.9f);
+                //renderer.WorldPosition = center;
+                renderer.BoundingBoxColor = Color.FromArgb(255, 211, 211, 211);
+                renderer.Scale = new vec3(1, 1, 0);
+                SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                this.scene.RootObject.Children.Add(boxObj);
+            }
+            // center axis 
+            // NOTE: this renderer must be the last one!
+            {
+                var model = new CenterAxis(max);
+                CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
+                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                this.scene.RootObject.Children.Add(obj);
+            }
+
+            const float deltaDistance = 0.05f;
+            {
+                var renderer = LabelRenderer.Create(1, 32);
+                renderer.Text = "X";
+                renderer.TextColor = Color.Blue;
+                renderer.KeepFront = true;
+                renderer.WorldPosition = new vec3(max / 2.0f + deltaDistance, 0, 0);
+                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                this.scene.RootObject.Children.Add(obj);
+            }
+            {
+                var renderer = LabelRenderer.Create(1, 32);
+                renderer.Text = "Y";
+                renderer.TextColor = Color.Green;
+                renderer.KeepFront = true;
+                renderer.WorldPosition = new vec3(0, max / 2.0f + deltaDistance, 0);
+                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                this.scene.RootObject.Children.Add(obj);
+            }
+            {
+                var renderer = LabelRenderer.Create(1, 32);
+                renderer.Text = "Z";
+                renderer.TextColor = Color.Red;
+                renderer.KeepFront = true;
+                renderer.WorldPosition = new vec3(0, 0, max / 2.0f + deltaDistance);
+                SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
+                this.scene.RootObject.Children.Add(obj);
+            }
+
+            this.camera.ZoomCamera(new BoundingBox(new vec3(-1, -1, -1), new vec3(1, 1, 1)));
         }
     }
 }
