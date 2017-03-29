@@ -39,7 +39,7 @@ namespace EMGraphics
             vec3 rendererSize = renderer.ModelSize;
             vec3 scale = new vec3(length / rendererSize.x, length / rendererSize.y, length / rendererSize.z);
             mat4 model = glm.scale(mat4.identity(), scale);
-            renderer.SetMVP(projection * view * model);
+            renderer.SetMVP(projection, view, model);
 
             base.DoRender(arg);
         }

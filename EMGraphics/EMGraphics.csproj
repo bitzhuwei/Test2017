@@ -391,6 +391,10 @@
     <Compile Include="EM\GLUIs\UIColorPalette\UIQuadStrip.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\UIColorPalette.Labels.cs" />
     <Compile Include="EM\GLUIs\UIColorPalette\UIColorPalette.cs" />
+    <Compile Include="EM\AxisLabelRenderer\AxisLabelRenderer.cs" />
+    <Compile Include="EM\AxisLabelRenderer\AxisLabelRenderer.DoInitialize.cs" />
+    <Compile Include="EM\AxisLabelRenderer\AxisLabelRenderer.DoRender.cs" />
+    <Compile Include="EM\AxisLabelRenderer\AxisLabelRenderer.Property.cs" />
     <Compile Include="EM\NASDataSource.cs" />
     <Compile Include="EM\IEMDataSource.cs" />
     <Compile Include="EM\IHighlightable.cs" />

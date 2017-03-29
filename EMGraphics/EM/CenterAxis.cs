@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 
@@ -50,12 +51,15 @@ namespace EMGraphics
                 if (this.colorBuffer == null)
                 {
                     vec3[] vertexColors = new vec3[6];
-                    vertexColors[0] = new vec3(0, 0, 1.0f);
-                    vertexColors[1] = new vec3(0, 0, 1.0f);
-                    vertexColors[2] = new vec3(0, 1.0f, 0);
-                    vertexColors[3] = new vec3(0, 1.0f, 0);
-                    vertexColors[4] = new vec3(1.0f, 0, 0);
-                    vertexColors[5] = new vec3(1.0f, 0, 0);
+                    var red = Color.Red.ToVec3();
+                    var green = Color.Green.ToVec3();
+                    var blue = Color.Blue.ToVec3();
+                    vertexColors[0] = blue;
+                    vertexColors[1] = blue;
+                    vertexColors[2] = green;
+                    vertexColors[3] = green;
+                    vertexColors[4] = red;
+                    vertexColors[5] = red;
                     this.colorBuffer = vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
                 return this.colorBuffer;
