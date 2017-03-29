@@ -95,7 +95,7 @@ namespace EMGraphics
                     var vertexColors = new vec3[singleBody * 3];
                     for (int i = 0; i < singleBody; i++)
                     {
-                        vertexColors[i] = red;
+                        vertexColors[i] = blue;
                     }
                     for (int i = 0; i < singleBody; i++)
                     {
@@ -103,7 +103,7 @@ namespace EMGraphics
                     }
                     for (int i = 0; i < singleBody; i++)
                     {
-                        vertexColors[singleBody + singleBody + i] = blue;
+                        vertexColors[singleBody + singleBody + i] = red;
                     }
 
                     this.colorBuffer = vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
