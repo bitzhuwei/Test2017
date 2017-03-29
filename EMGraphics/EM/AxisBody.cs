@@ -88,9 +88,9 @@ namespace EMGraphics
             {
                 if (this.colorBuffer == null)
                 {
-                    var red = new vec3(1, 0, 0);
-                    var green = new vec3(0, 1, 0);
-                    var blue = new vec3(0, 0, 1);
+                    var red = Color.Red.ToVec3();
+                    var green = Color.Green.ToVec3();
+                    var blue = Color.Blue.ToVec3();
                     int singleBody = (1 + detail) * 2;
                     var vertexColors = new vec3[singleBody * 3];
                     for (int i = 0; i < singleBody; i++)
