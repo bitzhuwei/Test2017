@@ -41,7 +41,41 @@ namespace EMGraphics
             {
                 if (this.positionBuffer == null)
                 {
-                    var vertexPositions = new vec3[1 + detail * 3 + 1];
+                    const double radius = 0.1;
+                    var vertexPositions = new vec3[(1 + detail) * 2 * 3];
+                    for (int i = 0; i < (1 + detail); i++)
+                    {
+                        vertexPositions[i * 2 + 0] = new vec3(
+                            0,
+                            (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                        vertexPositions[i * 2 + 1] = new vec3(
+                            1,
+                            (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                    }
+                    for (int i = 0; i < (1 + detail); i++)
+                    {
+                        vertexPositions[(1 + detail) * 2 + i * 2 + 0] = new vec3(
+                            (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
+                            0,
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                        vertexPositions[(1 + detail) * 2 + i * 2 + 1] = new vec3(
+                            (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
+                            1,
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                    }
+                    for (int i = 0; i < (1 + detail); i++)
+                    {
+                        vertexPositions[(1 + detail) * 2 * 2 + i * 2 + 0] = new vec3(
+                            (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)),
+                            0);
+                        vertexPositions[(1 + detail) * 2 * 2 + i * 2 + 1] = new vec3(
+                            (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)),
+                            1);
+                    }
 
                     this.positionBuffer = vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
@@ -51,7 +85,23 @@ namespace EMGraphics
             {
                 if (this.colorBuffer == null)
                 {
-                    var vertexColors = new vec3[1 + detail * 3 + 1];
+                    var red = new vec3(1, 0, 0);
+                    var green = new vec3(0, 1, 0);
+                    var blue = new vec3(0, 0, 1);
+                    int singleBody = (1 + detail) * 2;
+                    var vertexColors = new vec3[singleBody * 3];
+                    for (int i = 0; i < singleBody; i++)
+                    {
+                        vertexColors[i] = red;
+                    }
+                    for (int i = 0; i < singleBody; i++)
+                    {
+                        vertexColors[singleBody + i] = green;
+                    }
+                    for (int i = 0; i < singleBody; i++)
+                    {
+                        vertexColors[singleBody + singleBody + i] = blue;
+                    }
 
                     this.colorBuffer = vertexColors.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
@@ -67,8 +117,26 @@ namespace EMGraphics
         {
             if (this.indexBuffer == null)
             {
-                ZeroIndexBuffer buffer = GLBuffer.Create(DrawMode.TriangleFan, 0, 1 + this.detail * 3 + 1);
-                this.indexBuffer = buffer;
+                int singleBody = (1 + detail) * 2;
+                var indexes = new uint[singleBody + 1 + singleBody + 1 + singleBody];
+                uint count = 0;
+                int index = 0;
+                for (int i = 0; i < singleBody; i++)
+                {
+                    indexes[index++] = count++;
+                }
+                indexes[index++] = uint.MaxValue;//separator.
+                for (int i = 0; i < singleBody; i++)
+                {
+                    indexes[index++] = count++;
+                }
+                indexes[index++] = uint.MaxValue;//separator.
+                for (int i = 0; i < singleBody; i++)
+                {
+                    indexes[index++] = count++;
+                }
+
+                this.indexBuffer = indexes.GenIndexBuffer(DrawMode.TriangleStrip, BufferUsage.StaticDraw);
             }
 
             return indexBuffer;
@@ -76,7 +144,7 @@ namespace EMGraphics
 
         public bool UsesZeroIndexBuffer()
         {
-            return true;
+            return false;
         }
 
         public vec3 ModelSize { get; set; }

@@ -16,17 +16,17 @@ namespace EMGraphics
         /// 
         /// </summary>
         /// <returns></returns>
-        public static AxisBodyRenderer Create(AxisSeat model)
+        public static AxisBodyRenderer Create(AxisBody model)
         {
             var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\AxisSeat.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\AxisSeat.frag"), ShaderType.FragmentShader);
+            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\AxisBody.vert"), ShaderType.VertexShader);
+            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\AxisBody.frag"), ShaderType.FragmentShader);
             var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
-            map.Add("inPosition", AxisSeat.strPosition);
+            map.Add("inPosition", AxisBody.strPosition);
+            map.Add("inColor", AxisBody.strColor);
             var renderer = new AxisBodyRenderer(model, provider, map);
             renderer.ModelSize = model.ModelSize;
-            renderer.SeatColor = model.SeatColor;
 
             return renderer;
         }
@@ -43,13 +43,9 @@ namespace EMGraphics
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
             this.SetUniform("mvp", projection * view * model);
-            this.SetUniform("seatColor", this.SeatColor.ToVec3());
-
-            base.DoRender(arg);
 
             base.DoRender(arg);
         }
 
-        public System.Drawing.Color SeatColor { get; set; }
     }
 }

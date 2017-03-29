@@ -659,6 +659,8 @@
     <EmbeddedResource Include="EM\shaders\Background.vert" />
     <EmbeddedResource Include="EM\shaders\AxisSeat.vert" />
     <EmbeddedResource Include="EM\shaders\AxisSeat.frag" />
+    <EmbeddedResource Include="EM\shaders\AxisBody.vert" />
+    <EmbeddedResource Include="EM\shaders\AxisBody.frag" />
     <None Include="FontTexture\readme.md" />
     <None Include="Manipulaters\readme.md" />
     <None Include="PropertyGrid\TypeConverters\readme.md" />
