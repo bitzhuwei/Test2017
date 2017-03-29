@@ -41,8 +41,9 @@ namespace EMGraphics
             {
                 if (this.positionBuffer == null)
                 {
-                    const double radius = 0.1;
-                    var vertexPositions = new vec3[(1 + detail) * 2 * 3];
+                    const double radius = 0.05;
+                    int singleBody = (1 + detail) * 2;
+                    var vertexPositions = new vec3[singleBody * 3];
                     for (int i = 0; i < (1 + detail); i++)
                     {
                         vertexPositions[i * 2 + 0] = new vec3(
@@ -56,22 +57,22 @@ namespace EMGraphics
                     }
                     for (int i = 0; i < (1 + detail); i++)
                     {
-                        vertexPositions[(1 + detail) * 2 + i * 2 + 0] = new vec3(
+                        vertexPositions[singleBody + i * 2 + 0] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             0,
                             (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
-                        vertexPositions[(1 + detail) * 2 + i * 2 + 1] = new vec3(
+                        vertexPositions[singleBody + i * 2 + 1] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             1,
                             (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
                     }
                     for (int i = 0; i < (1 + detail); i++)
                     {
-                        vertexPositions[(1 + detail) * 2 * 2 + i * 2 + 0] = new vec3(
+                        vertexPositions[singleBody + singleBody + i * 2 + 0] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)),
                             0);
-                        vertexPositions[(1 + detail) * 2 * 2 + i * 2 + 1] = new vec3(
+                        vertexPositions[singleBody + singleBody + i * 2 + 1] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)),
                             1);
