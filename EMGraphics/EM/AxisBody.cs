@@ -11,6 +11,8 @@ namespace EMGraphics
     /// </summary>
     public class AxisBody : IBufferable, IModelSpace
     {
+        private int detail;
+
         /// <summary>
         /// lengths of x/y/z axis.
         /// </summary>
@@ -159,8 +161,5 @@ namespace EMGraphics
         public vec3 WorldPosition { get; set; }
 
 
-        public int detail { get; set; }
-
-        public float desplacement { get; set; }
     }
 }
