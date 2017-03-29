@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 
 namespace EMGraphics
 {
@@ -19,17 +20,7 @@ namespace EMGraphics
             System.Drawing.Size size, int partCount = 24)
             : base(anchor, margin, size, -Math.Max(size.Width, size.Height), Math.Max(size.Width, size.Height))
         {
-            var shaderCodes = new ShaderCode[2];
-            shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Simple.vert"), ShaderType.VertexShader);
-            shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"Resources\Simple.frag"), ShaderType.FragmentShader);
-			var provider = new ShaderCodeArray(shaderCodes);
-            var map = new AttributeMap();
-            map.Add("in_Position", Axis.strPosition);
-            map.Add("in_Color", Axis.strColor);
-            var axis = new Axis(partCount, 0.5f);
-            var renderer = new Renderer(axis, provider, map);
-            renderer.ModelSize = axis.ModelSize;
-
+            IntegratedAxisRenderer renderer = IntegratedAxisRenderer.Create();
             this.Renderer = renderer;
         }
 
@@ -44,13 +35,11 @@ namespace EMGraphics
             vec3 position = (camera.Position - camera.Target).normalize();
             mat4 view = glm.lookAt(position, new vec3(0, 0, 0), camera.UpVector);
             float length = Math.Max(this.Size.Width, this.Size.Height);
-            var renderer = this.Renderer as Renderer;
+            var renderer = this.Renderer as IntegratedAxisRenderer;
             vec3 rendererSize = renderer.ModelSize;
             vec3 scale = new vec3(length / rendererSize.x, length / rendererSize.y, length / rendererSize.z);
             mat4 model = glm.scale(mat4.identity(), scale);
-            renderer.SetUniform("projectionMatrix", projection);
-            renderer.SetUniform("viewMatrix", view);
-            renderer.SetUniform("modelMatrix", model);
+            renderer.SetMVP(projection * view * model);
 
             base.DoRender(arg);
         }
