@@ -13,6 +13,10 @@ namespace EMGraphics
     {
         public Color SeatColor { get; set; }
 
+        private int detail;
+
+        private float displacement;
+
         /// <summary>
         /// lengths of x/y/z axis.
         /// </summary>
@@ -20,13 +24,13 @@ namespace EMGraphics
         /// <param name="color"></param>
         /// <param name="detail"></param>
         /// <param name="displacement"></param>
-        public AxisSeat(float length, Color color, int detail = 10, float displacement = 0.1f)
+        public AxisSeat(float length, Color color, int detail = 10, float displacement = 0.05f)
         {
             this.ModelSize = new vec3(length, length, length);
             this.SeatColor = color;
             this.length = length;
             this.detail = detail;
-            this.desplacement = displacement;
+            this.displacement = displacement;
         }
 
         public const string strPosition = "position";
@@ -43,29 +47,35 @@ namespace EMGraphics
                 if (this.positionBuffer == null)
                 {
                     var vertexPositions = new vec3[1 + detail * 3 + 1];
-                    vertexPositions[0] = new vec3(0, 0, 0) * this.length / 2.0f;
+                    vertexPositions[0] = new vec3(0, 0, 0);
                     for (int i = 0; i < detail; i++)
                     {
                         vertexPositions[1 + i] = new vec3(
                             (float)Math.Cos(Math.PI / 2.0 * (double)i / (double)detail),
                             (float)Math.Sin(Math.PI / 2.0 * (double)i / (double)detail),
-                            0) * this.length / 2.0f;
+                            0);
                     }
                     for (int i = 0; i < detail; i++)
                     {
                         vertexPositions[1 + detail + i] = new vec3(
                             0,
                             (float)Math.Cos(Math.PI / 2.0 * (double)i / (double)detail),
-                            (float)Math.Sin(Math.PI / 2.0 * (double)i / (double)detail)) * this.length / 2.0f;
+                            (float)Math.Sin(Math.PI / 2.0 * (double)i / (double)detail));
                     }
                     for (int i = 0; i < detail; i++)
                     {
                         vertexPositions[1 + detail + detail + i] = new vec3(
                             (float)Math.Sin(Math.PI / 2.0 * (double)i / (double)detail),
                             0,
-                            (float)Math.Cos(Math.PI / 2.0 * (double)i / (double)detail)) * this.length / 2.0f;
+                            (float)Math.Cos(Math.PI / 2.0 * (double)i / (double)detail));
                     }
-                    vertexPositions[1 + detail * 3] = new vec3(1, 0, 0) * this.length / 2.0f;
+                    vertexPositions[1 + detail * 3] = new vec3(1, 0, 0);
+
+                    vec3 displace = new vec3(this.displacement, this.displacement, this.displacement) * 2;
+                    for (int i = 0; i < vertexPositions.Length; i++)
+                    {
+                        vertexPositions[i] = (vertexPositions[i] - displace) * this.length / 2.0f;
+                    }
 
                     this.positionBuffer = vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                 }
@@ -104,8 +114,5 @@ namespace EMGraphics
         public vec3 WorldPosition { get; set; }
 
 
-        public int detail { get; set; }
-
-        public float desplacement { get; set; }
     }
 }

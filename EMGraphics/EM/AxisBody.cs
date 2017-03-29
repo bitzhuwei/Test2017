@@ -51,33 +51,33 @@ namespace EMGraphics
                         vertexPositions[i * 2 + 0] = new vec3(
                             0,
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
-                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail))) * length / 2.0f;
                         vertexPositions[i * 2 + 1] = new vec3(
                             1,
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
-                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail))) * length / 2.0f;
                     }
                     for (int i = 0; i < (1 + detail); i++)
                     {
                         vertexPositions[singleBody + i * 2 + 0] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             0,
-                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail))) * length / 2.0f;
                         vertexPositions[singleBody + i * 2 + 1] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             1,
-                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)));
+                            (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail))) * length / 2.0f;
                     }
                     for (int i = 0; i < (1 + detail); i++)
                     {
                         vertexPositions[singleBody + singleBody + i * 2 + 0] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)),
-                            0);
+                            0) * length / 2.0f;
                         vertexPositions[singleBody + singleBody + i * 2 + 1] = new vec3(
                             (float)(radius * Math.Sin(Math.PI * 2 * (double)i / (double)detail)),
                             (float)(radius * Math.Cos(Math.PI * 2 * (double)i / (double)detail)),
-                            1);
+                            1) * length / 2.0f;
                     }
 
                     this.positionBuffer = vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
