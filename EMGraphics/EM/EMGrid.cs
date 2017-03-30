@@ -20,9 +20,8 @@ namespace EMGraphics
         /// <param name="normals"></param>
         /// <param name="triangles"></param>
         /// <param name="label"></param>
-        public EMGrid(vec3[] vertexPositions, vec3[] normals, Triangle[] triangles, string label)
+        public EMGrid(vec3[] vertexPositions, vec3[] normals, Triangle[] triangles, BoundingBox box, string label)
         {
-            BoundingBox box = vertexPositions.Move2Center();
             this.vertexPositions = vertexPositions;
             this.vertexNormals = normals;
             this.triangles = triangles;
@@ -63,37 +62,37 @@ namespace EMGraphics
 
         private int vertexCount;
 
-		public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
-		{
-			if (bufferName == strPosition)
-			{
-				if (this.positionBuffer == null)
-				{
-					this.positionBuffer = this.vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
-				}
-				return this.positionBuffer;
-			}
-			else if (bufferName == strNormal)
-			{
-				if (this.normalBuffer == null)
-				{
-					this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
-				}
-				return this.normalBuffer;
-			}
-			else if (bufferName == strCloudColor)
-			{
-				if (this.cloudColorBuffer == null)
-				{
-					this.cloudColorBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.DynamicDraw);
-				}
-				return this.cloudColorBuffer;
-			}
-			else
-			{
-				throw new NotImplementedException();
-			}
-		}
+        public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
+        {
+            if (bufferName == strPosition)
+            {
+                if (this.positionBuffer == null)
+                {
+                    this.positionBuffer = this.vertexPositions.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                }
+                return this.positionBuffer;
+            }
+            else if (bufferName == strNormal)
+            {
+                if (this.normalBuffer == null)
+                {
+                    this.normalBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
+                }
+                return this.normalBuffer;
+            }
+            else if (bufferName == strCloudColor)
+            {
+                if (this.cloudColorBuffer == null)
+                {
+                    this.cloudColorBuffer = this.vertexNormals.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.DynamicDraw);
+                }
+                return this.cloudColorBuffer;
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public IndexBuffer GetIndexBuffer()
         {

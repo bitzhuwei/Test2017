@@ -11,33 +11,33 @@ namespace EMGraphics
     /// <summary>
     /// 
     /// </summary>
-    public partial class EMGridRenderer 
+    public partial class EMGridRenderer
     {
 
-		private VertexBuffer cloudColorBuffer;
+        private VertexBuffer cloudColorBuffer;
 
-		protected override void DoInitialize()
-		{
-			base.DoInitialize();
+        protected override void DoInitialize()
+        {
+            base.DoInitialize();
 
-			this.cloudColorBuffer = this.DataSource.GetVertexAttributeBuffer(EMGrid.strCloudColor, string.Empty);
-		}
+            this.cloudColorBuffer = this.DataSource.GetVertexAttributeBuffer(EMGrid.strCloudColor, string.Empty);
+        }
 
-		public unsafe void UpdateCloud(IList<float> propertyValues, CodedColorArray colorPalette)
-		{
-			VertexBuffer cloudColorBuffer = this.cloudColorBuffer;
-			IntPtr pointer = cloudColorBuffer.MapBuffer(MapBufferAccess.WriteOnly);
-			if (pointer == IntPtr.Zero) { return; }
+        public unsafe void UpdateCloud(IList<float> propertyValues, CodedColorArray colorPalette)
+        {
+            VertexBuffer cloudColorBuffer = this.cloudColorBuffer;
+            IntPtr pointer = cloudColorBuffer.MapBuffer(MapBufferAccess.WriteOnly);
+            if (pointer == IntPtr.Zero) { return; }
 
-			int length = cloudColorBuffer.Length;
-			vec3* array = (vec3*)pointer.ToPointer();
-			for (int i = 0; i < length; i++)
-			{
-				Color c = colorPalette.Map2Color(propertyValues[i]);
-				array[i] = c.ToVec3();
-			}
+            int length = cloudColorBuffer.Length;
+            vec3* array = (vec3*)pointer.ToPointer();
+            for (int i = 0; i < length && i < propertyValues.Count; i++)
+            {
+                Color c = colorPalette.Map2Color(propertyValues[i]);
+                array[i] = c.ToVec3();
+            }
 
-			cloudColorBuffer.UnmapBuffer();
-		}
-	}
+            cloudColorBuffer.UnmapBuffer();
+        }
+    }
 }

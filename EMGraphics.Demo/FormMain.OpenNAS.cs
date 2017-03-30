@@ -34,8 +34,11 @@ namespace EMGraphics.Demo
                 {
                     SceneObject wholeObject = GetWholeObject(
                         dataSource.VertexPositions, dataSource.VertexNormals,
-                        dataSource.Triangles, center);
+                        dataSource.Triangles, dataSource.Box, center);
+                    this.wholeObject = wholeObject;
                     this.scene.RootObject.Children.Add(wholeObject);
+                }
+                {
                     BoundingBoxRenderer renderer = BoundingBoxRenderer.Create(
                         (box.MaxPosition - box.MinPosition) * 1.1f);
                     //renderer.WorldPosition = center;
@@ -44,7 +47,8 @@ namespace EMGraphics.Demo
                     SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(boxObj);
                     this.boxObject = boxObj;
-                    this.wholeObject = wholeObject;
+                }
+                {
                     SceneObject wholeNormal = GetWholeNormal(
                         dataSource.FaceNormalPositions,
                         dataSource.FaceNormalDirections,
@@ -148,9 +152,9 @@ namespace EMGraphics.Demo
         }
 
         private SceneObject GetWholeObject(
-            vec3[] positions, vec3[] normals, Triangle[] triangles, vec3 center)
+            vec3[] positions, vec3[] normals, Triangle[] triangles, BoundingBox box, vec3 center)
         {
-            var grid = new EMGrid(positions, normals, triangles, "Whole Model");
+            var grid = new EMGrid(positions, normals, triangles, box, "Whole Model");
             var renderer = EMGridRenderer.Create(grid);
             renderer.WorldPosition = center;
             //renderer.Initialize();
@@ -167,7 +171,7 @@ namespace EMGraphics.Demo
             {
                 EMGrid grid = gridList[i];
                 EMGridRenderer renderer = EMGridRenderer.Create(grid);
-                renderer.WorldPosition += center;
+                renderer.WorldPosition = center;
                 //renderer.Initialize();
                 SceneObject obj = renderer.WrapToSceneObject(string.Format(
                     "Mesh [{0}/{1}]", i + 1, gridList.Count), generateBoundingBox: false);
