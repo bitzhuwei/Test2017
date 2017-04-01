@@ -373,6 +373,10 @@
     <Compile Include="Canvas\Win32API\WNDCLASSEX.cs" />
     <Compile Include="Canvas\Win32API\WndProc.cs" />
     <Compile Include="EM\AxisBody.cs" />
+    <Compile Include="EM\CenterAxisLabelRenderer\CenterAxisLabelRenderer.cs" />
+    <Compile Include="EM\CenterAxisLabelRenderer\CenterAxisLabelRenderer.DoInitialize.cs" />
+    <Compile Include="EM\CenterAxisLabelRenderer\CenterAxisLabelRenderer.DoRender.cs" />
+    <Compile Include="EM\CenterAxisLabelRenderer\CenterAxisLabelRenderer.Property.cs" />
     <Compile Include="EM\IntegratedAxisRenderer.cs" />
     <Compile Include="EM\AxisSeat.cs" />
     <Compile Include="EM\AxisBodyRenderer.cs" />

@@ -85,29 +85,29 @@ namespace EMGraphics.Demo
 
             const float deltaDistance = 0.05f;
             {
-                var renderer = LabelRenderer.Create(1, 32);
+                var renderer = CenterAxisLabelRenderer.Create(1, 32);
                 renderer.Text = "X";
                 renderer.TextColor = Color.Blue;
                 renderer.KeepFront = true;
-                renderer.WorldPosition = new vec3(max / 2.0f + deltaDistance, 0, 0);
+                renderer.WorldPosition = new vec3(max / 4.0f + deltaDistance, 0, 0);
                 SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                 this.scene.RootObject.Children.Add(obj);
             }
             {
-                var renderer = LabelRenderer.Create(1, 32);
+                var renderer = CenterAxisLabelRenderer.Create(1, 32);
                 renderer.Text = "Y";
                 renderer.TextColor = Color.Green;
                 renderer.KeepFront = true;
-                renderer.WorldPosition = new vec3(0, max / 2.0f + deltaDistance, 0);
+                renderer.WorldPosition = new vec3(0, max / 4.0f + deltaDistance, 0);
                 SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                 this.scene.RootObject.Children.Add(obj);
             }
             {
-                var renderer = LabelRenderer.Create(1, 32);
+                var renderer = CenterAxisLabelRenderer.Create(1, 32);
                 renderer.Text = "Z";
                 renderer.TextColor = Color.Red;
                 renderer.KeepFront = true;
-                renderer.WorldPosition = new vec3(0, 0, max / 2.0f + deltaDistance);
+                renderer.WorldPosition = new vec3(0, 0, max / 4.0f + deltaDistance);
                 SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                 this.scene.RootObject.Children.Add(obj);
             }
