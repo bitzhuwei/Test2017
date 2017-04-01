@@ -39,22 +39,9 @@ namespace EMGraphics
 
         LineStippleState lineStippleState = new LineStippleState();
 
-        private bool firstRendering = true;
-        float left, right, bottom, top, near, far;
-
         protected override void DoRender(RenderEventArgs arg)
         {
-            if (this.firstRendering)
-            {
-                IOrthoViewCamera camera = arg.Camera;
-                this.left = (float)camera.Left;
-                this.right = (float)camera.Right;
-                this.bottom = (float)camera.Bottom;
-                this.top = (float)camera.Top;
-                this.near = (float)camera.Near;
-                this.far = (float)camera.Far;
-                this.firstRendering = false;
-            }
+            const float left = -1, bottom = -1, right = 1, top = 1, near = -100, far = 100;
             mat4 projection;
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
