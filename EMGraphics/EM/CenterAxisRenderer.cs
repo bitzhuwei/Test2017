@@ -21,12 +21,12 @@ namespace EMGraphics
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\CenterAxis.vert"), ShaderType.VertexShader);
             shaderCodes[1] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\CenterAxis.frag"), ShaderType.FragmentShader);
-			var provider = new ShaderCodeArray(shaderCodes);
+            var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
             map.Add("inPosition", CenterAxis.strPosition);
             map.Add("inColor", CenterAxis.strColor);
             var renderer = new CenterAxisRenderer(model, provider, map);
-			renderer.ModelSize = model.ModelSize;
+            renderer.ModelSize = model.ModelSize;
 
             return renderer;
         }
@@ -39,11 +39,47 @@ namespace EMGraphics
 
         LineStippleState lineStippleState = new LineStippleState();
 
+        private bool firstRendering = true;
+        float left, right, bottom, top, near, far;
+
         protected override void DoRender(RenderEventArgs arg)
         {
-            mat4 projection = arg.Camera.GetProjectionMatrix();
+            if (this.firstRendering)
+            {
+                IOrthoViewCamera camera = arg.Camera;
+                this.left = (float)camera.Left;
+                this.right = (float)camera.Right;
+                this.bottom = (float)camera.Bottom;
+                this.top = (float)camera.Top;
+                this.near = (float)camera.Near;
+                this.far = (float)camera.Far;
+                this.firstRendering = false;
+            }
+            mat4 projection;
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
+            {
+                IOrthoViewCamera camera = arg.Camera;
+                float newBottom = (float)camera.Bottom;
+                float newTop = (float)camera.Top;
+                float newLeft = (float)camera.Left;
+                float newRight = (float)camera.Right;
+                float newWidth = newRight - newLeft;
+                float newHeight = newTop - newBottom;
+                if (newWidth >= newHeight)
+                {
+                    float w = newWidth / newHeight * (top - bottom);
+                    projection = glm.ortho(-w / 2.0f, w / 2.0f, bottom, top, near, far);
+                }
+                else
+                {
+                    float h = newHeight / newWidth * (right - left);
+                    projection = glm.ortho(left, right, -h / 2.0f, h / 2.0f, near, far);
+                }
+            }
+            int[] viewport = OpenGL.GetViewport();
+            //mat4 projection = arg.Camera.GetProjectionMatrix();
+            //mat4 projection = glm.ortho(left, right, bottom, top, near, far);
             this.SetUniform("mvpMatrix", projection * view * model);
 
             base.DoRender(arg);
