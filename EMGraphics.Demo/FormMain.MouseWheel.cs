@@ -20,6 +20,13 @@ namespace EMGraphics.Demo
         /// <param name="e"></param>
         private void GlCanvas1_MouseWheel(object sender, MouseEventArgs e)
         {
+            ICanvas canvas = sender as ICanvas;
+            Point mousePosition = e.Location;
+            ScaleObject(e);
+        }
+
+        private void ScaleObject(MouseEventArgs e)
+        {
             float factor = 1000.0f;
             {
                 SceneObject obj = this.wholeObject;

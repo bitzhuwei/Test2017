@@ -64,9 +64,6 @@ namespace EMGraphics
                     projection = glm.ortho(left, right, -h / 2.0f, h / 2.0f, near, far);
                 }
             }
-            int[] viewport = OpenGL.GetViewport();
-            //mat4 projection = arg.Camera.GetProjectionMatrix();
-            //mat4 projection = glm.ortho(left, right, bottom, top, near, far);
             this.SetUniform("mvpMatrix", projection * view * model);
 
             base.DoRender(arg);
