@@ -20,6 +20,7 @@ namespace EMGraphics.Demo
         /// <param name="e"></param>
         private void GlCanvas1_MouseWheel(object sender, MouseEventArgs e)
         {
+            // scale projection state according to mouse's position.
             ICanvas canvas = sender as ICanvas;
             Point mousePosition = e.Location;
             Size size = canvas.ClientRectangle.Size;
