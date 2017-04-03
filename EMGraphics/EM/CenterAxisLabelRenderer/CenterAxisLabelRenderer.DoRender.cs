@@ -41,10 +41,9 @@
             int[] viewport = OpenGL.GetViewport();
             this.SetUniform("viewportSize", new vec2(viewport[2], viewport[3]));
             {
-                const float left = -1, bottom = -1, right = 1, top = 1, near = -100, far = 100;
-                mat4 projection;
+                const float deltaDistance = 0.05f;
+                mat4 projection = arg.Camera.GetProjectionMatrix();
                 mat4 view = arg.Camera.GetViewMatrix();
-                mat4 model = this.GetModelMatrix().Value;
                 {
                     IOrthoViewCamera camera = arg.Camera;
                     float newBottom = (float)camera.Bottom;
@@ -55,24 +54,52 @@
                     float newHeight = newTop - newBottom;
                     if (newWidth >= newHeight)
                     {
-                        float w = newWidth / newHeight * (top - bottom);
-                        float leftPercent = (0 - newLeft) / newWidth;
-                        float bottomPercent = (0 - newBottom) / newHeight;
-                        projection = glm.ortho(-w * leftPercent, w * (1 - leftPercent),
-                            -(top - bottom) * bottomPercent, (top - bottom) * (1 - bottomPercent), near, far);
+                        float scale = newHeight / 2.0f;
+                        this.WorldPosition = this.StandardOffset * scale;
                     }
                     else
                     {
-                        float h = newHeight / newWidth * (right - left);
-                        float leftPercent = (0 - newLeft) / newWidth;
-                        float bottomPercent = (0 - newBottom) / newHeight;
-                        projection = glm.ortho(-(right - left) * leftPercent, (right - left) * (1 - leftPercent),
-                            -h * bottomPercent, h * (1 - bottomPercent), near, far);
+                        float scale = newWidth / 2.0f;
+                        this.WorldPosition = this.StandardOffset * scale;
                     }
-                    this.SetUniform("projection", projection);
-                    this.SetUniform("view", view * model);
                 }
+                mat4 model = this.GetModelMatrix().Value;
+                this.SetUniform("projection", projection);
+                this.SetUniform("view", view * model);
             }
+            //{
+            //    const float left = -1, bottom = -1, right = 1, top = 1, near = -100, far = 100;
+            //    mat4 projection;
+            //    mat4 view = arg.Camera.GetViewMatrix();
+            //    mat4 model = this.GetModelMatrix().Value;
+            //    {
+            //        IOrthoViewCamera camera = arg.Camera;
+            //        float newBottom = (float)camera.Bottom;
+            //        float newTop = (float)camera.Top;
+            //        float newLeft = (float)camera.Left;
+            //        float newRight = (float)camera.Right;
+            //        float newWidth = newRight - newLeft;
+            //        float newHeight = newTop - newBottom;
+            //        if (newWidth >= newHeight)
+            //        {
+            //            float w = newWidth / newHeight * (top - bottom);
+            //            float leftPercent = (0 - newLeft) / newWidth;
+            //            float bottomPercent = (0 - newBottom) / newHeight;
+            //            projection = glm.ortho(-w * leftPercent, w * (1 - leftPercent),
+            //                -(top - bottom) * bottomPercent, (top - bottom) * (1 - bottomPercent), near, far);
+            //        }
+            //        else
+            //        {
+            //            float h = newHeight / newWidth * (right - left);
+            //            float leftPercent = (0 - newLeft) / newWidth;
+            //            float bottomPercent = (0 - newBottom) / newHeight;
+            //            projection = glm.ortho(-(right - left) * leftPercent, (right - left) * (1 - leftPercent),
+            //                -h * bottomPercent, h * (1 - bottomPercent), near, far);
+            //        }
+            //        this.SetUniform("projection", projection);
+            //        this.SetUniform("view", view * model);
+            //    }
+            //}
 
             if (this.KeepFront)
             {

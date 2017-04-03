@@ -12,7 +12,7 @@
         /// <param name="labelHeight">Label height(in pixels)</param>
         /// <param name="fontTexture">Use which font to render text?</param>
         /// <returns></returns>
-        public static AxisLabelRenderer Create(int maxCharCount = 64, int labelHeight = 32, IFontTexture fontTexture = null)
+        public static AxisLabelRenderer Create(int maxCharCount = 64, int labelHeight = 20, IFontTexture fontTexture = null)
         {
             if (fontTexture == null) { fontTexture = FontTexture.Default; }
 

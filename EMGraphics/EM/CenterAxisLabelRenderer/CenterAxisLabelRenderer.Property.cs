@@ -45,6 +45,8 @@ namespace EMGraphics
 
         #endregion Text
 
+        public vec3 StandardOffset { get; set; }
+
         public bool KeepFront { get; set; }
 
         #region discard
