@@ -97,7 +97,7 @@ namespace EMGraphics.Demo
                         this.scene.RootObject.Children.Add(obj);
                     }
 
-                    const float deltaDistance = 0.05f;
+                    const float deltaDistance = 0.025f;
                     {
                         var renderer = CenterAxisLabelRenderer.Create(1, 32);
                         renderer.Text = "X";

@@ -41,7 +41,7 @@ namespace EMGraphics
 
         protected override void DoRender(RenderEventArgs arg)
         {
-            const float left = -1, bottom = -1, right = 1, top = 1, near = -100, far = 100;
+            const float left = -1, bottom = -1, right = 1, top = 1, near = int.MinValue, far = int.MaxValue;
             mat4 projection = arg.Camera.GetProjectionMatrix();
             mat4 view = arg.Camera.GetViewMatrix();
             {

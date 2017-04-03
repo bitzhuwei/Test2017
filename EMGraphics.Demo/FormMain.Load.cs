@@ -33,7 +33,7 @@ namespace EMGraphics.Demo
             }
             {
                 var uiAxis = new UIAxis(AnchorStyles.Left | AnchorStyles.Bottom,
-                    new Padding(3, 3, 3, 3), new Size(128, 128));
+                    new Padding(3, 3, 3, 3), new Size(80, 80));
                 this.scene.RootUI.Children.Add(uiAxis);
             }
             {
@@ -83,7 +83,7 @@ namespace EMGraphics.Demo
                 this.scene.RootObject.Children.Add(obj);
             }
 
-            const float deltaDistance = 0.05f;
+            const float deltaDistance = 0.025f;
             {
                 var renderer = CenterAxisLabelRenderer.Create(1, 32);
                 renderer.Text = "X";
