@@ -41,7 +41,6 @@
             int[] viewport = OpenGL.GetViewport();
             this.SetUniform("viewportSize", new vec2(viewport[2], viewport[3]));
             {
-                const float deltaDistance = 0.05f;
                 mat4 projection = arg.Camera.GetProjectionMatrix();
                 mat4 view = arg.Camera.GetViewMatrix();
                 {
