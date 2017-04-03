@@ -56,12 +56,18 @@
                     if (newWidth >= newHeight)
                     {
                         float w = newWidth / newHeight * (top - bottom);
-                        projection = glm.ortho(-w / 2.0f, w / 2.0f, bottom, top, near, far);
+                        float leftPercent = (0 - newLeft) / newWidth;
+                        float bottomPercent = (0 - newBottom) / newHeight;
+                        projection = glm.ortho(-w * leftPercent, w * (1 - leftPercent),
+                            -(top - bottom) * bottomPercent, (top - bottom) * (1 - bottomPercent), near, far);
                     }
                     else
                     {
                         float h = newHeight / newWidth * (right - left);
-                        projection = glm.ortho(left, right, -h / 2.0f, h / 2.0f, near, far);
+                        float leftPercent = (0 - newLeft) / newWidth;
+                        float bottomPercent = (0 - newBottom) / newHeight;
+                        projection = glm.ortho(-(right - left) * leftPercent, (right - left) * (1 - leftPercent),
+                            -h * bottomPercent, h * (1 - bottomPercent), near, far);
                     }
                     this.SetUniform("projection", projection);
                     this.SetUniform("view", view * model);
