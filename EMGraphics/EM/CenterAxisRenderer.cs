@@ -42,8 +42,7 @@ namespace EMGraphics
         protected override void DoRender(RenderEventArgs arg)
         {
             const float left = -1, bottom = -1, right = 1, top = 1, near = int.MinValue, far = int.MaxValue;
-            mat4 projection = arg.Camera.GetProjectionMatrix();
-            mat4 view = arg.Camera.GetViewMatrix();
+            mat4 projection;
             {
                 IOrthoViewCamera camera = arg.Camera;
                 float newBottom = (float)camera.Bottom;
@@ -54,15 +53,18 @@ namespace EMGraphics
                 float newHeight = newTop - newBottom;
                 if (newWidth >= newHeight)
                 {
-                    float scale = newHeight / 2.0f;
-                    this.Scale = new vec3(scale, scale, scale);
+                    float scale = (top - bottom) / newHeight;
+                    projection = glm.ortho(newLeft * scale, newRight * scale,
+                        newBottom * scale, newTop * scale, near, far);
                 }
                 else
                 {
-                    float scale = newWidth / 2.0f;
-                    this.Scale = new vec3(scale, scale, scale);
+                    float scale = (right - left) / newWidth;
+                    projection = glm.ortho(newLeft * scale, newRight * scale,
+                        newBottom * scale, newTop * scale, near, far);
                 }
             }
+            mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
             this.SetUniform("mvpMatrix", projection * view * model);
 
