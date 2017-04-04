@@ -29,8 +29,8 @@ namespace EMGraphics
         /// </summary>
         public ScreenTranslateManipulater(MouseButtons bindingMouseButtons = MouseButtons.Middle)
         {
-            this.HorizontalRotationFactor = 0.001f;
-            this.VerticalRotationFactor = 0.001f;
+            this.HorizontalTranslateFactor = 0.001f;
+            this.VerticalTranslateFactor = 0.001f;
             this.BindingMouseButtons = bindingMouseButtons;
             this.mouseDownEvent = new MouseEventHandler(((IMouseHandler)this).canvas_MouseDown);
             this.mouseMoveEvent = new MouseEventHandler(((IMouseHandler)this).canvas_MouseMove);
@@ -45,12 +45,12 @@ namespace EMGraphics
         /// <summary>
         ///
         /// </summary>
-        public float HorizontalRotationFactor { get; set; }
+        public float HorizontalTranslateFactor { get; set; }
 
         /// <summary>
         ///
         /// </summary>
-        public float VerticalRotationFactor { get; set; }
+        public float VerticalTranslateFactor { get; set; }
 
         /// <summary>
         ///
@@ -82,29 +82,22 @@ namespace EMGraphics
             if (this.mouseDownFlag
                 && ((e.Button & this.lastBindingMouseButtons) != MouseButtons.None))
             {
-                IViewCamera camera = this.camera;
+                IOrthoCamera camera = this.camera;
                 if (camera == null) { return; }
 
                 Point newPosition = e.Location;
                 int diffX = newPosition.X - this.lastPosition.X;
                 int diffY = newPosition.Y - this.lastPosition.Y;
-                mat4 viewMatrix = this.camera.GetViewMatrix();
-                mat4 projectionMatrix = this.camera.GetProjectionMatrix();
-                vec3 cameraPosition = this.camera.Position;
-                vec4 viewport;
-                {
-                    int[] tmp = OpenGL.GetViewport();
-                    viewport = new vec4(tmp[0], tmp[1], tmp[2], tmp[3]);
-                }
-                vec3 windowPos = glm.project(cameraPosition,
-                        viewMatrix, projectionMatrix, viewport);
-                var newWindowPos = new vec3(windowPos.x - diffX,
-                    windowPos.y + diffY, windowPos.z);
-                vec3 newCameraPosition = glm.unProject(newWindowPos,
-                    viewMatrix, projectionMatrix, viewport);
-                vec3 cameraDiff = newCameraPosition - cameraPosition;
-                this.camera.Position = newCameraPosition;
-                this.camera.Target += cameraDiff;
+                int canvasWidth = this.canvas.ClientRectangle.Width;
+                int canvasHeight = this.canvas.ClientRectangle.Height;
+                double widthDiffPercent = (double)diffX / (double)canvasWidth;
+                double heightDiffPercent = (double)diffY / (double)canvasHeight;
+                double cameraWidth = camera.Right - camera.Left;
+                double cameraHeibht = camera.Top - camera.Bottom;
+                double moveX = cameraWidth * widthDiffPercent;
+                double moveY = cameraHeibht * heightDiffPercent;
+                camera.Left -= moveX; camera.Right -= moveX;
+                camera.Bottom += moveY; camera.Top += moveY;
 
                 this.lastPosition = newPosition;
 
