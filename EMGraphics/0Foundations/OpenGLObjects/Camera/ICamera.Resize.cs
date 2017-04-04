@@ -28,8 +28,9 @@ namespace EMGraphics
                     double lastWidth = orthoCamera.Right - orthoCamera.Left;
                     double widthRatio = ((double)currentSize.Width) / ((double)lastSize.Width);
                     double currentWidth = lastWidth * widthRatio;
-                    orthoCamera.Left = -currentWidth / 2.0;
-                    orthoCamera.Right = currentWidth / 2.0;
+                    double center = (orthoCamera.Left + orthoCamera.Right) / 2.0 * widthRatio;
+                    orthoCamera.Left = center - currentWidth / 2.0;
+                    orthoCamera.Right = center + currentWidth / 2.0;
                 }
 
                 if (lastSize.Height != currentSize.Height)
@@ -37,8 +38,9 @@ namespace EMGraphics
                     double lastHeight = orthoCamera.Top - orthoCamera.Bottom;
                     double heightRatio = ((double)currentSize.Height) / ((double)lastSize.Height);
                     double currentHeight = lastHeight * heightRatio;
-                    orthoCamera.Bottom = -currentHeight / 2.0;
-                    orthoCamera.Top = currentHeight / 2.0;
+                    double center = (orthoCamera.Bottom + orthoCamera.Top) / 2.0 * heightRatio;
+                    orthoCamera.Bottom = center - currentHeight / 2.0;
+                    orthoCamera.Top = center + currentHeight / 2.0;
                 }
                 //if (aspectRatio > lastAspectRatio)
                 //{
