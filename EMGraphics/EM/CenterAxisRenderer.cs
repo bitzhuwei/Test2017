@@ -82,11 +82,12 @@ namespace EMGraphics
                 }
             }
             this.SetUniform("mvpMatrix", projection * view * model);
+            base.DoRender(arg);
 
             lineStippleState.On();
             // 把所有在此之前渲染的内容都推到最远。
             // Push all rendered stuff to farest position.
-            OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
+            //OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
             base.DoRender(arg);
             lineStippleState.Off();
         }

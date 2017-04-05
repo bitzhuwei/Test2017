@@ -3,11 +3,18 @@ using System.IO;
 
 namespace EMGraphics
 {
-    public class PointSpriteRenderer : Renderer
+    public enum CenterAxisLabelDirection
+    {
+        X,
+        Y,
+        Z,
+    }
+    public class CenterAxisLabelRenderer : Renderer
     {
         private Texture spriteTexture;
+        private CenterAxisLabelDirection direction;
 
-        public static PointSpriteRenderer Create()
+        public static CenterAxisLabelRenderer Create(CenterAxisLabelDirection direction)
         {
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\PointSprite.vert"), ShaderType.VertexShader);
@@ -15,14 +22,15 @@ namespace EMGraphics
             var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
             map.Add("position", PointSpriteModel.strposition);
-            var model = new PointSpriteModel();
-            var renderer = new PointSpriteRenderer(model, provider, map, new PointSpriteState());
+            var model = new PointSpriteModel(direction);
+            var renderer = new CenterAxisLabelRenderer(model, provider, map, new PointSpriteState());
             renderer.ModelSize = model.Lengths;
+            renderer.direction = direction;
 
             return renderer;
         }
 
-        public PointSpriteRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
+        public CenterAxisLabelRenderer(IBufferable model, IShaderProgramProvider shaderProgramProvider,
             AttributeMap attributeMap, params GLState[] switches)
             : base(model, shaderProgramProvider, attributeMap, switches)
         {
@@ -30,15 +38,14 @@ namespace EMGraphics
 
         protected override void DoInitialize()
         {
-            {
-                // This is the texture that the compute program will write into
-                var bitmap = ManifestResourceLoader.LoadBitmap(@"EM\Textures\PointSprite.png");
-                var texture = new Texture(TextureTarget.Texture2D, bitmap, new SamplerParameters());
-                texture.Initialize();
-                bitmap.Dispose();
-                this.spriteTexture = texture;
-            }
             base.DoInitialize();
+            // This is the texture that the compute program will write into
+            var bitmap = ManifestResourceLoader.LoadBitmap(string.Format(@"EM\Textures\{0}.png", this.direction));
+            var texture = new Texture(TextureTarget.Texture2D, bitmap, new SamplerParameters());
+            texture.Initialize();
+            bitmap.Dispose();
+            this.spriteTexture = texture;
+
             this.SetUniform("spriteTexture", this.spriteTexture);
             this.SetUniform("factor", 50.0f);
         }
@@ -85,6 +92,7 @@ namespace EMGraphics
                 }
             }
             this.SetUniform("mvp", projection * view * model);
+            base.DoRender(arg);
 
             // 把所有在此之前渲染的内容都推到最远。
             // Push all rendered stuff to farest position.
@@ -105,10 +113,17 @@ namespace EMGraphics
             {
             }
 
+            public PointSpriteModel(CenterAxisLabelDirection direction)
+            {
+                // TODO: Complete member initialization
+                this.direction = direction;
+            }
+
             public const string strposition = "position";
             private VertexBuffer positionBuffer = null;
             private IndexBuffer indexBuffer;
             private float factor = 1;
+            private CenterAxisLabelDirection direction;
 
             public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
             {
