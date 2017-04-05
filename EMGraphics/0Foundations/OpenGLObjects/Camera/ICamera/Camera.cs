@@ -51,8 +51,8 @@ namespace EMGraphics
             orthoCamera.Right = width / 2 / factor;
             orthoCamera.Bottom = -height / 2 / factor;
             orthoCamera.Top = height / 2 / factor;
-            orthoCamera.Near = int.MinValue;
-            orthoCamera.Far = int.MaxValue;
+            orthoCamera.Near = -100000;
+            orthoCamera.Far = 100000;
 
             this.CameraType = cameraType;
         }
