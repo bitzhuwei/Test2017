@@ -41,9 +41,9 @@ namespace EMGraphics.Demo
                 {
                     BoundingBoxRenderer renderer = BoundingBoxRenderer.Create(
                         (box.MaxPosition - box.MinPosition) * 1.1f);
-                    //renderer.WorldPosition = center;
                     renderer.BoundingBoxColor = Color.FromArgb(255, 211, 211, 211);
                     renderer.Scale = new vec3(1, 1, 0);
+                    renderer.WorldPosition = center;
                     SceneObject boxObj = renderer.WrapToSceneObject(generateBoundingBox: false);
                     this.scene.RootObject.Children.Add(boxObj);
                     this.boxObject = boxObj;
@@ -93,6 +93,7 @@ namespace EMGraphics.Demo
                     {
                         var model = new CenterAxis(max);
                         CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
+                        renderer.WorldPosition = center;
                         SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                         this.scene.RootObject.Children.Add(obj);
                     }

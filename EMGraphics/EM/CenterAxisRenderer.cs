@@ -12,6 +12,12 @@ namespace EMGraphics
     /// </summary>
     public class CenterAxisRenderer : Renderer
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public vec3 ProjectionCenter { get; set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -42,7 +48,11 @@ namespace EMGraphics
         protected override void DoRender(RenderEventArgs arg)
         {
             const float left = -1, bottom = -1, right = 1, top = 1, near = int.MinValue, far = int.MaxValue;
-            mat4 projection;
+            mat4 projection = arg.Camera.GetProjectionMatrix();
+            mat4 view = arg.Camera.GetViewMatrix();
+            mat4 model = this.GetModelMatrix().Value;
+            int[] viewport = OpenGL.GetViewport();
+            vec3 windowCoord = glm.project(this.ProjectionCenter, view * model, projection, new vec4(viewport[0], viewport[1], viewport[2], viewport[3]));
             {
                 IOrthoViewCamera camera = arg.Camera;
                 float newBottom = (float)camera.Bottom;
@@ -53,19 +63,29 @@ namespace EMGraphics
                 float newHeight = newTop - newBottom;
                 if (newWidth >= newHeight)
                 {
-                    float scale = (top - bottom) / newHeight;
-                    projection = glm.ortho(newLeft * scale, newRight * scale,
-                        newBottom * scale, newTop * scale, near, far);
+                    float leftPercent = (windowCoord.x - 0) / (float)arg.CanvasRect.Width;
+                    float bottomPercent = (windowCoord.y - 0) / (float)arg.CanvasRect.Height;
+                    float scale = newWidth / newHeight;
+                    projection = glm.ortho(
+                        -leftPercent * (top - bottom) * scale,
+                        (1 - leftPercent) * (top - bottom) * scale,
+                        -bottomPercent * (top - bottom),
+                        (1 - bottomPercent) * (top - bottom),
+                        near, far);
                 }
                 else
                 {
-                    float scale = (right - left) / newWidth;
-                    projection = glm.ortho(newLeft * scale, newRight * scale,
-                        newBottom * scale, newTop * scale, near, far);
+                    float leftPercent = (windowCoord.x - 0) / (float)arg.CanvasRect.Width;
+                    float bottomPercent = (windowCoord.y - 0) / (float)arg.CanvasRect.Height;
+                    float scale = newHeight / newWidth;
+                    projection = glm.ortho(
+                        -leftPercent * (right - left),
+                        (1 - leftPercent) * (right - left),
+                        -bottomPercent * (right - left) * scale,
+                        (1 - bottomPercent) * (right - left) * scale,
+                        near, far);
                 }
             }
-            mat4 view = arg.Camera.GetViewMatrix();
-            mat4 model = this.GetModelMatrix().Value;
             this.SetUniform("mvpMatrix", projection * view * model);
 
             base.DoRender(arg);

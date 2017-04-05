@@ -27,7 +27,7 @@ namespace EMGraphics
             this.triangles = triangles;
             this.Label = label;
             this.ModelSize = box.MaxPosition - box.MinPosition;
-            this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
+            //this.WorldPosition = box.MaxPosition / 2.0f + box.MinPosition / 2.0f;
             this.RotationAngleDegree = 0;
             this.RotationAxis = new vec3(0, 1, 0);
             this.Scale = new vec3(1, 1, 1);

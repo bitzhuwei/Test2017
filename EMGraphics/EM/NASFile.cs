@@ -20,7 +20,7 @@ namespace EMGraphics
 
         public vec3[] VertexNormals { get; private set; }
 
-		public BoundingBox Box { get; private set; }
+        public BoundingBox Box { get; private set; }
 
         /// <summary>
         /// triangles in this *.nas file.
@@ -33,7 +33,8 @@ namespace EMGraphics
 
         private NASFile(vec3[] vertexPositions, Triangle[] triangles)
         {
-            this.Box = vertexPositions.Move2Center();
+            //this.Box = vertexPositions.Move2Center();
+            this.Box = vertexPositions.GetBoundingBox();
             this.VertexPositions = vertexPositions;
             this.Triangles = triangles;
             var veretxNormals = new vec3[vertexPositions.Length];
@@ -113,79 +114,79 @@ namespace EMGraphics
                     }
 
                     parts = line.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-					if (line.Length >= 5 && line.Substring(0, 5) == "GRID*")//观察导出文件的格式,当遇到*号时,开始解读点的坐标,反之就是网格的信息
-					{
-						if (flagPointIndexMin)
-						{
-							pointIndexMin = int.Parse(parts[1]);
-							flagPointIndexMin = false;
-						}
+                    if (line.Length >= 5 && line.Substring(0, 5) == "GRID*")//观察导出文件的格式,当遇到*号时,开始解读点的坐标,反之就是网格的信息
+                    {
+                        if (flagPointIndexMin)
+                        {
+                            pointIndexMin = int.Parse(parts[1]);
+                            flagPointIndexMin = false;
+                        }
 
-						if (parts.Length == 5)//GRID*              26176                -8.088764491E-01 5.021697901E-02   26176
-						{
-							x = float.Parse(parts[2]);
-							y = float.Parse(parts[3]);
-						}
-						else//GRID*              26182                -6.270781884E-01-4.699668723E-02   26182
-						{
-							string xy = parts[2];
-							if (xy.Substring(0, 1) == "-")
-							{
-								x = float.Parse(xy.Substring(0, 16));
-								y = float.Parse(xy.Substring(16));
-							}
-							else
-							{
-								x = float.Parse(xy.Substring(0, 15));
-								y = float.Parse(xy.Substring(15));
-							}
-						}
-					}
-					else if (line.Length >= 1 && line.Substring(0, 1) == "*")//提取Z坐标
-					{
-						string last = parts[parts.Length - 1];
-						if (last.Length == 15)// 正数或零
-						{ z = float.Parse(last); }
-						else// 负数
-						{ z = float.Parse(last.Substring(last.Length - 16)); }
-						points.Add(new vec3(x, y, z));
-					}
-					else if (line.Length >= 5 && line.Substring(0, 5) == "CTRIA")
-					{
-						string label = parts[2];
-						int hash = label.GetHashCode();
-						ctria1 = int.Parse(parts[3]) - pointIndexMin;//第一个点
-						ctria2 = int.Parse(parts[4]) - pointIndexMin;//第二个点
-						ctria3 = int.Parse(parts[5]) - pointIndexMin;//第三个点
-						var triangle = new Triangle(ctria1, ctria2, ctria3, label);
-						//triangle.IndexOfTriangles = triangles.Count;
-						//triangles.Add(triangle);
-						int index = 0;
-						while (index < triangles.Count && triangles[index].LabelHash > hash)
-						{
-							index++;
-						}
-						triangles.Insert(index, triangle);
-					}
+                        if (parts.Length == 5)//GRID*              26176                -8.088764491E-01 5.021697901E-02   26176
+                        {
+                            x = float.Parse(parts[2]);
+                            y = float.Parse(parts[3]);
+                        }
+                        else//GRID*              26182                -6.270781884E-01-4.699668723E-02   26182
+                        {
+                            string xy = parts[2];
+                            if (xy.Substring(0, 1) == "-")
+                            {
+                                x = float.Parse(xy.Substring(0, 16));
+                                y = float.Parse(xy.Substring(16));
+                            }
+                            else
+                            {
+                                x = float.Parse(xy.Substring(0, 15));
+                                y = float.Parse(xy.Substring(15));
+                            }
+                        }
+                    }
+                    else if (line.Length >= 1 && line.Substring(0, 1) == "*")//提取Z坐标
+                    {
+                        string last = parts[parts.Length - 1];
+                        if (last.Length == 15)// 正数或零
+                        { z = float.Parse(last); }
+                        else// 负数
+                        { z = float.Parse(last.Substring(last.Length - 16)); }
+                        points.Add(new vec3(x, y, z));
+                    }
+                    else if (line.Length >= 5 && line.Substring(0, 5) == "CTRIA")
+                    {
+                        string label = parts[2];
+                        int hash = label.GetHashCode();
+                        ctria1 = int.Parse(parts[3]) - pointIndexMin;//第一个点
+                        ctria2 = int.Parse(parts[4]) - pointIndexMin;//第二个点
+                        ctria3 = int.Parse(parts[5]) - pointIndexMin;//第三个点
+                        var triangle = new Triangle(ctria1, ctria2, ctria3, label);
+                        //triangle.IndexOfTriangles = triangles.Count;
+                        //triangles.Add(triangle);
+                        int index = 0;
+                        while (index < triangles.Count && triangles[index].LabelHash > hash)
+                        {
+                            index++;
+                        }
+                        triangles.Insert(index, triangle);
+                    }
                 } while (true);
 
-				//for (int i = 0; i < triangles.Count - 1; i++)
-				//{
-				//    int p = i;
-				//    for (int j = i + 1; j < triangles.Count; j++)
-				//    {
-				//        if (triangles[p].FaceLabel.CompareTo(triangles[j].FaceLabel) > 0)
-				//        {
-				//            p = j;
-				//        }
-				//    }
-				//    if (p != i)
-				//    {
-				//        Triangle tmp = triangles[i];
-				//        triangles[i] = triangles[p];
-				//        triangles[p] = tmp;
-				//    }
-				//}
+                //for (int i = 0; i < triangles.Count - 1; i++)
+                //{
+                //    int p = i;
+                //    for (int j = i + 1; j < triangles.Count; j++)
+                //    {
+                //        if (triangles[p].FaceLabel.CompareTo(triangles[j].FaceLabel) > 0)
+                //        {
+                //            p = j;
+                //        }
+                //    }
+                //    if (p != i)
+                //    {
+                //        Triangle tmp = triangles[i];
+                //        triangles[i] = triangles[p];
+                //        triangles[p] = tmp;
+                //    }
+                //}
 
                 result = new NASFile(points.ToArray(), triangles.ToArray());
             }
