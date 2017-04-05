@@ -405,6 +405,7 @@
     <Compile Include="EM\CloudFile.cs" />
     <Compile Include="EM\NASParser.cs" />
     <Compile Include="EM\NASFile.cs" />
+    <Compile Include="EM\PointSpriteRenderer.cs" />
     <Compile Include="FontTexture\FontBitmap.cs" />
     <Compile Include="FontTexture\FontBitmap.IDisposable.cs" />
     <Compile Include="FontTexture\FontBitmapHelper.0_.cs" />
@@ -669,6 +670,8 @@
     <EmbeddedResource Include="EM\shaders\AxisSeat.frag" />
     <EmbeddedResource Include="EM\shaders\AxisBody.vert" />
     <EmbeddedResource Include="EM\shaders\AxisBody.frag" />
+    <EmbeddedResource Include="EM\shaders\PointSprite.frag" />
+    <EmbeddedResource Include="EM\shaders\PointSprite.vert" />
     <None Include="FontTexture\readme.md" />
     <None Include="Manipulaters\readme.md" />
     <None Include="PropertyGrid\TypeConverters\readme.md" />
@@ -709,6 +712,7 @@
   <ItemGroup>
     <Content Include="0Foundations\OpenGLAPI\Enumerations\DrawMode.png" />
     <Content Include="EM\GLUIs\UIColorPalette\this-is-color-palette.bmp" />
+    <EmbeddedResource Include="EM\Textures\PointSprite.png" />
     <Content Include="FontTexture\FontBitmapHelper.1_PrepareInitialGlyphDictcs.cs.png" />
     <Content Include="FontTexture\FontBitmapHelper.2_PrepareFinalBitmapSize.cs.png" />
     <Content Include="FontTexture\FontBitmapHelper.3_PrintBitmap.cs.png" />

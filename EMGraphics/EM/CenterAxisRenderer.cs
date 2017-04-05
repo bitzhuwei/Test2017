@@ -16,11 +16,6 @@ namespace EMGraphics
         /// <summary>
         /// 
         /// </summary>
-        public vec3 ProjectionCenter { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
         /// <returns></returns>
         public static CenterAxisRenderer Create(CenterAxis model)
         {
@@ -52,7 +47,7 @@ namespace EMGraphics
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
             int[] viewport = OpenGL.GetViewport();
-            vec3 windowCoord = glm.project(this.ProjectionCenter, view * model, projection, new vec4(viewport[0], viewport[1], viewport[2], viewport[3]));
+            vec3 windowCoord = glm.project(new vec3(0, 0, 0), view * model, projection, new vec4(viewport[0], viewport[1], viewport[2], viewport[3]));
             {
                 IOrthoViewCamera camera = arg.Camera;
                 float newBottom = (float)camera.Bottom;
@@ -87,8 +82,6 @@ namespace EMGraphics
                 }
             }
             this.SetUniform("mvpMatrix", projection * view * model);
-
-            base.DoRender(arg);
 
             lineStippleState.On();
             // 把所有在此之前渲染的内容都推到最远。
