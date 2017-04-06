@@ -1,20 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace EMGraphics
 {
-    public enum CenterAxisLabelDirection
-    {
-        X,
-        Y,
-        Z,
-    }
+    //public enum CenterAxisLabelDirection
+    //{
+    //    X,
+    //    Y,
+    //    Z,
+    //}
     public class CenterAxisLabelRenderer : Renderer
     {
-        private Texture spriteTexture;
-        private CenterAxisLabelDirection direction;
+        //private CenterAxisLabelDirection direction;
 
-        public static CenterAxisLabelRenderer Create(CenterAxisLabelDirection direction)
+        //public static CenterAxisLabelRenderer Create(CenterAxisLabelDirection direction)
+        public float LabelSize { get; set; }
+
+        public static CenterAxisLabelRenderer Create()
         {
             var shaderCodes = new ShaderCode[2];
             shaderCodes[0] = new ShaderCode(ManifestResourceLoader.LoadTextFile(@"EM\shaders\PointSprite.vert"), ShaderType.VertexShader);
@@ -22,10 +25,11 @@ namespace EMGraphics
             var provider = new ShaderCodeArray(shaderCodes);
             var map = new AttributeMap();
             map.Add("position", PointSpriteModel.strposition);
-            var model = new PointSpriteModel(direction);
+            var model = new PointSpriteModel();
             var renderer = new CenterAxisLabelRenderer(model, provider, map, new PointSpriteState());
             renderer.ModelSize = model.Lengths;
-            renderer.direction = direction;
+            renderer.LabelSize = 50.0f;
+            //renderer.direction = direction;
 
             return renderer;
         }
@@ -36,23 +40,30 @@ namespace EMGraphics
         {
         }
 
+        private List<Texture> textures = new List<Texture>();
+
         protected override void DoInitialize()
         {
             base.DoInitialize();
-            // This is the texture that the compute program will write into
-            var bitmap = ManifestResourceLoader.LoadBitmap(string.Format(@"EM\Textures\{0}.png", this.direction));
-            var texture = new Texture(TextureTarget.Texture2D, bitmap, new SamplerParameters());
-            texture.Initialize();
-            bitmap.Dispose();
-            this.spriteTexture = texture;
+            var array = new string[] { "X", "Y", "Z" };
+            for (uint i = 0; i < array.Length; i++)
+            {
+                // This is the texture that the compute program will write into
+                var bitmap = ManifestResourceLoader.LoadBitmap(string.Format(@"EM\Textures\{0}.png", array[i]));
+                var texture = new Texture(TextureTarget.Texture2D, bitmap, new SamplerParameters());
+                texture.ActiveTextureIndex = i;
+                texture.Initialize();
+                bitmap.Dispose();
 
-            this.SetUniform("spriteTexture", this.spriteTexture);
-            this.SetUniform("factor", 50.0f);
+                this.SetUniform(string.Format("spriteTexture{0}", i), texture);
+
+                textures.Add(texture);
+            }
         }
 
         protected override void DoRender(RenderEventArgs arg)
         {
-            const float left = -1, bottom = -1, right = 1, top = 1, near = int.MinValue, far = int.MaxValue;
+            const float left = -1, bottom = -1, right = 1, top = 1, near = -1000, far = 1000;
             mat4 projection = arg.Camera.GetProjectionMatrix();
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
@@ -92,10 +103,10 @@ namespace EMGraphics
                 }
             }
             this.SetUniform("mvp", projection * view * model);
-            base.DoRender(arg);
+            this.SetUniform("labelSize", this.LabelSize);
 
-            // 把所有在此之前渲染的内容都推到最远。
-            // Push all rendered stuff to farest position.
+            //// 把所有在此之前渲染的内容都推到最远。
+            //// Push all rendered stuff to farest position.
             OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
             base.DoRender(arg);
         }
@@ -104,7 +115,10 @@ namespace EMGraphics
         {
             base.DisposeUnmanagedResources();
 
-            this.spriteTexture.Dispose();
+            foreach (var item in this.textures)
+            {
+                item.Dispose();
+            }
         }
 
         private class PointSpriteModel : IBufferable
@@ -113,17 +127,10 @@ namespace EMGraphics
             {
             }
 
-            public PointSpriteModel(CenterAxisLabelDirection direction)
-            {
-                // TODO: Complete member initialization
-                this.direction = direction;
-            }
-
             public const string strposition = "position";
             private VertexBuffer positionBuffer = null;
             private IndexBuffer indexBuffer;
             private float factor = 1;
-            private CenterAxisLabelDirection direction;
 
             public VertexBuffer GetVertexAttributeBuffer(string bufferName, string varNameInShader)
             {
@@ -131,8 +138,11 @@ namespace EMGraphics
                 {
                     if (this.positionBuffer == null)
                     {
-                        var array = new vec3[1];
-                        array[0] = new vec3(0.5f, 0, 0);
+                        const float factor = 1.10f;
+                        var array = new vec3[3];
+                        array[0] = new vec3(0.5f, 0, 0) * factor;
+                        array[1] = new vec3(0, 0.5f, 0) * factor;
+                        array[2] = new vec3(0, 0, 0.5f) * factor;
                         VertexBuffer buffer = array.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                         this.positionBuffer = buffer;
                     }
@@ -149,7 +159,7 @@ namespace EMGraphics
             {
                 if (this.indexBuffer == null)
                 {
-                    ZeroIndexBuffer buffer = ZeroIndexBuffer.Create(DrawMode.Points, 0, 1);
+                    ZeroIndexBuffer buffer = ZeroIndexBuffer.Create(DrawMode.Points, 0, 3);
                     this.indexBuffer = buffer;
                 }
 
@@ -165,18 +175,5 @@ namespace EMGraphics
             public vec3 Lengths { get { return new vec3(2, 2, 2); } }
         }
 
-        internal void UpdateTexture(string filename)
-        {
-            // This is the texture that the compute program will write into
-            var bitmap = new System.Drawing.Bitmap(filename);
-            var texture = new Texture(TextureTarget.Texture2D, bitmap, new SamplerParameters());
-            texture.Initialize();
-            bitmap.Dispose();
-            Texture old = this.spriteTexture;
-            this.spriteTexture = texture;
-            this.SetUniform("sprite_texture", texture);
-
-            old.Dispose();
-        }
     }
 }

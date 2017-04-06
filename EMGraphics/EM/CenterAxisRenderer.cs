@@ -42,7 +42,7 @@ namespace EMGraphics
 
         protected override void DoRender(RenderEventArgs arg)
         {
-            const float left = -1, bottom = -1, right = 1, top = 1, near = int.MinValue, far = int.MaxValue;
+            const float left = -1, bottom = -1, right = 1, top = 1, near = -100, far = 100;
             mat4 projection = arg.Camera.GetProjectionMatrix();
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
@@ -84,10 +84,13 @@ namespace EMGraphics
             this.SetUniform("mvpMatrix", projection * view * model);
             base.DoRender(arg);
 
+            //OpenGL.Flush();
+            //OpenGL.Finish();
+
             lineStippleState.On();
             // 把所有在此之前渲染的内容都推到最远。
             // Push all rendered stuff to farest position.
-            //OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
+            OpenGL.Clear(OpenGL.GL_DEPTH_BUFFER_BIT);
             base.DoRender(arg);
             lineStippleState.Off();
         }

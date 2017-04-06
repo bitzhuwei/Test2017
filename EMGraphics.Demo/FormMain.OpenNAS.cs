@@ -97,13 +97,13 @@ namespace EMGraphics.Demo
                         SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                         this.scene.RootObject.Children.Add(obj);
                     }
-
                     {
-                        var renderer = CenterAxisLabelRenderer.Create(CenterAxisLabelDirection.X);
+                        var renderer = CenterAxisLabelRenderer.Create();
                         renderer.WorldPosition = center;
                         SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
                         this.scene.RootObject.Children.Add(obj);
                     }
+
                     //const float deltaDistance = 0.025f;
                     //{
                     //    var renderer = CenterAxisLabelRenderer.Create(1, 32);
