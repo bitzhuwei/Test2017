@@ -12,7 +12,6 @@ namespace EMGraphics
         /// <param name="currentSize">canvas' current size.</param>
         public static void Resize(this ICamera camera, Size lastSize, Size currentSize)
         {
-
             // update perspective camera.
             {
                 IPerspectiveCamera perspectiveCamera = camera;
@@ -64,34 +63,6 @@ namespace EMGraphics
                     orthoCamera.Bottom = center - newHeight / 2;
                     orthoCamera.Top = center + newHeight / 2;
                 }
-                //double aspect = (double)currentSize.Width / (double)currentSize.Height;
-                //double lastAspect = (double)lastSize.Width / (double)lastSize.Height;
-                //if (aspect > lastAspect)
-                //{
-                //    double top = orthoCamera.Top;
-                //    double newRight = top * aspectRatio;
-                //    orthoCamera.Left = -newRight;
-                //    orthoCamera.Right = newRight;
-                //}
-                //else if (aspectRatio < lastAspectRatio)
-                //{
-                //    double right = orthoCamera.Right;
-                //    double newTop = right / aspectRatio;
-                //    orthoCamera.Bottom = -newTop;
-                //    orthoCamera.Top = newTop;
-                //}
-
-                //const int factor = 100;
-                //if (width / 2 / factor != orthoCamera.Right)
-                //{
-                //    orthoCamera.Left = -width / 2 / factor;
-                //    orthoCamera.Right = width / 2 / factor;
-                //}
-                //if (height / 2 / factor != orthoCamera.Top)
-                //{
-                //    orthoCamera.Bottom = -height / 2 / factor;
-                //    orthoCamera.Top = height / 2 / factor;
-                //}
             }
         }
     }
