@@ -63,7 +63,7 @@ namespace EMGraphics
 
         protected override void DoRender(RenderEventArgs arg)
         {
-            const float left = -1, bottom = -1, right = 1, top = 1, near = -1000, far = 1000;
+            const float left = -1, bottom = -1, right = 1, top = 1, near = -100, far = 100;
             mat4 projection = arg.Camera.GetProjectionMatrix();
             mat4 view = arg.Camera.GetViewMatrix();
             mat4 model = this.GetModelMatrix().Value;
@@ -138,11 +138,12 @@ namespace EMGraphics
                 {
                     if (this.positionBuffer == null)
                     {
+                        const float halfAxisLength = 0.5f;
                         const float factor = 1.10f;
                         var array = new vec3[3];
-                        array[0] = new vec3(0.5f, 0, 0) * factor;
-                        array[1] = new vec3(0, 0.5f, 0) * factor;
-                        array[2] = new vec3(0, 0, 0.5f) * factor;
+                        array[0] = new vec3(halfAxisLength, 0, 0) * factor;
+                        array[1] = new vec3(0, halfAxisLength, 0) * factor;
+                        array[2] = new vec3(0, 0, halfAxisLength) * factor;
                         VertexBuffer buffer = array.GenVertexBuffer(VBOConfig.Vec3, varNameInShader, BufferUsage.StaticDraw);
                         this.positionBuffer = buffer;
                     }

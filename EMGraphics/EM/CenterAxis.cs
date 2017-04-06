@@ -15,9 +15,9 @@ namespace EMGraphics
         /// lengths of x/y/z axis.
         /// </summary>
         /// <param name="length"></param>
-        public CenterAxis(float length)
+        public CenterAxis()
         {
-            this.ModelSize = new vec3(length, length, length);
+            this.ModelSize = new vec3(1, 1, 1);
         }
 
         public const string strPosition = "position";

@@ -91,7 +91,7 @@ namespace EMGraphics.Demo
                     // center axis 
                     // NOTE: this renderer must be the last one!
                     {
-                        var model = new CenterAxis(max);
+                        var model = new CenterAxis();
                         CenterAxisRenderer renderer = CenterAxisRenderer.Create(model);
                         renderer.WorldPosition = center;
                         SceneObject obj = renderer.WrapToSceneObject(generateBoundingBox: false);
