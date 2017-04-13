@@ -34,11 +34,11 @@ namespace EMGraphics
             }
         }
 
-        private const string defaultCharSet = "\t abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.:,;'\"(!?)+-*/=_{}[]@~#\\<>|^%$£&";
+        private const string defaultCharSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.:,;'\"(!?)+-*/=_{}[]@~#\\<>|^%$£& ";
 
         private static FontTexture InitializeDefaultFontTexture()
         {
-            Font font = new Font("Arial", 64.0f, FontStyle.Regular, GraphicsUnit.Pixel);// SystemFonts.DefaultFont;
+            Font font = new Font("新宋体", 32.0f, FontStyle.Regular, GraphicsUnit.Pixel);// SystemFonts.DefaultFont;
             FontBitmap fontBitmap = font.GetFontBitmap(defaultCharSet);
             FontTexture fontTexture = fontBitmap.GetFontTexture();
             return fontTexture;
